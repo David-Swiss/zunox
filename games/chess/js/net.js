@@ -1,0 +1,3 @@
+// Phase 4: austauschbare Transport-Schnittstelle für PeerJS oder Server.
+export class Transport{connect(){throw new Error("Transport nicht konfiguriert");}send(_message){}onMessage(_callback){}disconnect(){}}
+export class LocalTransport extends Transport{constructor(){super();this.handlers=[];}connect(){return Promise.resolve(true);}send(message){this.handlers.forEach(h=>h(message));}onMessage(cb){this.handlers.push(cb);}disconnect(){this.handlers=[];}}

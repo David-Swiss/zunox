@@ -52,11 +52,11 @@ button:active{transform:scale(.97)}
 <script>
 "use strict";
 // NEON ORBIT — Canvas-Spiel, vollständig offline und ohne Bibliotheken.
-const C={bg:"#0a1020",radii:[.205,.315,.425],colors:["#43f5ff","#ff45c8","#ffe66d"],maxParticles:240,spawn:1.3};
+const C={bg:"#0a1020",radii:[.197,.303,.409],colors:["#43f5ff","#ff45c8","#ffe66d"],maxParticles:240,spawn:1.3};
 const canvas=document.querySelector("#game"),ctx=canvas.getContext("2d",{alpha:false});
 const $=s=>document.querySelector(s),overlay=$("#overlay"),panel=$("#panel");
 let W=0,H=0,D=1,cx=0,cy=0,baseR=0,last=0,state="menu",time=0,score=0,best=0,combo=1,wave=1,waveTime=0,spawnTime=0;
-let angle=-Math.PI/2,lane=1,direction=-1,speed=1.25,shake=0,flash=0,toastTime=0;
+let angle=-Math.PI/2,lane=1,direction=-1,speed=1.08,shake=0,flash=0,toastTime=0;
 let objects=[],particles=[],trail=[],popups=[],stars=[],powers={shield:0,slow:0,magnet:0};
 let audio=null,master=null,muted=false,lastInput=0,runToken=0;
 const TAU=Math.PI*2,rand=(a,b)=>a+Math.random()*(b-a),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -101,12 +101,12 @@ for(let p of particles){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=Math.pow(.96,
 for(let p of popups){p.life-=dt;p.y-=35*dt}popups=popups.filter(p=>p.life>0);
 shake=Math.max(0,shake-35*dt);flash=Math.max(0,flash-2.8*dt);if(toastTime>0&&((toastTime-=dt)<=0))$("#toast").classList.remove("show");
 if(state!=="playing")return;
-time+=dt;let slow=powers.slow>0?0.48:1;speed=Math.min(2.65,1.25+time*.008);angle=norm(angle+speed*dt*slow);
+time+=dt;let slow=powers.slow>0?0.48:1;speed=Math.min(2.15,1.08+time*.005);angle=norm(angle+speed*dt*slow);
 let p=pos(lane,angle);trail.push({x:p.x,y:p.y,life:.34,max:.34,lane});if(trail.length>25)trail.shift();for(let t of trail)t.life-=dt;trail=trail.filter(t=>t.life>0);if(Math.random()<.5)particle(p.x,p.y,C.colors[lane],1);
-waveTime+=dt;if(waveTime>=17){wave++;waveTime=0;toast("WELLE "+wave,wave%5===0?"#ff45c8":"#43f5ff")}
-spawnTime-=dt;if(spawnTime<=0){if(wave%5===0&&waveTime<2.2)patternWave();else{if(Math.random()<.83)spawn();if(Math.random()<.58)energy();if(Math.random()<.12)power()}spawnTime=rand(C.spawn*.72,C.spawn*1.25)/clamp(1+(wave-1)*.07,1,1.8)}
+waveTime+=dt;if(waveTime>=22){wave++;waveTime=0;toast("WELLE "+wave,wave%5===0?"#ff45c8":"#43f5ff")}
+spawnTime-=dt;if(spawnTime<=0){if(wave%5===0&&waveTime<2.2)patternWave();else{if(Math.random()<.68)spawn();if(Math.random()<.48)energy();if(Math.random()<.09)power()}spawnTime=rand(C.spawn*1.05,C.spawn*1.65)/clamp(1+(wave-1)*.045,1,1.45)}
 for(let key of Object.keys(powers))powers[key]=Math.max(0,powers[key]-dt);
-for(let i=objects.length-1;i>=0;i--){let o=objects[i];o.angle=norm(o.angle-o.speed*dt*(.55+wave*.025));o.rot+=dt*1.4;o.life-=dt;if(o.life<=0){objects.splice(i,1);continue}
+for(let i=objects.length-1;i>=0;i--){let o=objects[i];o.angle=norm(o.angle-o.speed*dt*(.43+wave*.015));o.rot+=dt*1.4;o.life-=dt;if(o.life<=0){objects.splice(i,1);continue}
 if(o.type==="energy"&&powers.magnet>0&&o.lane===lane){o.angle=norm(o.angle+norm(angle-o.angle)*Math.min(1,dt*3.5))}
 if(o.lane!==lane||ad(o.angle,angle)>.115)continue;
 let collision=o.type==="asteroid"?ad(o.angle,angle)<.105:o.type==="laser"?ad(o.angle,angle)<o.arc*.5:o.type==="spinner"?ad(o.angle,angle)<.14&&Math.abs(Math.sin(norm(angle-o.angle-o.rot)))<.2:false;

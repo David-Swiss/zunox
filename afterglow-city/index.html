@@ -184,38 +184,56 @@ class VehicleFactory{
  }
 }
 class VehiclePhysics{
- constructor(world,car){this.world=world;this.car=car;this.x=0;this.z=0;this.yaw=0;this.speed=0;this.lateralSpeed=0;this.nitro=100;this.condition=100;this.hitCooldown=0;}
+ constructor(world,car){this.world=world;this.car=car;this.x=0;this.z=0;this.yaw=0;this.speed=0;this.lateralSpeed=0;this.nitro=100;this.condition=100;this.hitCooldown=0;this.steerInput=0;}
  update(dt,input,traffic=[]){
+  // Fixed-size substeps keep steering and collision response stable on mobile frame rates.
+  const steps=Math.max(1,Math.ceil(dt/(1/90))),step=dt/steps;
+  for(let frame=0;frame<steps;frame++)this.step(step,input,traffic);
+  this.car.group.position.set(this.x,0,this.z);
+  this.car.group.rotation.y=this.yaw;
+  this.car.wheels.forEach(w=>w.rotation.x+=this.speed*dt*1.4);
+ }
+ step(dt,input,traffic){
   this.hitCooldown=Math.max(0,this.hitCooldown-dt);
   const forward=input.down('w')||input.down('arrowup')||input.down('gas');
   const reverse=input.down('s')||input.down('arrowdown')||input.down('brake');
   const boost=input.down('shift')||input.down('nitro');
   const hand=input.down(' ')||input.down('hand');
   const steer=(input.down('a')||input.down('arrowleft')||input.down('left')?-1:0)+(input.down('d')||input.down('arrowright')||input.down('right')?1:0);
-  const max=boost&&this.nitro>0?55:36;
-  // Progressive throttle, decisive braking and a small engine-brake when coasting.
-  if(forward&&!reverse)this.speed=clamp(this.speed+dt*(boost?20:9.5),-13,max);
-  else if(reverse&&!forward){if(this.speed>1)this.speed=Math.max(0,this.speed-dt*30);else this.speed=clamp(this.speed-dt*8.5,-13,0);}
-  else this.speed*=Math.pow(hand ? .975 : .989,dt*60);
-  if(boost&&this.speed>0&&this.nitro>0)this.nitro=Math.max(0,this.nitro-dt*30);
-  else this.nitro=Math.min(100,this.nitro+dt*12);
-  const speedFactor=clamp(Math.abs(this.speed)/36,0,1);
-  // Stable arcade handling: the car follows its heading instead of sliding sideways.
-  const yawRate=(.16+speedFactor*.78)*(hand?1.12:1);
-  this.yaw+=steer*dt*yawRate*(this.speed<0?-1:1);
-  const lateralTarget=hand?steer*this.speed*.12:0;
-  const lateralResponse=1-Math.exp(-dt*(hand?5:16));
-  this.lateralSpeed+=(lateralTarget-this.lateralSpeed)*lateralResponse;
-  this.lateralSpeed=clamp(this.lateralSpeed,-4,4);
+  const hasNitro=boost&&this.nitro>0&&forward;
+  const maxSpeed=hasNitro?48:36;
+  // Engine, service brake and rolling resistance are independent forces.
+  if(forward&&!reverse)this.speed=Math.min(maxSpeed,this.speed+dt*(hasNitro?15:10.5));
+  else if(reverse&&!forward){
+   if(this.speed>0)this.speed=Math.max(0,this.speed-dt*25);
+   else this.speed=Math.max(-10,this.speed-dt*6.5);
+  }else{
+   const drag=(hand?2.8:0.72)*dt;
+   this.speed=Math.sign(this.speed)*Math.max(0,Math.abs(this.speed)-drag);
+  }
+  if(hasNitro)this.nitro=Math.max(0,this.nitro-dt*26);
+  else this.nitro=Math.min(100,this.nitro+dt*10);
+  const speedRatio=clamp(Math.abs(this.speed)/36,0,1);
+  // Steering builds smoothly with speed; reverse steering is naturally inverted.
+  const steeringAuthority=.12+Math.pow(speedRatio,.72)*1.42;
+  this.yaw+=steer*steeringAuthority*dt*(this.speed<-.15?-1:this.speed>.15?1:0);
+  // Normal tyres strongly resist sideways motion. Handbrake deliberately loosens the rear.
+  const lateralGrip=hand?3.2:13.5;
+  const lateralTarget=hand?steer*this.speed*.16:0;
+  this.lateralSpeed+=(lateralTarget-this.lateralSpeed)*(1-Math.exp(-lateralGrip*dt));
+  this.lateralSpeed=clamp(this.lateralSpeed,-(hand?7:1.4),hand?7:1.4);
   const fx=Math.sin(this.yaw),fz=-Math.cos(this.yaw),rx=Math.cos(this.yaw),rz=Math.sin(this.yaw);
-  const nx=this.x+(fx*this.speed+rx*this.lateralSpeed)*dt;
-  const nz=this.z+(fz*this.speed+rz*this.lateralSpeed)*dt;
-  const trafficHit=traffic.some(n=>Math.hypot(nx-n.car.group.position.x,nz-n.car.group.position.z)<3.25);
-  if(!this.world.collides(nx,nz)&&!trafficHit){this.x=nx;this.z=nz;}
-  else{this.speed*=-.18;this.lateralSpeed*=-.18;if(this.hitCooldown===0){this.condition=Math.max(0,this.condition-(trafficHit?8:4));this.hitCooldown=1.0;}}
-  this.car.group.position.set(this.x,0,this.z);
-  this.car.group.rotation.y=this.yaw;
-  this.car.wheels.forEach(w=>w.rotation.x+=this.speed*dt*1.4);
+  const dx=(fx*this.speed+rx*this.lateralSpeed)*dt,dz=(fz*this.speed+rz*this.lateralSpeed)*dt;
+  const hitTraffic=(x,z)=>traffic.some(n=>Math.hypot(x-n.car.group.position.x,z-n.car.group.position.z)<3.15);
+  const nx=this.x+dx,nz=this.z+dz;
+  // Resolve each axis separately so a glancing wall contact does not reverse the car.
+  let blocked=false;
+  if(!this.world.collides(nx,this.z)&&!hitTraffic(nx,this.z))this.x=nx;else{blocked=true;this.lateralSpeed*=.25;}
+  if(!this.world.collides(this.x,nz)&&!hitTraffic(this.x,nz))this.z=nz;else{blocked=true;this.lateralSpeed*=.25;}
+  if(blocked){
+   this.speed*=Math.pow(.16,dt*8);
+   if(this.hitCooldown===0){this.condition=Math.max(0,this.condition-2);this.hitCooldown=.45;}
+  }
  }
 }
 class TrafficSystem{

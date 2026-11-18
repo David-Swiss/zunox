@@ -50,7 +50,7 @@ const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
 const $=id=>document.getElementById(id);
 const W=1900,H=1300,roadW=148,wall=30;
 // Larger circuit with several clear S-bends and long straights between them.
-const controlPts=[{x:220,y:280},{x:430,y:190},{x:650,y:225},{x:850,y:155},{x:1080,y:190},{x:1280,y:275},{x:1510,y:205},{x:1690,y:330},{x:1770,y:535},{x:1660,y:700},{x:1740,y:900},{x:1540,y:1080},{x:1320,y:1140},{x:1120,y:1050},{x:900,y:1160},{x:680,y:1080},{x:470,y:1140},{x:270,y:1010},{x:150,y:825},{x:125,y:625},{x:225,y:465}];
+const controlPts=[{x:220,y:280},{x:380,y:175},{x:540,y:225},{x:700,y:165},{x:860,y:245},{x:1030,y:145},{x:1190,y:220},{x:1350,y:300},{x:1510,y:205},{x:1660,y:300},{x:1770,y:465},{x:1720,y:610},{x:1610,y:735},{x:1740,y:900},{x:1600,y:1040},{x:1430,y:1140},{x:1260,y:1080},{x:1090,y:1180},{x:900,y:1100},{x:720,y:1170},{x:530,y:1070},{x:350,y:1120},{x:210,y:960},{x:145,y:790},{x:105,y:620},{x:225,y:465}];
 function buildTrack(points,steps=8){let out=[];for(let i=0;i<points.length;i++){let p0=points[(i-1+points.length)%points.length],p1=points[i],p2=points[(i+1)%points.length],p3=points[(i+2)%points.length];for(let j=0;j<steps;j++){let t=j/steps,t2=t*t,t3=t2*t;out.push({x:.5*((2*p1.x)+(-p0.x+p2.x)*t+(2*p0.x-5*p1.x+4*p2.x-p3.x)*t2+(-p0.x+3*p1.x-3*p2.x+p3.x)*t3),y:.5*((2*p1.y)+(-p0.y+p2.y)*t+(2*p0.y-5*p1.y+4*p2.y-p3.y)*t2+(-p0.y+3*p1.y-3*p2.y+p3.y)*t3)});}}return out;}
 const pts=buildTrack(controlPts);
 const keys={left:false,right:false,gas:false,brake:false,hand:false};

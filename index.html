@@ -30,6 +30,55 @@
 .limit{right:148px;bottom:119px;width:37px;height:37px;font-size:13px;border-width:3px}
 .help{display:none}
 }
+</style><style>
+/* Complete HUD redesign: clean driving-game dashboard */
+html,body{background:#111923}
+#world{inset:0;z-index:0}
+.hud{z-index:2;pointer-events:none}
+.panel{background:rgba(10,17,27,.88);border:1px solid rgba(191,211,230,.22);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.28);backdrop-filter:blur(12px)}
+.profile{top:18px;left:18px;width:215px;padding:15px 17px;border-left:3px solid #39d9a0}
+.profile:before{content:"FAHRERPROFIL";display:block;color:#8fa6bc;font-size:9px;letter-spacing:2px;font-weight:800;margin-bottom:7px}
+.money{font-size:23px;line-height:1.1;color:#44e5a4}
+.muted{font-size:11px;color:#bdc9d5;margin-top:7px}
+.mission{top:18px;left:50%;transform:translateX(-50%);min-width:270px;padding:12px 22px;text-align:left;border-radius:12px}
+.mission:before{content:"AKTIVER AUFTRAG";display:block;font-size:9px;letter-spacing:2px;color:#7de8ed;font-weight:900;margin-bottom:5px}
+.mission b{font-size:15px}.mission small{font-size:11px;color:#c0cbd6}
+.tools{top:18px;right:18px;gap:7px}
+.tools button{pointer-events:auto;background:#101c2be8;border:1px solid #a9bfd044;border-radius:9px;padding:10px 14px;color:#eef6ff;font-size:12px}
+.tools button:active,.control:active{transform:scale(.96);background:#176c75}
+.map{top:86px;right:18px;width:156px;height:156px;border:3px solid #52677c;background:#111c29}
+.speedo{left:50%;right:auto;bottom:18px;transform:translateX(-50%);width:210px;height:76px;border:1px solid #8095aa55;border-radius:15px;background:rgba(9,16,26,.9);box-shadow:0 10px 30px #0006}
+.speedinner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;padding:0 15px}
+.speed{font-size:36px;line-height:1}.unit{font-size:10px;color:#9eafc0}.gear{font-size:19px;margin:0 0 0 12px}
+.pedals{right:18px;bottom:18px;display:grid;grid-template-columns:repeat(2,76px);gap:7px}
+.control{pointer-events:auto;min-width:0;height:52px;border-radius:11px;padding:5px;background:rgba(12,22,34,.9);border:1px solid #9bb1c455;color:#fff;font-size:12px;font-weight:800}
+.control.active{background:#176f65;border-color:#51e4c0}
+.steer{left:18px;bottom:18px;gap:8px}
+.steer .control{width:66px;height:66px;font-size:23px}
+.limit{display:none}
+.help{bottom:106px;left:50%;font-size:10px;color:#d5e2ef;background:#091321aa;padding:6px 10px;border-radius:7px}
+.overlay{z-index:10;background:rgba(4,9,16,.72);backdrop-filter:blur(9px)}
+.dialog{border-radius:18px;border:1px solid #658197;background:linear-gradient(145deg,#182a3c,#0c1420);padding:30px}
+.dialog h1{letter-spacing:-1px}
+button{cursor:pointer;touch-action:manipulation}
+@media(max-width:900px){
+.profile{top:10px;left:10px;width:155px;padding:10px 11px}.profile:before{font-size:8px;margin-bottom:5px}.money{font-size:16px}.muted{font-size:9px;margin-top:4px}
+.mission{top:10px;left:50%;width:42%;min-width:0;padding:9px 11px}.mission:before{font-size:7px;margin-bottom:3px}.mission b{font-size:11px}.mission small{font-size:9px}
+.tools{top:68px;right:10px;gap:5px}.tools button{font-size:10px;padding:8px 9px}
+.map{top:112px;right:10px;width:105px;height:105px}
+.speedo{bottom:10px;width:145px;height:62px}.speedinner{padding:0 9px}.speed{font-size:27px}.gear{font-size:15px;margin-left:6px}.unit{font-size:8px}
+.pedals{right:10px;bottom:10px;grid-template-columns:repeat(2,56px);gap:5px}.control{width:56px;height:46px;font-size:10px}
+.steer{left:10px;bottom:10px;gap:5px}.steer .control{width:49px;height:49px;font-size:18px}
+.help{display:none}
+}
+@media(max-width:430px){
+.profile{width:128px}.mission{width:43%;left:51%}.mission b{font-size:10px}
+.map{top:106px;width:86px;height:86px}
+.tools{top:202px;right:10px;flex-direction:column}
+.speedo{width:116px;height:54px;bottom:10px}.speed{font-size:23px}
+.pedals{grid-template-columns:repeat(2,49px)}.control{width:49px;height:42px;font-size:9px}
+.steer .control{width:43px;height:45px}
+}
 </style></head><body><div id="world"></div><div class="hud"><div class="panel profile"><div class="money" id="cash">1'000 $ · Anfänger</div><div class="muted">★★★★★</div><div class="muted">Keine Fahndung</div><div class="muted">Stadtfahrt · Zustand <b>100 %</b></div></div><div class="panel mission"><b id="mission">Kurierauftrag: Paket abholen</b><small id="distance">Fahre zum grünen Licht</small></div><div class="tools"><button id="camera">Kamera</button><button id="mapbtn">Karte</button><button id="pause">Pause</button></div><div class="panel map" id="mapbox"><canvas id="minimap" width="240" height="240"></canvas></div><div class="speedo"><div class="speedinner"><div class="speed" id="speed">0</div><div class="unit">km/h</div><div class="gear" id="gear">N</div></div></div><div class="limit">50</div><div class="pedals"><button class="control" data-key="hand">Hand</button><button class="control" data-key="nitro">Nitro</button><button class="control" data-key="brake">Bremse</button><button class="control active" data-key="gas">Gas</button></div><div class="steer"><button class="control" data-key="left">◀</button><button class="control" data-key="right">▶</button></div><div class="help">WASD: Fahren & Lenken · W Gas · S Bremse · A/D Lenken · Shift Nitro · Leertaste Handbremse</div></div>
 <div class="overlay" id="overlay"><div class="dialog"><div style="color:#75edff;letter-spacing:3px;font-size:11px">GAMEZONE ORIGINAL</div><h1>AFTERGLOW CITY</h1><p>Willkommen in deiner Stadt. Fahre durch eine belebte Downtown mit 3D-Gebäuden, Ampeln und Verkehr. Folge dem grünen Licht zum Kurierauftrag.</p><button id="start">MOTOR STARTEN</button></div></div>
 <script>
@@ -61,7 +110,7 @@ if(missionIndex<3&&Math.hypot(px-goal.x,pz-goal.z)<13){missionIndex++;cash+=500;
 let targetPos=new T.Vector3(px+Math.sin(angle)* (camMode?1:-12),camMode?5:7,pz-Math.cos(angle)*(camMode?1:18));let look=new T.Vector3(px,1.2,pz);camera.position.lerp(targetPos,1-Math.pow(.001,dt));camera.lookAt(look);hud();}
 function minimap(){let c=document.getElementById('minimap'),g=c.getContext('2d');g.fillStyle='#28333e';g.fillRect(0,0,240,240);g.strokeStyle='#8b969e';g.lineWidth=7;for(let i=0;i<240;i+=30){g.beginPath();g.moveTo(i,0);g.lineTo(i,240);g.stroke();g.beginPath();g.moveTo(0,i);g.lineTo(240,i);g.stroke()}g.fillStyle='#3e6945';for(let i=0;i<10;i++)g.fillRect((i*47)%230,(i*71)%230,18,18);g.fillStyle='#53e6a1';g.beginPath();g.arc(120+(goal.x-px)*.12,120+(goal.z-pz)*.12,5,0,7);g.fill();g.fillStyle='white';g.beginPath();g.moveTo(120,108);g.lineTo(113,128);g.lineTo(127,128);g.fill();}
 let lastMap=0;function loop(t){requestAnimationFrame(loop);if(t-(loop.last||0)<33)return;let dt=Math.min(.05,(t-(loop.last||t))/1000);loop.last=t;if(active&&!paused)update(dt);renderer.render(scene,camera);if(t-lastMap>180){minimap();lastMap=t}}
-document.getElementById('start').onclick=()=>{active=true;document.getElementById('overlay').classList.add('hidden')};document.getElementById('pause').onclick=()=>paused=!paused;document.getElementById('camera').onclick=()=>camMode=1-camMode;document.getElementById('mapbtn').onclick=()=>document.getElementById('mapbox').classList.toggle('hidden');
-const drivingKeys=['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright','shift',' '];document.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(drivingKeys.includes(k)){keys[k]=true;e.preventDefault()}});document.addEventListener('keyup',e=>{const k=e.key.toLowerCase();keys[k]=false});window.addEventListener('blur',()=>{Object.keys(keys).forEach(k=>keys[k]=false);Object.keys(touch).forEach(k=>touch[k]=false)});document.querySelectorAll('[data-key]').forEach(b=>{let k=b.dataset.key;b.addEventListener('pointerdown',e=>{e.preventDefault();touch[k]=true;b.setPointerCapture(e.pointerId)});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,()=>touch[k]=false))});addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});player.g.position.set(0,0,0);camera.position.set(0,7,18);camera.lookAt(0,1,0);newGoal();hud();loop(0);
+document.getElementById('start').onclick=()=>{active=true;document.getElementById('overlay').classList.add('hidden')};document.getElementById('pause').onclick=()=>{paused=!paused;document.getElementById('pause').textContent=paused?'Weiter':'Pause';document.getElementById('distance').textContent=paused?'Spiel pausiert':'Fahre zum grünen Licht';};document.getElementById('camera').onclick=()=>camMode=1-camMode;document.getElementById('mapbtn').onclick=()=>document.getElementById('mapbox').classList.toggle('hidden');
+const drivingKeys=['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright','shift',' '];document.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(drivingKeys.includes(k)){keys[k]=true;e.preventDefault()}});document.addEventListener('keyup',e=>{const k=e.key.toLowerCase();keys[k]=false});window.addEventListener('blur',()=>{Object.keys(keys).forEach(k=>keys[k]=false);Object.keys(touch).forEach(k=>touch[k]=false)});document.querySelectorAll('[data-key]').forEach(b=>{let k=b.dataset.key;b.addEventListener('pointerdown',e=>{e.preventDefault();touch[k]=true;b.classList.add('active');b.setPointerCapture(e.pointerId)});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,()=>{touch[k]=false;b.classList.remove('active')}))});addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});player.g.position.set(0,0,0);camera.position.set(0,7,18);camera.lookAt(0,1,0);newGoal();hud();loop(0);
 })();
 </script></body></html>

@@ -1,0 +1,3 @@
+const KEY="zunox-chess-profile";export function loadProfile(){try{return {...{ratings:{bullet:800,blitz:800,rapid:800},games:0,wins:0,draws:0,losses:0},...JSON.parse(localStorage.getItem(KEY)||"{}")};}catch{return {ratings:{bullet:800,blitz:800,rapid:800},games:0,wins:0,draws:0,losses:0};}}
+export function saveProfile(p){try{localStorage.setItem(KEY,JSON.stringify(p));}catch{}}
+export function updateRating(rating,opponent,score,k=24){const expected=1/(1+10**((opponent-rating)/400));return Math.round(rating+k*(score-expected));}

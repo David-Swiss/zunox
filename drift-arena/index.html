@@ -94,8 +94,9 @@ let steer=(keys.right?1:0)-(keys.left?1:0);
 let speedFactor=Math.min(1,Math.abs(forward)/90);
 let turnRate=(.85+speedFactor*1.75)*(hand?1.9:1);
 car.a+=steer*turnRate*dt*Math.sign(forward||1);
-let grip=hand?.955:(onRoad?Math.max(.78,.84+gripLevel*.012):.84);
-side+=steer*Math.abs(forward)*(hand?.95:.30)*dt;
+// Steering automatically breaks rear grip in corners, so drifting needs no handbrake.
+let grip=hand?.94:(onRoad?Math.min(.94,.91+gripLevel*.006):.84);
+side+=steer*Math.abs(forward)*(hand?1.05:.85)*dt;
 side*=Math.pow(grip,dt*60);
 let velocityDamp=onRoad?1:.99;
 car.vx=(Math.cos(car.a)*forward+rightX*side)*Math.pow(velocityDamp,dt*60);

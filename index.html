@@ -61,6 +61,15 @@ main{max-width:1200px;margin:auto;padding:24px 18px 60px}
 .cardbody h3{letter-spacing:.15px}
 .playbtn{background:linear-gradient(135deg,#2a4567,#355780);border:1px solid #456487}
 @media(max-width:620px){.thumb{height:110px}.thumbicon{font-size:52px}.thumbcaption{font-size:8px;bottom:7px;left:8px}}
+</style><style>
+/* Clearer game descriptions and richer play feedback */
+.cardbody p{font-size:12.5px;line-height:1.5;min-height:48px;color:#b7c6df}
+.gameinfo span{max-width:75%;line-height:1.4}
+.notice{font-weight:750;border:1px solid #38577d;box-shadow:0 4px 16px #0002}
+.controls button,.mobilepad button{transition:transform .12s,filter .12s}
+.controls button:active,.mobilepad button:active{transform:scale(.96);filter:brightness(1.2)}
+.canvaswrap{touch-action:pan-y}
+@media(max-width:620px){.cardbody p{min-height:64px;font-size:12px}.gameinfo span{max-width:100%}}
 </style></head>
 <body>
 <header class="top"><nav class="nav"><div class="logo">GAMEZONE</div><div class="navlinks"><button class="active" data-nav="all">Start</button><button data-nav="Racing">Racing</button><button data-nav="Arcade">Arcade</button><button data-nav="Puzzle">Puzzle</button><button data-nav="Action">Action</button></div><input id="search" class="search" placeholder="Spiel suchen…" aria-label="Spiel suchen"></nav></header>
@@ -75,26 +84,26 @@ main{max-width:1200px;margin:auto;padding:24px 18px 60px}
 (()=> {
 "use strict";
 const games=[
-{id:"racer",name:"Neon Racer",cat:"Racing",icon:"🏎️",desc:"Weiche dem Verkehr aus und halte durch.",colors:["#102c4b","#087c96"]},
-{id:"drift",name:"Drift Challenge",cat:"Racing",icon:"🛞",desc:"Sammle Driftpunkte und bleib auf der Strecke.",colors:["#3b1e50","#b53a79"]},
-{id:"snake",name:"Snake X",cat:"Arcade",icon:"🐍",desc:"Futter sammeln, wachsen und nicht kollidieren.",colors:["#123d34","#26a269"]},
-{id:"pong",name:"Pong",cat:"Arcade",icon:"🏓",desc:"Spiel gegen eine einfache KI.",colors:["#132b49","#356cba"]},
-{id:"breakout",name:"Brick Breaker",cat:"Arcade",icon:"🧱",desc:"Zerstöre alle Blöcke mit dem Ball.",colors:["#3a203c","#a9448d"]},
-{id:"runner",name:"Neon Runner",cat:"Arcade",icon:"🏃",desc:"Springe über Hindernisse und sammle Punkte.",colors:["#172c4b","#2878a6"]},
-{id:"flappy",name:"Flappy Challenge",cat:"Arcade",icon:"🐤",desc:"Fliegen, tippen, durch die Lücken.",colors:["#27567b","#52a4cb"]},
-{id:"shooter",name:"Galaxy Shooter",cat:"Action",icon:"🚀",desc:"Schieße Gegner ab und weiche aus.",colors:["#161d49","#6b4fd0"]},
-{id:"dodge",name:"Dodge Arena",cat:"Action",icon:"💠",desc:"Überlebe so lange wie möglich.",colors:["#14314b","#27a5bd"]},
-{id:"2048",name:"2048",cat:"Puzzle",icon:"🔢",desc:"Verbinde gleiche Zahlen bis 2048.",colors:["#54422d","#bd8e4b"]},
-{id:"memory",name:"Memory",cat:"Puzzle",icon:"🧠",desc:"Finde alle Kartenpaare.",colors:["#24314d","#647ec2"]},
-{id:"mines",name:"Mine Finder",cat:"Puzzle",icon:"💣",desc:"Finde die Felder ohne Minen.",colors:["#34402b","#88a84a"]},
-{id:"reaction",name:"Reaction Rush",cat:"Skill",icon:"⚡",desc:"Reagiere sobald das Feld grün wird.",colors:["#40262b","#d64d68"]},
-{id:"aim",name:"Aim Trainer",cat:"Skill",icon:"🎯",desc:"Triff die Ziele, bevor die Zeit abläuft.",colors:["#173e50","#2cb9bd"]},
-{id:"penalty",name:"Penalty King",cat:"Sport",icon:"⚽",desc:"Schieße auf die Ecken und überliste den Keeper.",colors:["#18402e","#3eae70"]},
-{id:"tower",name:"Mini Tower Defense",cat:"Strategy",icon:"🏰",desc:"Platziere Türme und stoppe die Gegner.",colors:["#2e264b","#8762c7"]},
-{id:"memory2",name:"Color Match",cat:"Puzzle",icon:"🎨",desc:"Merke dir die Sequenz und wiederhole sie.",colors:["#493022","#d58a44"]},
-{id:"clicker",name:"Click Rush",cat:"Skill",icon:"🖱️",desc:"Klicke so schnell du kannst in 15 Sekunden.",colors:["#2a1d4b","#9273d6"]}
+{id:"racer",name:"Neon Racer",cat:"Racing",icon:"🏎️",desc:"Rase durch den Neonverkehr, weiche Autos aus und sammle Strecke für deinen Highscore. Je länger du überlebst, desto schneller wird es.",colors:["#102c4b","#087c96"]},
+{id:"drift",name:"Drift Challenge",cat:"Racing",icon:"🛞",desc:"Lenke durch den Verkehr, halte die Ideallinie und sammle Punkte für jede überstandene Sekunde. Wie weit schaffst du es ohne Crash?",colors:["#3b1e50","#b53a79"]},
+{id:"snake",name:"Snake X",cat:"Arcade",icon:"🐍",desc:"Iss die Früchte, wachse mit jedem Bissen und plane deine Route voraus. Wand oder eigener Schwanz bedeuten Game Over.",colors:["#123d34","#26a269"]},
+{id:"pong",name:"Pong",cat:"Arcade",icon:"🏓",desc:"Schlage den Ball zurück und trickse den Computer aus. Wer zuerst fünf Punkte erzielt, gewinnt das Match.",colors:["#132b49","#356cba"]},
+{id:"breakout",name:"Brick Breaker",cat:"Arcade",icon:"🧱",desc:"Zerschlage die farbigen Blöcke mit dem Ball, halte ihn im Spiel und räume das gesamte Feld ab. Du hast drei Leben.",colors:["#3a203c","#a9448d"]},
+{id:"runner",name:"Neon Runner",cat:"Arcade",icon:"🏃",desc:"Springe im richtigen Moment über Hindernisse. Das Tempo steigt mit deiner Distanz – schaffe einen neuen Rekord!",colors:["#172c4b","#2878a6"]},
+{id:"flappy",name:"Flappy Challenge",cat:"Arcade",icon:"🐤",desc:"Tippe für jeden Flügelschlag und fliege durch die Röhren. Jeder sichere Durchgang zählt; ein Treffer beendet den Lauf.",colors:["#27567b","#52a4cb"]},
+{id:"shooter",name:"Galaxy Shooter",cat:"Action",icon:"🚀",desc:"Verteidige dein Raumschiff gegen Wellen von Gegnern. Bewege dich, schieße und sammle Abschüsse – ein Treffer beendet die Runde.",colors:["#161d49","#6b4fd0"]},
+{id:"dodge",name:"Dodge Arena",cat:"Action",icon:"💠",desc:"Bewege deinen Spieler durch das Gefahrenfeld und weiche fallenden Objekten aus. Die Gefahr nimmt mit der Zeit zu.",colors:["#14314b","#27a5bd"]},
+{id:"2048",name:"2048",cat:"Puzzle",icon:"🔢",desc:"Schiebe die Kacheln, kombiniere gleiche Zahlen und erreiche 2048. Plane voraus, denn jeder Zug bringt eine neue Kachel.",colors:["#54422d","#bd8e4b"]},
+{id:"memory",name:"Memory",cat:"Puzzle",icon:"🧠",desc:"Finde die acht Paare mit möglichst wenigen Versuchen. Merke dir die Positionen und räume alle Karten ab.",colors:["#24314d","#647ec2"]},
+{id:"mines",name:"Mine Finder",cat:"Puzzle",icon:"💣",desc:"Entdecke sichere Felder, nutze die Zahlen als Hinweise und markiere vermutete Minen. Dein erster Klick ist garantiert sicher.",colors:["#34402b","#88a84a"]},
+{id:"reaction",name:"Reaction Rush",cat:"Skill",icon:"⚡",desc:"Warte auf das grüne Signal und tippe so schnell wie möglich. Ein Frühstart zählt als Fehlversuch – teste deine Reaktionszeit.",colors:["#40262b","#d64d68"]},
+{id:"aim",name:"Aim Trainer",cat:"Skill",icon:"🎯",desc:"Triff so viele bewegliche Ziele wie möglich innerhalb von 30 Sekunden. Jeder Treffer zählt, jeder Fehlschuss kostet wertvolle Zeit.",colors:["#173e50","#2cb9bd"]},
+{id:"penalty",name:"Penalty King",cat:"Sport",icon:"⚽",desc:"Schieße zehn Elfmeter in die Ecken und täusche den Torwart. Entscheide dich für Ziel und Timing – wie viele Tore schaffst du?",colors:["#18402e","#3eae70"]},
+{id:"tower",name:"Mini Tower Defense",cat:"Strategy",icon:"🏰",desc:"Baue Türme neben dem Weg, um Gegner aufzuhalten. Verdiene Geld durch Abschüsse, überlebe zwölf Gegner und verhindere Durchbrüche.",colors:["#2e264b","#8762c7"]},
+{id:"memory2",name:"Color Match",cat:"Puzzle",icon:"🎨",desc:"Präge dir die Farbfolge ein und wiederhole sie fehlerfrei. Jede Runde fügt ein weiteres Signal hinzu – wie lang hält dein Gedächtnis?",colors:["#493022","#d58a44"]},
+{id:"clicker",name:"Click Rush",cat:"Skill",icon:"🖱️",desc:"Starte den 15-Sekunden-Timer und klicke so schnell du kannst. Jeder Klick erhöht deinen Score – knack deinen persönlichen Rekord!",colors:["#2a1d4b","#9273d6"]}
 ];
-games.push({id:"tetris",name:"Neon Tetris",cat:"Puzzle",icon:"🧩",desc:"Reihen füllen und löschen.",colors:["#20345e","#7c54d8"]},{id:"ttt",name:"Tic Tac Toe",cat:"Puzzle",icon:"❌",desc:"Du gegen KI.",colors:["#24334c","#557ec0"]},{id:"connect",name:"Vier Gewinnt",cat:"Puzzle",icon:"🔴",desc:"Vier in einer Reihe.",colors:["#24334c","#b94b5d"]},{id:"whack",name:"Mole Smash",cat:"Skill",icon:"🐹",desc:"Triff auftauchende Ziele.",colors:["#27432e","#77b94f"]},{id:"basket",name:"Hoop Master",cat:"Sport",icon:"🏀",desc:"Wurf-Challenge.",colors:["#553326","#e58a45"]},{id:"bubble",name:"Bubble Pop",cat:"Puzzle",icon:"🫧",desc:"Blasen platzen lassen.",colors:["#253e61","#56a5e4"]},{id:"blocks",name:"Block Puzzle",cat:"Puzzle",icon:"🟦",desc:"Fülle das Spielfeld.",colors:["#293b59","#59b7d0"]},{id:"platform",name:"Pixel Quest",cat:"Arcade",icon:"🕹️",desc:"Sammle Münzen.",colors:["#243b62","#45a78a"]},{id:"quiz",name:"Quiz Blitz",cat:"Skill",icon:"🧠",desc:"Schnellquiz.",colors:["#42305f","#a579e4"]},{id:"typing",name:"Type Sprint",cat:"Skill",icon:"⌨️",desc:"Tippe Wörter schnell.",colors:["#213b50","#52a7a8"]},{id:"solitaire",name:"Card Sort",cat:"Puzzle",icon:"🃏",desc:"Kartensortierung.",colors:["#204333","#4ca978"]},{id:"maze",name:"Maze Escape",cat:"Arcade",icon:"🧭",desc:"Labyrinth entkommen.",colors:["#2d354f","#738bc5"]});
+games.push({id:"tetris",name:"Neon Tetris",cat:"Puzzle",icon:"🧩",desc:"Drehe und verschiebe die fallenden Blöcke, um vollständige Reihen zu bilden. Lösche Reihen, sammle Punkte und verhindere, dass der Stapel oben ankommt.",colors:["#20345e","#7c54d8"]},{id:"ttt",name:"Tic Tac Toe",cat:"Puzzle",icon:"❌",desc:"Setze X auf das 3×3-Feld und verhindere die Gewinnlinie der KI. Drei Symbole in einer Reihe gewinnen – ein Unentschieden ist besser als eine Niederlage.",colors:["#24334c","#557ec0"]},{id:"connect",name:"Vier Gewinnt",cat:"Puzzle",icon:"🔴",desc:"Lass deine Scheiben in die Spalten fallen und bilde vier in einer Reihe. Blockiere den Gegner und sichere dir den Sieg.",colors:["#24334c","#b94b5d"]},{id:"whack",name:"Mole Smash",cat:"Skill",icon:"🐹",desc:"Triff die auftauchenden Ziele, bevor sie verschwinden. Bleib aufmerksam und sammle möglichst viele Treffer.",colors:["#27432e","#77b94f"]},{id:"basket",name:"Hoop Master",cat:"Sport",icon:"🏀",desc:"Ziele auf den Korb und wirf im richtigen Moment. Sammle Treffer und schaffe die Wurf-Challenge.",colors:["#553326","#e58a45"]},{id:"bubble",name:"Bubble Pop",cat:"Puzzle",icon:"🫧",desc:"Klicke die Blasen an, bevor sie entkommen. Sammle Punkte und halte das Spielfeld sauber.",colors:["#253e61","#56a5e4"]},{id:"blocks",name:"Block Puzzle",cat:"Puzzle",icon:"🟦",desc:"Platziere die Formen geschickt auf dem Raster und vervollständige Reihen oder Spalten. Nutze den Platz, bevor keine Form mehr passt.",colors:["#293b59","#59b7d0"]},{id:"platform",name:"Pixel Quest",cat:"Arcade",icon:"🕹️",desc:"Springe durch die Pixelwelt, sammle Münzen und weiche Hindernissen aus. Erkunde die Strecke und erreiche das Ziel.",colors:["#243b62","#45a78a"]},{id:"quiz",name:"Quiz Blitz",cat:"Skill",icon:"🧠",desc:"Teste dein Wissen mit schnellen Fragen. Wähle die richtige Antwort und sammle Punkte für jede richtige Lösung.",colors:["#42305f","#a579e4"]},{id:"typing",name:"Type Sprint",cat:"Skill",icon:"⌨️",desc:"Tippe die angezeigten Wörter so schnell und genau wie möglich. Deine Geschwindigkeit und Fehlerquote entscheiden über den Score.",colors:["#213b50","#52a7a8"]},{id:"solitaire",name:"Card Sort",cat:"Puzzle",icon:"🃏",desc:"Sortiere die Karten nach Farben und Reihenfolge. Nutze freie Plätze mit Strategie und bringe alle Karten in die Zielstapel.",colors:["#204333","#4ca978"]},{id:"maze",name:"Maze Escape",cat:"Arcade",icon:"🧭",desc:"Finde den Ausgang im Labyrinth, ohne dich zu verlaufen. Plane deine Wege und erreiche das Ziel so schnell du kannst.",colors:["#2d354f","#738bc5"]});
 const categories=["Alle","Racing","Arcade","Action","Puzzle","Skill","Sport","Strategy"];
 const catalog=document.getElementById("catalog"),filters=document.getElementById("filters"),search=document.getElementById("search");
 let category="Alle", active=null, gameState=null, loopId=0, lastTime=0, score=0, highs=JSON.parse(localStorage.getItem("gz-highs")||"{}");

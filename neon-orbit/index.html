@@ -36,8 +36,13 @@ button:active{transform:scale(.97)}
 .secondary{width:100%;margin-top:9px;padding:12px;font-size:12px;font-weight:800}
 @media(orientation:landscape) and (max-height:520px){.panel{padding:16px 22px;max-width:390px}.desc{margin:12px auto}.stats{margin:10px 0}#switch{height:47px;bottom:10px}#hint{bottom:65px}}
 </style>
+<style>
+.zuno-back{position:fixed!important;top:max(10px,env(safe-area-inset-top))!important;left:12px!important;z-index:99999!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:42px!important;padding:0 15px!important;border:1px solid #ffffff38!important;border-radius:13px!important;background:rgba(8,17,31,.88)!important;color:#fff!important;font:800 13px/1 system-ui,-apple-system,sans-serif!important;letter-spacing:.2px!important;text-decoration:none!important;box-shadow:0 5px 20px #0005!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;user-select:none!important;-webkit-user-select:none!important}
+.zuno-back:active{transform:scale(.96)!important;background:rgba(28,48,70,.96)!important}
+</style>
 </head>
 <body>
+<a class="zuno-back" href="../" aria-label="Zur ZUNOX-Startseite">← Zurück</a>
 <canvas id="game"></canvas>
 <div id="hud"><div id="label">PUNKTE</div><div id="score">0</div><div id="combo">COMBO x1</div><div id="powers"></div></div>
 <div id="top"><button id="pause" aria-label="Pause">Ⅱ</button><button id="mute" aria-label="Ton">♫</button></div>

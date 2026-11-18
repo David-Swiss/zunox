@@ -8,8 +8,8 @@
 // Ein neues Spiel benötigt nur einen Ordner mit index.html und einen Eintrag in GAMES.
 const GAMES=[
  {title:'Afterglow City',description:'Erkunde die offene Stadt, fahre durch den Verkehr und entkomme der Polizei.',category:'Simulation',path:'afterglow-city/',icon:'🏎️',style:'city'},
- {title:'Neon Assault',description:'Überlebe Gegnerwellen, verwalte deine Munition und knacke deinen Highscore.',category:'Action',path:'shooter/',icon:'🎯',style:'shooter'},
- {title:'Green Valley Farm',description:'Bestelle Felder, gieße deine Pflanzen und baue deinen eigenen Hof auf.',category:'Simulation',path:'farm/',icon:'🚜',style:'farm'},
+ {title:'Rival Strike',description:'Rasante Ego-Shooter-Arena: Kämpfe gegen Bots, wechsle Waffen und sammle Kills.',category:'Action',path:'shooter/',icon:'🎯',style:'shooter'},
+ {title:'Chicken Valley',description:'Kaufe Hühner, sammle Eier, verkaufe sie und baue deinen eigenen Chicken-Tycoon-Hof auf.',category:'Simulation',path:'farm/',icon:'🚜',style:'farm'},
  {title:'Schach',description:'Spiele eine Partie Schach direkt im Browser.',category:'Strategie',path:'chess/',icon:'♟️',style:'chess'}
 ];
 const categories=['Alle',...new Set(GAMES.map(g=>g.category))];let active='Alle';

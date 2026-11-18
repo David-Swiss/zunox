@@ -12,7 +12,7 @@
 const C={dt:1/120,size:25,base:330,max:535,accel:2.5,g:2600,maxParticles:180};
 const THEMES=[{at:0,c:"#48f2ed",glow:"#2df5ef",dark:"#0a2534",a:"#b5ffff"},{at:1150,c:"#fa65ee",glow:"#f04bdf",dark:"#2b1237",a:"#ffd0fa"},{at:2600,c:"#ffe36a",glow:"#ffc94a",dark:"#33290e",a:"#fff4b8"},{at:4300,c:"#8cff82",glow:"#51f76a",dark:"#102b1b",a:"#d1ffc5"}];
 const $=id=>document.getElementById(id),cv=$("game"),g=cv.getContext("2d",{alpha:false});
-let w=innerWidth,h=innerHeight,dpr=1,top=60,bottom=h-60,player=null,objects=[],particles=[],texts=[],stars=[],buildings=[],state="menu",world=0,nextChunk=0,dist=0,coins=0,totalCoins=0,record=0,elapsed=0,speed=C.base,theme=THEMES[0],shake=0,stop=0,acc=0,last=0,muted=false,audio=null,beat=0,beatTimer=0,coinTone=0;
+let w=innerWidth,h=innerHeight,dpr=1,top=60,bottom=h-60,player=null,objects=[],particles=[],texts=[],stars=[],buildings=[],state="menu",world=0,nextChunk=0,dist=0,coins=0,totalCoins=0,record=0,elapsed=0,speed=C.base,theme=THEMES[0],shake=0,stop=0,acc=0,last=0,muted=false,audio=null,beat=0,beatTimer=0,coinTone=0,trailTimer=0;
 let powers={shield:0,slow:0,double:0};const powerText={shield:"SCHILD",slow:"ZEITLUPE",double:"DOPPELTE PUNKTE"};
 try{record=+localStorage.getItem("gf_record")||0;totalCoins=+localStorage.getItem("gf_total")||0;muted=localStorage.getItem("gf_mute")==="1"}catch(e){}
 function save(){try{localStorage.setItem("gf_record",record);localStorage.setItem("gf_total",totalCoins);localStorage.setItem("gf_mute",muted?"1":"0")}catch(e){}}

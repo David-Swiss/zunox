@@ -1,0 +1,1 @@
+export async function loadStarter(){try{const r=await fetch("../puzzles/starter.json");if(!r.ok)throw Error("not found");return await r.json();}catch{return [];}}

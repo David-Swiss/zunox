@@ -78,7 +78,7 @@ function render(){
 filters.innerHTML=categories.map(c=>`<button class="filter ${c==="Alle"?"selected":""}" data-cat="${c}">${c}</button>`).join("");
 filters.addEventListener("click",e=>{let b=e.target.closest("[data-cat]");if(!b)return;category=b.dataset.cat;filters.querySelectorAll(".filter").forEach(x=>x.classList.toggle("selected",x===b));render()});
 search.addEventListener("input",render);catalog.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if(b)openGame(b.dataset.play)});document.querySelector(".suggested-row").addEventListener("click",e=>{const b=e.target.closest("[data-suggest]");if(b)openGame(b.dataset.suggest)});
-document.getElementById("featured").onclick=()=>openGame("racer");
+const featuredButton=document.getElementById("featured");if(featuredButton)featuredButton.onclick=()=>openGame("racer");
 const overlay=document.getElementById("overlay"),wrap=document.getElementById("canvaswrap"),controls=document.getElementById("controls"),pad=document.getElementById("mobilepad"),notice=document.getElementById("notice");
 document.getElementById("close").onclick=closeGame;document.getElementById("restart").onclick=()=>active&&openGame(active.id);document.addEventListener("keydown",e=>{if(e.key==="Escape"&&overlay.classList.contains("open"))closeGame()});
 function cleanupGame(){
@@ -255,6 +255,8 @@ function openGame(id){
  state.draw=draw;state.update=update;startLoop();
 }
 render();
+// Fail-safe: keep the catalog visible even if a nonessential UI element is missing.
+if(!catalog.innerHTML)catalog.innerHTML="<p style=\"color:var(--muted)\">Spiele werden geladen…</p>";
 })();
 </script>
 </body>

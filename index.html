@@ -237,11 +237,73 @@ button:focus-visible,input:focus-visible{outline:2px solid #78d6e5;outline-offse
 @media(max-width:380px){.grid{grid-template-columns:1fr 1fr}.hero h1{font-size:29px}.cardbottom{align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
+<style>
+/* NICO-LEVEL REDESIGN — vivid arcade identity, editorial cards, responsive play shell */
+:root{--bg:#100a24;--panel:#21143d;--panel2:#302052;--text:#f8f5ff;--muted:#c1b5d8;--accent:#39e8ff;--accent2:#f03da7;--line:#4a326a}
+html,body{background:radial-gradient(ellipse at 50% -18%,#56218a 0,transparent 48%),linear-gradient(145deg,#110b29 0%,#1a1035 48%,#0d0920 100%);background-attachment:fixed}
+.top{background:#120b26dc;border-bottom:1px solid #ffffff18}
+.nav{max-width:1400px;padding:13px 22px;gap:20px}
+.logo{font-size:25px;letter-spacing:1.5px;background:linear-gradient(90deg,#40eaff,#a16bff 55%,#ff48b4);-webkit-background-clip:text}
+.navlinks button,.pill{font-weight:750}
+.navlinks button:hover,.navlinks button.active{background:#ffffff14;border-color:#ffffff26}
+.search{background:#ffffff10;border-color:#ffffff24;border-radius:999px}
+main{max-width:1400px;padding:26px 24px 70px}
+.hero{min-height:405px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;border:0;border-radius:30px;padding:34px 24px 30px;background:radial-gradient(circle at 50% 35%,#6925a0a8 0,transparent 33%),linear-gradient(125deg,#291052 0%,#1b123b 48%,#3b123e 100%);box-shadow:inset 0 1px #ffffff20,0 24px 70px #05020e80;isolation:isolate}
+.hero:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.4;background:radial-gradient(circle at 20% 70%,#13c9ff38 0 2px,transparent 3px),radial-gradient(circle at 78% 26%,#ff4cb938 0 2px,transparent 3px);background-size:46px 46px,61px 61px}
+.hero:after{right:calc(50% - 135px);top:36px;width:270px;height:270px;background:radial-gradient(circle,#a92cff36,transparent 68%)}
+.brandmark{display:flex;align-items:center;gap:10px;margin:0 auto 20px;padding:9px 19px;border:1px solid #ffffff25;border-radius:999px;background:#08051b55;box-shadow:0 0 32px #a23cff3a}
+.brandmark>span{font-size:34px;filter:drop-shadow(0 0 12px #26dcff)}
+.brandmark b{font-size:23px;letter-spacing:2px;color:#fff;text-shadow:0 3px 16px #0008}
+.brandmark b span{color:#40eaff}
+.kicker{color:#76edff;font-size:12px;letter-spacing:3px}
+.hero h1{font-size:clamp(38px,6vw,66px);line-height:.98;letter-spacing:-2px;margin:14px 0 13px;text-shadow:0 5px 25px #0007}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#49e8ff,#b78aff 50%,#ff63b7);-webkit-background-clip:text;color:transparent}
+.hero p{color:#d2c5e9;font-size:16px;max-width:620px;line-height:1.6;margin:0 auto 21px}
+.heroactions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.primary{background:linear-gradient(100deg,#7738f2,#e83da6);color:white;padding:14px 22px;border-radius:999px;font-weight:900;box-shadow:0 10px 28px #bd35d44d}
+.hero-count{padding:12px 18px;border:1px solid #ffffff35;background:#ffffff12;border-radius:999px;color:#f4eaff;font-weight:800;font-size:13px}
+.stats{justify-content:center;margin-top:22px}
+.stat{background:#08051b55;border-color:#ffffff20;color:#e5daf8}
+.sectionhead{margin:36px 0 14px}
+.sectionhead h2{font-size:24px;letter-spacing:-.4px}
+.sectionhead span{color:#d0bde9}
+.filters{gap:9px;margin:14px 0 20px}
+.filter{background:#ffffff0c;border-color:#ffffff20;color:#d3c5e7;padding:9px 15px;font-weight:750}
+.filter.selected{background:linear-gradient(100deg,#6934d6,#b42f9c);border-color:#d59bff;color:white;box-shadow:0 5px 18px #8b35dd44}
+.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.gamecard{background:#fff;color:#211632;border:1px solid #ffffff80;border-radius:21px;box-shadow:0 14px 35px #05020e55;transition:transform .22s,box-shadow .22s}
+.gamecard:hover{transform:translateY(-6px);border-color:#d9b6ff;box-shadow:0 22px 45px #05020e80,0 0 0 2px #a84dff40}
+.thumb{height:205px}
+.thumbicon{font-size:82px}
+.thumbcaption{font-size:10px;letter-spacing:1.7px;bottom:12px;left:14px}
+.cardbody{padding:17px 18px 18px}
+.cardbody h3{font-size:21px;letter-spacing:-.5px;color:#20142e;margin-bottom:8px}
+.cardbody p{font-size:14px;line-height:1.55;color:#766b89;min-height:64px}
+.tag{background:#f0eafa;color:#5c4675;font-weight:800;padding:7px 10px}
+.playbtn{background:linear-gradient(100deg,#7538ed,#e33ca5);color:#fff;padding:11px 17px;border-radius:12px;font-size:14px;font-weight:900;box-shadow:0 5px 14px #b43cb52a}
+.playbtn:hover{background:linear-gradient(100deg,#5e29d3,#ca278f)}
+/* The game itself gets a more deliberate, premium frame */
+.overlay{background:#090515ed;backdrop-filter:blur(14px);padding:18px}
+.modal{width:min(1080px,100%);background:linear-gradient(145deg,#21143c,#100d22);border:1px solid #7651a1;border-radius:22px;box-shadow:0 30px 110px #000c,0 0 50px #8c39e933}
+.modalhead{padding:16px 19px;background:linear-gradient(90deg,#2c1850,#211333);border-bottom:1px solid #ffffff1c}
+.modalhead h2{font-size:19px;font-weight:900}
+.iconbtn{background:#ffffff14;border:1px solid #ffffff25;border-radius:11px;font-weight:800}
+.gamearea{padding:17px 19px 20px}
+.gameinfo{color:#d2c3e8;font-weight:650}
+.canvaswrap{background:#090817;border:1px solid #63468a;border-radius:16px;min-height:250px;box-shadow:inset 0 0 30px #0008}
+.controls button,.mobilepad button{background:linear-gradient(145deg,#3b2860,#25183f);border:1px solid #7955a7;border-radius:12px;font-weight:800}
+.notice{background:linear-gradient(100deg,#382052,#4b2453);border:1px solid #a76bc5;color:#fff0ff;border-radius:12px;font-weight:750;padding:13px}
+.hint{color:#c3b2dc}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{min-height:360px}}
+@media(max-width:620px){main{padding:13px 12px 42px}.nav{padding:10px 12px}.grid{grid-template-columns:1fr;gap:15px}.thumb{height:170px}.thumbicon{font-size:70px}.cardbody{padding:14px}.cardbody h3{font-size:19px}.cardbody p{min-height:0}.hero{min-height:350px;padding:28px 16px;border-radius:22px}.hero h1{font-size:43px}.hero p{font-size:14px}.brandmark{margin-bottom:17px}.brandmark b{font-size:20px}.stats{gap:7px}.stat{font-size:11px;padding:7px 9px}.hero-count{font-size:11px;padding:11px 13px}.overlay{padding:5px}.modal{border-radius:16px}.modalhead{padding:11px 12px}.gamearea{padding:10px}.gamearea .gameinfo{font-size:12px}}
+@media(min-width:621px) and (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.gamecard,.primary,.playbtn{transition:none!important}}
+</style>
 </head>
 <body>
 <header class="top"><nav class="nav"><div class="logo">GAMEZONE</div><div class="navlinks"><button class="active" data-nav="all">Start</button><button data-nav="Racing">Racing</button><button data-nav="Arcade">Arcade</button><button data-nav="Puzzle">Puzzle</button><button data-nav="Action">Action</button></div><input id="search" class="search" placeholder="Spiel suchen…" aria-label="Spiel suchen"></nav></header>
 <main>
-<section class="hero"><div class="kicker">Dein Spiel. Dein Moment.</div><h1>PLAY MORE.<br>LEVEL UP.</h1><p>Direkt losspielen. Keine Installation, keine Wartezeit. Wähle ein Spiel und knack deinen Highscore.</p><button class="primary" id="featured">▶ Jetzt spielen</button><div class="stats"><span class="stat">⚡ Sofort spielbar</span><span class="stat">📱 Touch + Tastatur</span><span class="stat">🏆 Highscores lokal</span></div></section>
+<section class="hero"><div class="brandmark" aria-label="GAMEZONE Logo"><span>🎮</span><b>GAME<span>ZONE</span></b></div><div class="kicker">DEINE ARCADE. DEINE REGELN.</div><h1>SPIELEN.<br><em>ENTDECKEN.</em><br>LEVEL UP.</h1><p>Entdecke 24 kostenlose Games – direkt im Browser spielbar. Von Racing und Action bis Puzzle und Strategie.</p><div class="heroactions"><button class="primary" id="featured">▶ FEATURED GAME STARTEN</button><span class="hero-count">⚡ 24 GAMES · 100% GRATIS</span></div><div class="stats"><span class="stat">📱 Für iPad & Mobile</span><span class="stat">🎮 Touch + Tastatur</span><span class="stat">🏆 Deine Highscores</span></div></section>
 <div class="sectionhead"><h2>Alle Spiele</h2><span id="count"></span></div>
 <div class="filters" id="filters"></div>
 <div class="grid" id="catalog"></div>

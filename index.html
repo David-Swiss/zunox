@@ -153,6 +153,89 @@ main{max-width:1200px;margin:auto;padding:24px 18px 60px}
  .overlay.open[data-game="cookie"] .hint{grid-column:1;grid-row:4}
 }
 </style>
+<style>
+/* GAMEZONE CLEAN UI refresh */
+:root{--bg:#0b0e15;--panel:#141923;--panel2:#1b2330;--text:#f2f5fa;--muted:#9ca8ba;--line:#252e3d;--accent:#79d9e8;--accent2:#a18aff}
+html,body{background:#0b0e15}
+.top{background:#0b0e15ee;border-bottom-color:#202735}
+.nav{padding:12px 18px;gap:18px}
+.logo{font-size:20px;letter-spacing:.7px}
+.navlinks button,.pill{padding:8px 11px}
+.search{background:#141923;border-color:#252e3d;border-radius:10px}
+main{padding-top:22px}
+.hero{border-radius:18px;padding:clamp(20px,4vw,34px);background:linear-gradient(120deg,#182333,#171d2b 70%,#222039);border-color:#2a3547;box-shadow:none}
+.hero:after{opacity:.5;width:220px;height:220px}
+.hero h1{font-size:clamp(28px,4.3vw,44px);letter-spacing:-1.5px}
+.hero p{line-height:1.6;color:#aab6c8}
+.primary{box-shadow:none;border-radius:10px;padding:11px 16px}
+.stats{gap:8px;margin-top:14px}.stat{background:#111a27;border-color:#273244;color:#bdc8d8}
+.sectionhead{margin:24px 0 12px}.sectionhead h2{font-size:18px;letter-spacing:-.3px}
+.filters{gap:6px;margin:10px 0 16px}
+.filter{padding:7px 11px;background:#141923;border-color:#252e3d}
+.filter.selected{background:#1d303b;color:#8be0eb;border-color:#3b5865}
+.grid{gap:12px}
+.gamecard{background:#141923;border-color:#252e3d;border-radius:14px;box-shadow:none}
+.gamecard:hover{transform:translateY(-2px);border-color:#3a4a5e;box-shadow:0 8px 20px #0003}
+.thumb{height:128px;filter:saturate(.86)}
+.thumb:before{opacity:.45}
+.thumbicon{font-size:56px;filter:drop-shadow(0 4px 5px #0005)}
+.thumbcaption{font-size:8px;letter-spacing:1px;opacity:.75}
+.cardbody{padding:12px}
+.cardbody h3{font-size:14px;font-weight:750;margin-bottom:5px}
+.cardbody p{font-size:12px;line-height:1.45;color:#a6b1c2;min-height:50px}
+.cardbottom{padding-top:10px;gap:8px}
+.tag{background:#1b2431;color:#aebbd0;border:1px solid #273244}
+.playbtn{background:#202c3c;border:1px solid #2d3b4e;border-radius:8px;padding:8px 10px}
+.playbtn:hover{background:#2b3b50}
+.overlay{padding:14px;background:#06080dcc;backdrop-filter:blur(12px)}
+.overlay.open{align-items:center}
+.modal{width:min(900px,100%);border-radius:16px;background:#111720;border-color:#293342;box-shadow:0 24px 70px #0008}
+.modalhead{padding:12px 15px;gap:9px;background:#111720}
+.modalhead h2{font-size:16px;font-weight:750;letter-spacing:-.2px}
+.iconbtn{background:#202a37;border:1px solid #2b3747;border-radius:9px;padding:8px 11px}
+.gamearea{padding:12px 14px 14px}
+.gameinfo{margin-bottom:9px;color:#a5b1c2}
+#score{color:#e6edf7;font-size:13px}
+.canvaswrap{min-height:0;border-radius:12px;background:#080c12;border-color:#283343;box-shadow:none}
+.canvaswrap canvas{box-shadow:none;border:0;border-radius:8px;max-height:58vh}
+.controls{gap:7px;margin-top:10px}
+.controls button{background:#202a37;border:1px solid #2b3747;border-radius:9px;padding:9px 12px;font-size:13px}
+.controls button:hover{background:#29384a}
+.controls button:disabled{cursor:not-allowed;opacity:.42}
+.mobilepad{gap:6px;margin-top:9px}
+.mobilepad button{width:48px;height:42px;background:#202a37;border:1px solid #2b3747;border-radius:10px}
+.hint{color:#8e9caf;margin-top:9px;line-height:1.5}
+.notice{background:#192634;border:1px solid #2b4357;border-radius:9px;color:#c9e6f0;padding:9px 11px;font-size:13px}
+button,input{transition:background .16s,border-color .16s,transform .16s,opacity .16s}
+button:focus-visible,input:focus-visible{outline:2px solid #78d6e5;outline-offset:2px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){
+ main{padding:12px 11px 34px}
+ .nav{padding:10px 11px;gap:10px}
+ .logo{font-size:18px}
+ .hero{padding:20px;border-radius:15px}
+ .hero h1{font-size:32px}
+ .stats{gap:6px}.stat{font-size:11px;padding:6px 9px}
+ .sectionhead{margin:20px 0 10px}
+ .grid{gap:9px}
+ .thumb{height:104px}
+ .thumbicon{font-size:46px}
+ .cardbody{padding:10px}
+ .cardbody p{min-height:62px;font-size:11.5px}
+ .cardbottom{gap:5px;flex-wrap:wrap}
+ .tag{font-size:10px;padding:4px 7px}
+ .playbtn{font-size:11px;padding:7px 8px}
+ .overlay{padding:5px}
+ .modal{border-radius:13px}
+ .modalhead{padding:10px 11px}
+ .modalhead h2{font-size:15px}
+ .gamearea{padding:9px}
+ .canvaswrap canvas{max-height:52vh}
+ .controls button{padding:9px 10px;font-size:12px}
+}
+@media(max-width:380px){.grid{grid-template-columns:1fr 1fr}.hero h1{font-size:29px}.cardbottom{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
 <header class="top"><nav class="nav"><div class="logo">GAMEZONE</div><div class="navlinks"><button class="active" data-nav="all">Start</button><button data-nav="Racing">Racing</button><button data-nav="Arcade">Arcade</button><button data-nav="Puzzle">Puzzle</button><button data-nav="Action">Action</button></div><input id="search" class="search" placeholder="Spiel suchen…" aria-label="Spiel suchen"></nav></header>

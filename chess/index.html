@@ -18,11 +18,11 @@ main{width:min(1000px,calc(100% - 28px));margin:30px auto 50px}.heading{display:
 <main><div class="heading"><div><h1>Schach</h1><p>Eine ruhige Partie. Ein Zug nach dem anderen.</p></div></div>
 <div class="layout"><section class="game"><div class="player"><span class="avatar">♟</span><b>Computer</b><small id="botlabel">Schwarz · Mittel</small></div><div id="board" class="board" aria-label="Schachbrett"></div><div class="player"><span class="avatar">♙</span><b>Du</b><small>Weiss</small></div></section>
 <aside class="panel"><h2>Deine Partie</h2><div class="status" id="status">Du bist am Zug.</div><div class="actions"><button class="btn primary" id="new">Neue Partie</button><button class="btn" id="undo">Zug zurück</button></div><div class="settings"><label for="level">Bot-Stärke</label><select id="level"><option value="1">Leicht</option><option value="2" selected>Mittel</option><option value="3">Schwer</option></select></div><div class="promotion" id="promotion"></div><h2 style="margin-top:18px">Zugverlauf</h2><div class="moves" id="moves"><span class="num">—</span><span>Neue Partie starten</span></div><p class="hint">Figur antippen und Zielfeld wählen. Auf dem Handy funktioniert das genauso. Rochade, en passant und Umwandlung sind aktiv.</p></aside></div></main>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.4.0/chess.min.js"></script>
-<script>
+<script type="module">
+import { Chess } from "https://esm.sh/chess.js@1.4.0";
 (()=>{'use strict';
 const $=s=>document.querySelector(s),board=$('#board'),status=$('#status'),movesEl=$('#moves'),level=$('#level'),promotion=$('#promotion');
-if(!window.Chess){status.textContent='Schachregeln konnten nicht geladen werden. Bitte Seite neu laden.';return;}
+if(typeof Chess!=='function'){status.textContent='Schachregeln konnten nicht geladen werden.';return;}
 let game=new Chess(),selected=null,targets=[],history=[],busy=false,last=null;
 const glyph={wk:'♔',wq:'♕',wr:'♖',wb:'♗',wn:'♘',wp:'♙',bk:'♚',bq:'♛',br:'♜',bb:'♝',bn:'♞',bp:'♟'};
 const files='abcdefgh',value={p:100,n:320,b:335,r:500,q:900,k:0};

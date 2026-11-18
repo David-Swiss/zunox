@@ -19,6 +19,10 @@ Ein Run ist auf zehn Minuten ausgelegt. Die Gegnerdichte und Gegnertypen skalier
 
 ## Systeme
 
+- Waffen-Evolutionen auf der sechsten Stufe mit veränderten Angriffseffekten.
+- Zusätzlicher Schild-Gegnertyp und begrenzte Gegnerzahl als Performance-Schutz.
+
+
 - Prozedural erzeugte Gegnerwellen, sieben Gegnertypen und Bosskämpfe.
 - Sechs Waffen mit fünf Stufen und Evolutionsstufe.
 - Passive Verbesserungen, XP-Kristalle, Heilung und Spezialdrops.

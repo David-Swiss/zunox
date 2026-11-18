@@ -1,0 +1,2 @@
+export function classifyMove(before,after){const loss=Math.max(0,before-after);if(loss<.08)return "Bester";if(loss<.2)return "Ausgezeichnet";if(loss<.45)return "Gut";if(loss<.8)return "Ungenauigkeit";if(loss<1.5)return "Fehler";return "Patzer";}
+export function accuracy(scores){if(!scores.length)return 100;const avg=scores.reduce((a,b)=>a+b,0)/scores.length;return Math.max(0,Math.min(100,Math.round(100*Math.exp(-avg/2.5))));}

@@ -1,8 +1,8 @@
-# ZUN0
+# ZUNOX
 
 **Deine Gamezone. Deine Spiele.**
 
-ZUN0 ist ein kostenloses Browsergame-Portal mit eigenen Spielen – direkt im Browser und ohne Download.
+ZUNOX ist ein kostenloses Browsergame-Portal mit eigenen Spielen – direkt im Browser und ohne Download.
 
 ## Spiele
 
@@ -12,6 +12,6 @@ ZUN0 ist ein kostenloses Browsergame-Portal mit eigenen Spielen – direkt im Br
 
 ## Spielen
 
-**[ZUN0 jetzt öffnen](https://david-swiss.github.io/zuno/)**
+**[ZUNOX jetzt öffnen](https://david-swiss.github.io/zuno/)**
 
-© ZUN0
+© ZUNOX

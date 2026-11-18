@@ -45,8 +45,11 @@ document.getElementById("quitButton").addEventListener("click",()=>finish(false)
 document.getElementById("againButton").addEventListener("click",startRun);
 document.getElementById("menuButton").addEventListener("click",()=>{state="menu";ui.menu();refreshMenu();});
 document.getElementById("rerollButton").addEventListener("click",reroll);
-document.getElementById("shopButton").addEventListener("click",()=>{ui.renderShop(save,(id,cost)=>{if(save.cores<cost)return;save.cores-=cost;save.upgrades[id]++;saveNow();ui.renderShop(save,()=>{});refreshMenu();});ui.show("shopOverlay");});
-document.getElementById("shipsButton").addEventListener("click",()=>{ui.renderShips(save,(id,cost)=>{if(save.cores<cost)return;save.cores-=cost;save.unlockedShips.push(id);saveNow();ui.renderShips(save,()=>{},()=>{});refreshMenu();},id=>{save.selectedShip=id;saveNow();ui.renderShips(save,()=>{},()=>{});toast(id.toUpperCase()+" AUSGEWÄHLT");});ui.show("shipsOverlay");});
+const buyShop=(id,cost)=>{if(save.cores<cost)return;save.cores-=cost;save.upgrades[id]++;saveNow();ui.renderShop(save,buyShop);refreshMenu();toast("UPGRADE GEKAUFT");};
+const selectShip=id=>{save.selectedShip=id;saveNow();ui.renderShips(save,buyShipShip,selectShip);toast(id.toUpperCase()+" AUSGEWÄHLT");};
+const buyShipShip=(id,cost)=>{if(save.cores<cost)return;save.cores-=cost;save.unlockedShips.push(id);saveNow();ui.renderShips(save,buyShipShip,selectShip);refreshMenu();toast("SCHIFF FREIGESCHALTET");};
+document.getElementById("shopButton").addEventListener("click",()=>{ui.renderShop(save,buyShop);ui.show("shopOverlay");});
+document.getElementById("shipsButton").addEventListener("click",()=>{ui.renderShips(save,buyShipShip,selectShip);ui.show("shipsOverlay");});
 document.getElementById("missionsButton").addEventListener("click",()=>{ui.renderMissions(save);ui.show("missionsOverlay");});
 document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>ui.menu()));
 refreshMenu();

@@ -431,7 +431,7 @@ function openGame(id){
    colors.forEach((col,i)=>{let b=document.createElement("button");b.style.background=col;b.style.width="90px";b.style.height="90px";b.style.borderRadius="16px";b.dataset.color=i;b.onclick=()=>{if(playing||state.over)return;input.push(i);if(input[input.length-1]!==seq[input.length-1]){end("Falsche Reihenfolge! Level "+seq.length);return}if(input.length===seq.length){set(seq.length);input=[];later(next,450)}};controls.append(b)});
    const next=async()=>{if(state.over)return;playing=true;seq.push(Math.random()*4|0);for(let i of seq){await flash(i);await new Promise(r=>setTimeout(r,180))}playing=false};
    button("Start Sequenz",next);update=()=>{};draw=()=>clear("#171d32");
-}else if(id==="cookie")
+}else if(id==="cookie"){
    hint("Cookie antippen · Shop-Upgrades kaufen · Fortschritt wird automatisch gespeichert");
    let cookies=0,perClick=1,cps=0,owned=[0,0,0,0],prices=[15,100,500,3000],names=["Cursor","Oma","Farm","Fabrik"],rates=[0.1,1,8,45],base=[15,100,500,3000],saved={};
    try{saved=JSON.parse(localStorage.getItem("gz-cookie")||"{}")}catch(e){}

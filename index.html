@@ -81,7 +81,7 @@ function cleanupGame(){
 }
 function closeGame(){overlay.classList.remove("open");cleanupGame();active=null;gameState=null;wrap.innerHTML="";controls.innerHTML="";pad.innerHTML=""}
 function stopLoop(){if(loopId){cancelAnimationFrame(loopId);loopId=0}}
-function setScore(n){score=Math.max(0,Math.floor(n));document.getElementById("score").textContent="Punkte: "+score}
+function setScore(n){score=Math.max(0,Math.floor(n));document.getElementById("score").textContent="Punkte: "+score+(active&&highs[active.id]?" · Best: "+highs[active.id]:"")}
 function showNotice(t){notice.textContent=t;notice.classList.add("show")}
 function hideNotice(){notice.classList.remove("show")}
 function openGame(id){
@@ -95,12 +95,12 @@ function openGame(id){
  const button=(label,fn)=>{let b=document.createElement("button");b.textContent=label;b.onclick=fn;controls.append(b);return b};
  const mobile=(label,key)=>{let b=document.createElement("button");b.textContent=label;b.onpointerdown=e=>{e.preventDefault();state.keys[key]=true};b.onpointerup=b.onpointerleave=b.onpointercancel=()=>state.keys[key]=false;pad.append(b)};
  const resetBase=()=>{state.over=false;state.running=true;hideNotice();setScore(0)};
- const end=(message="Spiel vorbei! Neustart für eine neue Runde.")=>{if(state.over)return;state.over=true;state.running=false;showNotice(message);highs[active.id]=Math.max(highs[active.id]||0,score);localStorage.setItem("gz-highs",JSON.stringify(highs));};
+ const end=(message="Spiel vorbei! Neustart für eine neue Runde.")=>{if(state.over)return;state.over=true;state.running=false;showNotice(message);highs[active.id]=Math.max(highs[active.id]||0,score);localStorage.setItem("gz-highs",JSON.stringify(highs));document.getElementById("score").textContent="Punkte: "+score+" · Best: "+highs[active.id];};
  const clear=(color="#07111e")=>{ctx.fillStyle=color;ctx.fillRect(0,0,c.width,c.height)};
  const text=(t,x,y,size=22,color="#fff",align="left")=>{ctx.fillStyle=color;ctx.font=`bold ${size}px system-ui`;ctx.textAlign=align;ctx.fillText(t,x,y)};
  const rect=(x,y,w,h,col)=>{ctx.fillStyle=col;ctx.fillRect(x,y,w,h)};
  const circle=(x,y,r,col)=>{ctx.fillStyle=col;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()};
- const keysDown=e=>{state.keys[e.key.toLowerCase()]=true;if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key))e.preventDefault()};
+ const keysDown=e=>{if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key))e.preventDefault();state.keys[e.key.toLowerCase()]=true};
  const keysUp=e=>state.keys[e.key.toLowerCase()]=false;
  window.addEventListener("keydown",keysDown);window.addEventListener("keyup",keysUp);
  state.cleanup=()=>{window.removeEventListener("keydown",keysDown);window.removeEventListener("keyup",keysUp)};
@@ -115,13 +115,13 @@ function openGame(id){
    let cell=20,cols=36,rows=22,snake=[{x:8,y:10},{x:7,y:10},{x:6,y:10}],dir={x:1,y:0},next={x:1,y:0},food={x:20,y:10},acc=0;
    const place=()=>{do{food={x:Math.floor(Math.random()*cols),y:Math.floor(Math.random()*rows)}}while(snake.some(p=>p.x===food.x&&p.y===food.y))};place();
    mobile("⬆","arrowup");mobile("⬅","arrowleft");mobile("⬇","arrowdown");mobile("➡","arrowright");
-   update=dt=>{if(state.keys.arrowup||state.keys.w)next={x:0,y:-1};if(state.keys.arrowdown||state.keys.s)next={x:0,y:1};if(state.keys.arrowleft||state.keys.a)next={x:-1,y:0};if(state.keys.arrowright||state.keys.d)next={x:1,y:0};if(next.x!==-dir.x||next.y!==-dir.y)dir=next;acc+=dt;if(acc<7)return;acc=0;let head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(head.x<0||head.y<0||head.x>=cols||head.y>=rows||snake.some((p,i)=>i<snake.length-1&&p.x===head.x&&p.y===head.y)){end("Game Over · Punkte: "+score);return}snake.unshift(head);if(head.x===food.x&&head.y===food.y){set(score+10);place()}else snake.pop()};
+   update=dt=>{if(state.keys.arrowup||state.keys.w)next={x:0,y:-1};if(state.keys.arrowdown||state.keys.s)next={x:0,y:1};if(state.keys.arrowleft||state.keys.a)next={x:-1,y:0};if(state.keys.arrowright||state.keys.d)next={x:1,y:0};if(next.x!==-dir.x||next.y!==-dir.y)dir=next;acc+=dt;if(acc<Math.max(4,8-score/100))return;acc=0;let head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(head.x<0||head.y<0||head.x>=cols||head.y>=rows||snake.some((p,i)=>i<snake.length-1&&p.x===head.x&&p.y===head.y)){end("Game Over · Punkte: "+score);return}snake.unshift(head);if(head.x===food.x&&head.y===food.y){set(score+10);place()}else snake.pop()};
    draw=()=>{clear("#07151b");for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){rect(x*cell,y*cell,cell-1,cell-1,"#0b2027")}circle(food.x*cell+10,food.y*cell+10,8,"#ff617e");snake.forEach((p,i)=>rect(p.x*cell+1,p.y*cell+1,cell-3,cell-3,i?"#31b87b":"#8af5c2"))};
  }else if(id==="pong"){
    hint("W/S oder ↑/↓ · gegen Computer");
    let px=200,py=210,vy=3.3,bx=360,by=220,vx=4.5,bvy=2.5,ai=185,playerScore=0,aiScore=0;
    mobile("⬆","arrowup");mobile("⬇","arrowdown");
-   update=dt=>{py+=(state.keys.arrowup||state.keys.w?-6:0)+(state.keys.arrowdown||state.keys.s?6:0);py=Math.max(0,Math.min(350,py));ai+=(by-(ai+45))*.075*dt;bx+=vx*dt;by+=bvy*dt;if(by<9||by>431)bvy=-bvy;if(bx<px+14&&by>py&&by<py+90){vx=Math.abs(vx)*1.04;bvy+=(by-(py+45))*.08}if(bx>690&&by>ai&&by<ai+90){vx=-Math.abs(vx)*1.03;bvy+=(by-(ai+45))*.07}if(bx<0){aiScore++;bx=360;by=220;vx=4.5}if(bx>720){playerScore++;set(playerScore);bx=360;by=220;vx=-4.5}if(playerScore>=5||aiScore>=5)end(playerScore>=5?"Du gewinnst!":"Computer gewinnt!")};
+   update=dt=>{py+=(state.keys.arrowup||state.keys.w?-6:0)+(state.keys.arrowdown||state.keys.s?6:0);py=Math.max(0,Math.min(350,py));ai+=(by-(ai+45))*.075*dt;bx+=vx*dt;by+=bvy*dt;if(by<9||by>431)bvy=-bvy;if(bx<px+14&&bx>px&&by>py-8&&by<py+98&&vx<0){vx=Math.abs(vx)*1.04;bvy+=(by-(py+45))*.08}if(bx>688&&bx<700&&by>ai-8&&by<ai+98&&vx>0){vx=-Math.abs(vx)*1.03;bvy+=(by-(ai+45))*.07}if(bx<0){aiScore++;bx=360;by=220;vx=4.5;bvy=(Math.random()-.5)*5}if(bx>720){playerScore++;set(playerScore);bx=360;by=220;vx=-4.5;bvy=(Math.random()-.5)*5}if(playerScore>=5||aiScore>=5)end(playerScore>=5?"Du gewinnst!":"Computer gewinnt!")};
    draw=()=>{clear("#07111e");rect(355,0,4,440,"#29405c");rect(20,py,12,90,"#58e6ff");rect(688,ai,12,90,"#ff8b75");circle(bx,by,9,"#fff");text(playerScore,290,55,34);text(aiScore,420,55,34)};
  }else if(id==="breakout"){
    hint("← → / A D · Touch/Mouse bewegt Paddle");
@@ -165,7 +165,7 @@ function openGame(id){
  }else if(id==="2048"){
    hint("Pfeiltasten / W A S D · Zahlen kombinieren");
    let board=Array(16).fill(0);const spawn=()=>{let empty=board.map((v,i)=>v===0?i:-1).filter(i=>i>=0);if(empty.length)board[empty[Math.random()*empty.length|0]]=Math.random()<.9?2:4};spawn();spawn();
-   const move=d=>{let changed=false;for(let line=0;line<4;line++){let idx=[];for(let j=0;j<4;j++){let row=d==="left"||d==="right"?line:j,col=d==="left"?j:d==="right"?3-j:d==="up"?line:3-line;idx.push(row*4+col)}let vals=idx.map(i=>board[i]).filter(Boolean);for(let k=0;k<vals.length-1;k++)if(vals[k]===vals[k+1]){vals[k]*=2;set(score+vals[k]);vals.splice(k+1,1)}while(vals.length<4)vals.push(0);idx.forEach((i,k)=>{if(board[i]!==vals[k])changed=true;board[i]=vals[k]})}if(changed){spawn();if(!board.some(v=>!v))end("Keine freien Felder mehr!")}};
+   const move=d=>{let changed=false;for(let line=0;line<4;line++){let idx=[];for(let j=0;j<4;j++){let row=d==="left"||d==="right"?line:j,col=d==="left"?j:d==="right"?3-j:d==="up"?line:3-line;idx.push(row*4+col)}let vals=idx.map(i=>board[i]).filter(Boolean);for(let k=0;k<vals.length-1;k++)if(vals[k]===vals[k+1]){vals[k]*=2;set(score+vals[k]);vals.splice(k+1,1)}while(vals.length<4)vals.push(0);idx.forEach((i,k)=>{if(board[i]!==vals[k])changed=true;board[i]=vals[k]})}if(changed){spawn();if(board.some(v=>v>=2048))end("2048 erreicht! 🎉");else if(!board.some(v=>!v)&&!hasMoves())end("Keine Züge mehr — Endpunktzahl: "+score)}};const hasMoves=()=>board.some((v,i)=>!v||(i%4<3&&v===board[i+1])||(i<12&&v===board[i+4]));
    state.move=move;update=()=>{if(state.keys.arrowleft||state.keys.a){move("left");state.keys.arrowleft=state.keys.a=false}if(state.keys.arrowright||state.keys.d){move("right");state.keys.arrowright=state.keys.d=false}if(state.keys.arrowup||state.keys.w){move("up");state.keys.arrowup=state.keys.w=false}if(state.keys.arrowdown||state.keys.s){move("down");state.keys.arrowdown=state.keys.s=false}};
    draw=()=>{clear("#776e62");for(let i=0;i<16;i++){let x=55+(i%4)*155,y=35+Math.floor(i/4)*95;rect(x,y,140,80,board[i]?"#"+({2:"eee4da",4:"ede0c8",8:"f2b179",16:"f59563",32:"f67c5f",64:"f65e3b",128:"edcf72",256:"edcc61",512:"edc850",1024:"edc53f",2048:"edc22e"}[board[i]]||"b9a58a"):"#8c8175");if(board[i])text(board[i],x+70,y+50,board[i]>=1024?26:32,board[i]<=4?"#655b51":"#fff","center")}};
    ["←","→","↑","↓"].forEach((v,i)=>button(v,()=>move(["left","right","up","down"][i])));
@@ -189,7 +189,7 @@ function openGame(id){
    let phase="wait",start=0,elapsed=0,attempts=0;
    draw=()=>{clear(phase==="go"?"#1b684c":phase==="false"?"#752d3c":"#22314a");text(phase==="wait"?"Warte…":phase==="go"?"JETZT KLICKEN!":phase==="false"?"Zu früh!":"Zeit: "+elapsed+" ms",360,210,32,"#fff","center")};
    c.onclick=()=>{if(state.over)return;if(phase==="wait"){phase="false";showNotice("Zu früh! Klicke auf Neu.");end("Zu früh geklickt!")}else if(phase==="go"){elapsed=Math.max(0,Math.floor(performance.now()-start));set(elapsed);phase="done";end("Deine Reaktion: "+elapsed+" ms")}};
-   later(()=>{if(phase==="wait"){phase="go";start=performance.now();hideNotice()}},1200+Math.random()*2600);
+   later(()=>{if(phase==="wait"&&!state.over){phase="go";start=performance.now();hideNotice()}},1800+Math.random()*3200);
    update=()=>{};
  }else if(id==="aim"){
    hint("Ziele anklicken · 30 Sekunden");
@@ -225,7 +225,7 @@ function openGame(id){
    let big=document.createElement("button");big.className="primary";big.style.fontSize="25px";big.style.padding="28px 50px";big.textContent="KLICK!";controls.append(big);
    big.onclick=()=>{if(!started||state.over||!state.running)return;set(score+1)};
    big.onpointerdown=()=>{};
-   let start=document.createElement("button");start.textContent="Timer starten";controls.append(start);start.onclick=()=>{started=true;remaining=15;set(0);hideNotice()};
+   let start=document.createElement("button");start.textContent="Timer starten";controls.append(start);start.onclick=()=>{started=true;state.over=false;state.running=true;remaining=15;set(0);hideNotice()};
    update=dt=>{if(started){remaining-=dt/60;if(remaining<=0){started=false;end("Ergebnis: "+score+" Klicks")}}};
    draw=()=>{clear("#201b3b");text(started?"Noch "+Math.ceil(remaining)+" Sekunden":"Bereit?",360,210,34,"#fff","center")};
  }else{

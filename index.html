@@ -93,26 +93,65 @@ class InputManager{
  down(k){return this.keys.has(k)||this.touch.has(k);}
 }
 class Materials{
- constructor(){const m=(c,r=.8,metal=0)=>new THREEJS.MeshStandardMaterial({color:c,roughness:r,metalness:metal});this.ground=m(0x182b2a);this.road=m(0x171e2a);this.side=m(0x354455);this.line=m(0x9aaabd);this.glass=m(0x172b3d,.28,.35);this.trees=m(0x174d48);this.trunk=m(0x55402f);const facade=document.createElement('canvas');facade.width=128;facade.height=256;const ctx=facade.getContext('2d');ctx.fillStyle='#18232f';ctx.fillRect(0,0,128,256);for(let y=8;y<250;y+=20)for(let x=7;x<124;x+=18){const lit=Math.random()>.38;ctx.fillStyle=lit?(Math.random()>.5?'#f6c978':'#8fc6db'):'#263747';ctx.fillRect(x,y,10,12);}const facadeMap=new THREEJS.CanvasTexture(facade);facadeMap.wrapS=facadeMap.wrapT=THREEJS.RepeatWrapping;facadeMap.repeat.set(2,2);this.buildings=[0x384957,0x52616b,0x625d5b,0x4a5369,0x6b6257,0x33434e].map(c=>new THREEJS.MeshStandardMaterial({color:c,map:facadeMap,roughness:.88}));this.yellow=m(0xf5bd4f);this.white=m(0xe4e8ed);this.black=m(0x11151b,.7);}
+ constructor(){
+  const m=(c,r=.8,metal=0)=>new THREEJS.MeshStandardMaterial({color:c,roughness:r,metalness:metal});
+  this.ground=m(0x182b2a);this.road=m(0x171e2a);this.side=m(0x354455);this.line=m(0x9aaabd);this.glass=m(0x172b3d,.2,.45);this.trees=m(0x174d48);this.trunk=m(0x55402f);this.yellow=m(0xf5bd4f);this.white=m(0xe4e8ed);this.black=m(0x11151b,.7);
+  const c=document.createElement('canvas');c.width=256;c.height=512;const x=c.getContext('2d');const grad=x.createLinearGradient(0,0,256,512);grad.addColorStop(0,'#263b50');grad.addColorStop(.5,'#182b3c');grad.addColorStop(1,'#314252');x.fillStyle=grad;x.fillRect(0,0,256,512);
+  for(let y=10;y<500;y+=24){x.fillStyle='rgba(4,12,22,.7)';x.fillRect(0,y,256,3);for(let px=10;px<250;px+=22){const lit=Math.random()>.48;x.fillStyle=lit?(Math.random()>.5?'#e8c98c':'#8dc9df'):'#101d2a';x.fillRect(px,y+4,13,15);x.strokeStyle='#63788b';x.lineWidth=1;x.strokeRect(px,y+4,13,15);if(lit){x.fillStyle='rgba(255,224,160,.16)';x.fillRect(px+2,y+6,9,11);}}}
+  const map=new THREEJS.CanvasTexture(c);map.wrapS=map.wrapT=THREEJS.RepeatWrapping;map.repeat.set(1,1);map.anisotropy=4;
+  this.buildings=[0x9aa9b7,0x8196a6,0x9a8e83,0x8290a7,0xb0a28e,0x758d92].map(color=>new THREEJS.MeshStandardMaterial({color,map,roughness:.76,metalness:.12}));
+ }
 }
 class CityWorld{
- constructor(scene,mat){this.scene=scene;this.mat=mat;this.obstacles=[];this.signals=[];this.build();}
- box(w,h,d,material,x,y,z){const o=new THREEJS.Mesh(new THREEJS.BoxGeometry(w,h,d),material);o.position.set(x,y,z);o.receiveShadow=false;this.scene.add(o);return o;}
- build(){this.box(1500,.3,1500,this.mat.ground,0,-.3,0);
- // Roads are continuous strips with sidewalks and dashed lane markers.
- for(let n=-7;n<=7;n++){let p=n*100;this.box(20,.12,1400,this.mat.road,p,-.08,0);this.box(1400,.12,20,this.mat.road,0,-.08,p);// No continuous white center stripes: they looked like giant runway markings.
- for(let q=-680;q<=680;q+=24){this.box(.22,.15,8,this.mat.yellow,p+5,.015,q);this.box(8,.15,.22,this.mat.yellow,q,.015,p+5);}
+ constructor(scene,mat){this.scene=scene;this.mat=mat;this.obstacles=[];this.signals=[];this.lamps=[];this.build();}
+ box(w,h,d,material,x,y,z,parent=this.scene){const o=new THREEJS.Mesh(new THREEJS.BoxGeometry(w,h,d),material);o.position.set(x,y,z);parent.add(o);return o;}
+ build(){
+  this.box(1500,.5,1500,this.mat.ground,0,-.35,0);
+  const sidewalk=new THREEJS.MeshStandardMaterial({color:0x536273,roughness:.94}),curb=new THREEJS.MeshStandardMaterial({color:0x9ba9b7,roughness:.8}),lane=new THREEJS.MeshStandardMaterial({color:0xe4d8a1,roughness:.9}),cross=new THREEJS.MeshStandardMaterial({color:0xe7edf3,roughness:.9}),concrete=new THREEJS.MeshStandardMaterial({color:0x354352,roughness:.9});
+  // Street grid with asphalt, raised pavements, lane dashes and zebra crossings.
+  for(let n=-7;n<=7;n++){const p=n*100;
+   this.box(20,.14,1400,this.mat.road,p,-.08,0);this.box(1400,.14,20,this.mat.road,0,-.08,p);
+   for(const side of [-1,1]){this.box(3,.28,1400,sidewalk,p+side*11.5,-.01,0);this.box(1400,.28,3,sidewalk,0,-.01,p+side*11.5);this.box(.28,.34,1400,curb,p+side*10,-.01,0);this.box(1400,.34,.28,curb,0,-.01,p+side*10);}
+   for(let q=-680;q<=680;q+=22){this.box(.22,.025,5,lane,p+4,.006,q);this.box(5,.025,.22,lane,q,.006,p+4);}
+   for(let q=-1;q<=1;q++){for(let k=-1;k<=1;k++){this.box(.8,.025,7,cross,p+q*2.1,.012,p+14+k*8);this.box(7,.025,.8,cross,p+14+k*8,.012,p+q*2.1);}}
+  }
+  // Dense mixed-use blocks: podium, tower, setbacks, roof plant and lit window textures.
+  for(let x=-6;x<=6;x++)for(let z=-6;z<=6;z++){
+   if(Math.abs(x)<=1&&Math.abs(z)<=1)continue;
+   const cx=x*100+50,cz=z*100+50;if(Math.abs(cx)>680||Math.abs(cz)>680)continue;
+   const w=42+Math.random()*17,d=42+Math.random()*17,floors=5+Math.floor(Math.random()*15),h=floors*4.1;
+   const mat=this.mat.buildings[(x*13+z*7+78)%this.mat.buildings.length];
+   this.box(w+5,2,d+5,concrete,cx,1,cz);
+   const tower=this.box(w,h,d,mat,cx,h/2+2,cz);this.obstacles.push({x:cx,z:cz,w:w+2,d:d+2});
+   this.box(w+1,.45,d+1,this.mat.black,cx,h+2.25,cz);
+   // Articulated roof plant, parapets and antenna.
+   this.box(w*.65,1.3,d*.55,concrete,cx,h+3,cz);
+   this.box(.35,Math.min(12,h*.22),.35,curb,cx-w*.22,h+8,cz-d*.18);
+   for(let side of [-1,1]){this.box(w*.9,.35,.35,curb,cx,h+2.6,cz+side*(d/2));this.box(.35,.35,d*.9,curb,cx+side*(w/2),h+2.6,cz);}
+   if(floors>13){const sign=new THREEJS.Mesh(new THREEJS.BoxGeometry(w*.55,2,.22),new THREEJS.MeshBasicMaterial({color:[0x22d9e6,0xff4d9d,0x9b83ff][(x-z+40)%3]}));sign.position.set(cx,h*.62,cz-d/2-.16);this.scene.add(sign);}
+  }
+  // Pocket parks with benches, planters and varied trees.
+  for(let x=-6;x<=6;x++)for(let z=-6;z<=6;z++){if((x+z)%4!==0)continue;const px=x*100+20,pz=z*100+20;
+   this.box(16,.24,16,new THREEJS.MeshStandardMaterial({color:0x254b43}),px,-.03,pz);
+   for(const [dx,dz] of [[-5,-5],[5,-5],[-5,5],[5,5]]){this.box(.7,3.2,.7,this.mat.trunk,px+dx,1.6,pz+dz);const crown=new THREEJS.Mesh(new THREEJS.IcosahedronGeometry(3.5+Math.random()*1.2,1),this.mat.trees);crown.position.set(px+dx,4.5,pz+dz);this.scene.add(crown);}
+   this.box(5,.45,.55,curb,px, .35,pz);
+  }
+  // Warm street lamps; emissive bulbs are cheap compared with hundreds of dynamic lights.
+  const poleMat=new THREEJS.MeshStandardMaterial({color:0x263444,metalness:.7,roughness:.4}),bulbMat=new THREEJS.MeshBasicMaterial({color:0xffd69a});
+  for(let n=-6;n<=6;n++)for(let q=-6;q<=6;q+=2){for(const axis of [0,1]){const x=axis?n*100+15:q*100+15,z=axis?q*100+15:n*100+15;if(Math.abs(x)>680||Math.abs(z)>680)continue;
+   const group=new THREEJS.Group();group.position.set(x,0,z);this.scene.add(group);
+   const pole=new THREEJS.Mesh(new THREEJS.CylinderGeometry(.12,.19,7,8),poleMat);pole.position.y=3.5;group.add(pole);
+   const arm=this.box(2.2,.12,.12,poleMat,axis?0:1.05,6.9,axis?1.05:0,group);
+   const head=this.box(.65,.18,.48,bulbMat,axis?0:2.1,6.75,axis?2.1:0,group);
+   const glow=new THREEJS.Mesh(new THREEJS.SphereGeometry(.32,8,6),new THREEJS.MeshBasicMaterial({color:0xffc979,transparent:true,opacity:.22}));glow.position.set(axis?0:2.1,6.55,axis?2.1:0);group.add(glow);
+  }}
+  this.makeSignals();
  }
- // Blocks: varied silhouettes, rooftop details and restrained lit windows.
- for(let x=-6;x<=6;x++)for(let z=-6;z<=6;z++){if(Math.abs(x)<=1&&Math.abs(z)<=1)continue;const cx=x*100+50,cz=z*100+50;if(Math.abs(cx)>680||Math.abs(cz)>680)continue;const w=40+Math.random()*24,d=40+Math.random()*24,h=20+Math.random()*90,material=this.mat.buildings[Math.floor(Math.random()*this.mat.buildings.length)];const b=this.box(w,h,d,material,cx,h/2,cz);this.obstacles.push({x:cx,z:cz,w,d});this.box(w+1,.7,d+1,this.mat.black,cx,h+.3,cz);
- // Rooftop crown and a few luminous facade strips (low object count).
- if(h>65){this.box(w*.45,1,d*.45,this.mat.side,cx,h+1,cz);for(let k=-1;k<=1;k+=2)this.box(.35,h*.55,.18,new THREEJS.MeshBasicMaterial({color:0x83cfe0}),cx+k*w*.3,h*.5,cz-d/2-.12);}
- }
- // Park islands and trees between blocks.
- for(let x=-6;x<=6;x++)for(let z=-6;z<=6;z++){if((x+z)%3!==0)continue;const px=x*100+18,pz=z*100+18;this.box(12,.25,12,this.mat.side,px,-.02,pz);const trunk=this.box(1.1,5,1.1,this.mat.trunk,px,2.5,pz);const crown=new THREEJS.Mesh(new THREEJS.IcosahedronGeometry(4.2,1),this.mat.trees);crown.position.set(px,6,pz);this.scene.add(crown);}
- this.makeSignals();
- }
- makeSignals(){for(let x=-6;x<=6;x++)for(let z=-6;z<=6;z++){if(Math.abs(x)>5||Math.abs(z)>5)continue;const px=x*100+13,pz=z*100+13;this.box(.35,5,.35,this.mat.black,px,2.5,pz);this.box(1,2.3,.65,this.mat.black,px,5.8,pz);const lamp=(color,y)=>{const m=new THREEJS.MeshStandardMaterial({color,emissive:color,emissiveIntensity:1.5});const o=new THREEJS.Mesh(new THREEJS.SphereGeometry(.27,10,8),m);o.position.set(px, y,pz);this.scene.add(o);return o;};this.signals.push({red:lamp(0xff263e,6.35),green:lamp(0x20ed8b,5.35),x:px,z:pz});}}
+ makeSignals(){for(let x=-6;x<=6;x++)for(let z=-6;z<=6;z++){if(Math.abs(x)>5||Math.abs(z)>5)continue;const px=x*100+13,pz=z*100+13;
+  this.box(.3,5,.3,this.mat.black,px,2.5,pz);this.box(.85,2.1,.55,this.mat.black,px,5.7,pz);
+  const lamp=(color,y)=>{const m=new THREEJS.MeshStandardMaterial({color,emissive:color,emissiveIntensity:2});const o=new THREEJS.Mesh(new THREEJS.SphereGeometry(.24,12,8),m);o.position.set(px,y,pz);this.scene.add(o);return o;};
+  this.signals.push({red:lamp(0xff263e,6.25),green:lamp(0x20ed8b,5.25),x:px,z:pz});
+ }}
  collides(x,z,r=2.3){return this.obstacles.some(b=>Math.abs(x-b.x)<b.w/2+r&&Math.abs(z-b.z)<b.d/2+r);}
 }
 class VehicleFactory{

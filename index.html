@@ -183,13 +183,35 @@ class VehicleFactory{
  }
 }
 class VehiclePhysics{
- constructor(world,car){this.world=world;this.car=car;this.x=0;this.z=0;this.yaw=0;this.speed=0;this.nitro=100;this.condition=100;this.hitCooldown=0;}
- update(dt,input,traffic=[]){this.hitCooldown=Math.max(0,this.hitCooldown-dt);const forward=input.down('w')||input.down('arrowup')||input.down('gas'),reverse=input.down('s')||input.down('arrowdown')||input.down('brake'),boost=input.down('shift')||input.down('nitro');const max=boost&&this.nitro>0?52:34;
- if(forward&&!reverse)this.speed=clamp(this.speed+dt*(boost?23:13),-12,max);else if(reverse&&!forward)this.speed=clamp(this.speed-dt*18,-12,max);else this.speed*=Math.pow(.986,dt*60);
- if(boost&&this.speed>0&&this.nitro>0)this.nitro=Math.max(0,this.nitro-dt*30);else this.nitro=Math.min(100,this.nitro+dt*12);
- const steer=(input.down('a')||input.down('arrowleft')||input.down('left')?-1:0)+(input.down('d')||input.down('arrowright')||input.down('right')?1:0);const hand=input.down(' ')||input.down('hand');this.yaw+=steer*dt*(.7+Math.min(Math.abs(this.speed)/18,1.5))*(hand?1.6:1)*(this.speed<0?-1:1);
- const nx=this.x+Math.sin(this.yaw)*this.speed*dt,nz=this.z-Math.cos(this.yaw)*this.speed*dt;const trafficHit=traffic.some(n=>Math.hypot(nx-n.car.group.position.x,nz-n.car.group.position.z)<3.25);if(!this.world.collides(nx,nz)&&!trafficHit){this.x=nx;this.z=nz;}else{this.speed*=-.24;if(this.hitCooldown===0){this.condition=Math.max(0,this.condition-5);this.hitCooldown=1.1;}}
- this.car.group.position.set(this.x,0,this.z);this.car.group.rotation.y=this.yaw;this.car.wheels.forEach(w=>w.rotation.x+=this.speed*dt*1.4);
+ constructor(world,car){this.world=world;this.car=car;this.x=0;this.z=0;this.yaw=0;this.speed=0;this.lateralSpeed=0;this.nitro=100;this.condition=100;this.hitCooldown=0;}
+ update(dt,input,traffic=[]){
+  this.hitCooldown=Math.max(0,this.hitCooldown-dt);
+  const forward=input.down('w')||input.down('arrowup')||input.down('gas');
+  const reverse=input.down('s')||input.down('arrowdown')||input.down('brake');
+  const boost=input.down('shift')||input.down('nitro');
+  const hand=input.down(' ')||input.down('hand');
+  const steer=(input.down('a')||input.down('arrowleft')||input.down('left')?-1:0)+(input.down('d')||input.down('arrowright')||input.down('right')?1:0);
+  const max=boost&&this.nitro>0?52:34;
+  if(forward&&!reverse)this.speed=clamp(this.speed+dt*(boost?23:13),-12,max);
+  else if(reverse&&!forward)this.speed=clamp(this.speed-dt*18,-12,max);
+  else this.speed*=Math.pow(hand ? .994 : .986,dt*60);
+  if(boost&&this.speed>0&&this.nitro>0)this.nitro=Math.max(0,this.nitro-dt*30);
+  else this.nitro=Math.min(100,this.nitro+dt*12);
+  const speedFactor=clamp(Math.abs(this.speed)/9,0,1.6);
+  const yawRate=(.55+speedFactor*.9)*(hand?1.75:1);
+  this.yaw+=steer*dt*yawRate*(this.speed<0?-1:1);
+  const lateralGrip=hand?1.15:8.5;
+  const lateralAcceleration=steer*this.speed*speedFactor*(hand?3.0:1.05);
+  this.lateralSpeed+=(lateralAcceleration-this.lateralSpeed*lateralGrip)*dt;
+  const fx=Math.sin(this.yaw),fz=-Math.cos(this.yaw),rx=Math.cos(this.yaw),rz=Math.sin(this.yaw);
+  const nx=this.x+(fx*this.speed+rx*this.lateralSpeed)*dt;
+  const nz=this.z+(fz*this.speed+rz*this.lateralSpeed)*dt;
+  const trafficHit=traffic.some(n=>Math.hypot(nx-n.car.group.position.x,nz-n.car.group.position.z)<3.25);
+  if(!this.world.collides(nx,nz)&&!trafficHit){this.x=nx;this.z=nz;}
+  else{this.speed*=-.24;this.lateralSpeed*=-.25;if(this.hitCooldown===0){this.condition=Math.max(0,this.condition-5);this.hitCooldown=1.1;}}
+  this.car.group.position.set(this.x,0,this.z);
+  this.car.group.rotation.y=this.yaw;
+  this.car.wheels.forEach(w=>w.rotation.x+=this.speed*dt*1.4);
  }
 }
 class TrafficSystem{

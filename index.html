@@ -117,17 +117,39 @@ class CityWorld{
 }
 class VehicleFactory{
  constructor(scene,mat){this.scene=scene;this.mat=mat;}
- create(color=0x9d315c,police=false){const g=new THREEJS.Group(),paint=new THREEJS.MeshStandardMaterial({color,roughness:.32,metalness:.5}),glass=this.mat.glass;const add=(geo,m,x,y,z)=>{const o=new THREEJS.Mesh(geo,m);o.position.set(x,y,z);g.add(o);return o;};add(new THREEJS.BoxGeometry(2.35,.62,4.6),paint,0,.82,0);add(new THREEJS.BoxGeometry(2.02,.86,2.25),glass,0,1.48,.15);add(new THREEJS.BoxGeometry(1.96,.1,1.95),paint,0,1.94,.15);const wheels=[];for(const x of [-1.2,1.2])for(const z of [-1.5,1.5]){const w=add(new THREEJS.CylinderGeometry(.46,.46,.28,16),this.mat.black,x,.48,z);w.rotation.z=Math.PI/2;wheels.push(w);}for(const x of [-.78,.78]){add(new THREEJS.BoxGeometry(.43,.17,.08),new THREEJS.MeshBasicMaterial({color:0xfff2cf}),x,.9,-2.33);add(new THREEJS.BoxGeometry(.43,.17,.08),new THREEJS.MeshBasicMaterial({color:0xff1e36}),x,.9,2.33);}
- if(police){add(new THREEJS.BoxGeometry(1.2,.14,.4),this.mat.black,0,2.03,0);add(new THREEJS.BoxGeometry(.48,.18,.25),new THREEJS.MeshBasicMaterial({color:0xff183a}),-.32,2.18,0);add(new THREEJS.BoxGeometry(.48,.18,.25),new THREEJS.MeshBasicMaterial({color:0x168cff}),.32,2.18,0);}
- this.scene.add(g);return {group:g,wheels};}
+ create(color=0x9d315c,police=false){
+  const g=new THREEJS.Group(),paint=new THREEJS.MeshStandardMaterial({color,roughness:.27,metalness:.42}),dark=new THREEJS.MeshStandardMaterial({color:0x101820,roughness:.35}),chrome=new THREEJS.MeshStandardMaterial({color:0x9aa9b8,metalness:.8,roughness:.22}),glass=new THREEJS.MeshPhysicalMaterial({color:0x142a3d,roughness:.12,metalness:.25,transparent:true,opacity:.88});
+  const add=(geo,m,x,y,z)=>{const o=new THREEJS.Mesh(geo,m);o.position.set(x,y,z);g.add(o);return o;};
+  add(new THREEJS.BoxGeometry(2.18,.48,4.55),paint,0,.72,0);
+  add(new THREEJS.BoxGeometry(2.12,.30,1.22),paint,0,.98,-1.55);
+  add(new THREEJS.BoxGeometry(2.08,.28,1.05),paint,0,.96,1.68);
+  add(new THREEJS.BoxGeometry(2.02,.72,2.12),glass,0,1.34,.05);
+  add(new THREEJS.BoxGeometry(1.78,.12,1.62),paint,0,1.76,.08);
+  add(new THREEJS.BoxGeometry(2.2,.2,.16),dark,0,.58,-2.32);
+  add(new THREEJS.BoxGeometry(2.2,.2,.16),dark,0,.58,2.32);
+  add(new THREEJS.BoxGeometry(.82,.23,.035),dark,0,.79,-2.34);
+  for(const x of [-.78,.78]){
+   add(new THREEJS.BoxGeometry(.48,.2,.07),new THREEJS.MeshStandardMaterial({color:0xfff0cf,emissive:0xffd78a,emissiveIntensity:1.1}),x,.88,-2.34);
+   add(new THREEJS.BoxGeometry(.48,.19,.07),new THREEJS.MeshStandardMaterial({color:0xff2038,emissive:0x8d0014,emissiveIntensity:.65}),x,.88,2.34);
+   add(new THREEJS.BoxGeometry(.22,.16,.34),paint,x*1.38,1.25,-.78);
+  }
+  const wheels=[];
+  for(const x of [-1.12,1.12])for(const z of [-1.48,1.48]){
+   const tire=add(new THREEJS.CylinderGeometry(.43,.43,.27,24),dark,x,.48,z);tire.rotation.z=Math.PI/2;wheels.push(tire);
+   const hub=add(new THREEJS.CylinderGeometry(.23,.23,.285,16),chrome,x,.48,z);hub.rotation.z=Math.PI/2;
+   for(let k=0;k<5;k++){const t=k*Math.PI*2/5;const spoke=add(new THREEJS.BoxGeometry(.055,.31,.055),chrome,x,.48+Math.sin(t)*.13,z+Math.cos(t)*.13);spoke.rotation.x=t;}
+  }
+  if(police){add(new THREEJS.BoxGeometry(1.3,.12,.34),dark,0,1.88,.05);add(new THREEJS.BoxGeometry(.52,.16,.22),new THREEJS.MeshBasicMaterial({color:0xff183a}),-.34,2,.05);add(new THREEJS.BoxGeometry(.52,.16,.22),new THREEJS.MeshBasicMaterial({color:0x168cff}),.34,2,.05);}
+  this.scene.add(g);return {group:g,wheels};
+ }
 }
 class VehiclePhysics{
- constructor(world,car){this.world=world;this.car=car;this.x=0;this.z=0;this.yaw=0;this.speed=0;this.nitro=100;}
- update(dt,input){const forward=input.down('w')||input.down('arrowup')||input.down('gas'),reverse=input.down('s')||input.down('arrowdown')||input.down('brake'),boost=input.down('shift')||input.down('nitro');const max=boost&&this.nitro>0?52:34;
+ constructor(world,car){this.world=world;this.car=car;this.x=0;this.z=0;this.yaw=0;this.speed=0;this.nitro=100;this.condition=100;this.hitCooldown=0;}
+ update(dt,input,traffic=[]){this.hitCooldown=Math.max(0,this.hitCooldown-dt);const forward=input.down('w')||input.down('arrowup')||input.down('gas'),reverse=input.down('s')||input.down('arrowdown')||input.down('brake'),boost=input.down('shift')||input.down('nitro');const max=boost&&this.nitro>0?52:34;
  if(forward&&!reverse)this.speed=clamp(this.speed+dt*(boost?23:13),-12,max);else if(reverse&&!forward)this.speed=clamp(this.speed-dt*18,-12,max);else this.speed*=Math.pow(.986,dt*60);
  if(boost&&this.speed>0&&this.nitro>0)this.nitro=Math.max(0,this.nitro-dt*30);else this.nitro=Math.min(100,this.nitro+dt*12);
  const steer=(input.down('a')||input.down('arrowleft')||input.down('left')?-1:0)+(input.down('d')||input.down('arrowright')||input.down('right')?1:0);const hand=input.down(' ')||input.down('hand');this.yaw+=steer*dt*(.7+Math.min(Math.abs(this.speed)/18,1.5))*(hand?1.6:1)*(this.speed<0?-1:1);
- const nx=this.x+Math.sin(this.yaw)*this.speed*dt,nz=this.z-Math.cos(this.yaw)*this.speed*dt;if(!this.world.collides(nx,nz)){this.x=nx;this.z=nz;}else this.speed*=-.22;
+ const nx=this.x+Math.sin(this.yaw)*this.speed*dt,nz=this.z-Math.cos(this.yaw)*this.speed*dt;const trafficHit=traffic.some(n=>Math.hypot(nx-n.car.group.position.x,nz-n.car.group.position.z)<3.25);if(!this.world.collides(nx,nz)&&!trafficHit){this.x=nx;this.z=nz;}else{this.speed*=-.24;if(this.hitCooldown===0){this.condition=Math.max(0,this.condition-5);this.hitCooldown=1.1;}}
  this.car.group.position.set(this.x,0,this.z);this.car.group.rotation.y=this.yaw;this.car.wheels.forEach(w=>w.rotation.x+=this.speed*dt*1.4);
  }
 }
@@ -142,7 +164,7 @@ class PoliceAI{
 }
 class Dashboard{
  constructor(){this.last=0;}
- update(player,clock,wanted,red){$('speed').textContent=Math.round(Math.abs(player.speed)*3.6);$('gear').textContent=player.speed<-.5?'R':player.speed>.5?'D':'N';$('cash').textContent='FREIE FAHRT';$('wanted').textContent=clock<wanted?'POLIZEI · VERFOLGUNG':'Keine Fahndung';$('vehicleState').innerHTML='Fahrzeugzustand <b>100 %</b>';$('distance').textContent=clock<wanted?'Polizeistreife verfolgt dich':red?'AMPEL ROT · STOPPEN':'AMPEL GRÜN · FREIE FAHRT';}
+ update(player,clock,wanted,red){$('speed').textContent=Math.round(Math.abs(player.speed)*3.6);$('gear').textContent=player.speed<-.5?'R':player.speed>.5?'D':'N';$('cash').textContent='FREIE FAHRT';$('wanted').textContent=clock<wanted?'POLIZEI · VERFOLGUNG':'Keine Fahndung';$('vehicleState').innerHTML='Fahrzeugzustand <b>'+Math.round(player.condition)+' %</b>';$('distance').textContent=clock<wanted?'Polizeistreife verfolgt dich':red?'AMPEL ROT · STOPPEN':'AMPEL GRÜN · FREIE FAHRT';}
  minimap(player){const c=$('minimap'),g=c.getContext('2d');g.fillStyle='#17232e';g.fillRect(0,0,240,240);g.strokeStyle='#56616b';g.lineWidth=7;for(let i=0;i<240;i+=30){g.beginPath();g.moveTo(i,0);g.lineTo(i,240);g.stroke();g.beginPath();g.moveTo(0,i);g.lineTo(240,i);g.stroke();}g.fillStyle='#41624d';for(let i=0;i<12;i++)g.fillRect((i*47)%225,(i*71)%225,11,11);g.save();g.translate(120,120);g.rotate(-player.yaw);g.fillStyle='#62f3bc';g.beginPath();g.moveTo(0,-11);g.lineTo(-7,8);g.lineTo(7,8);g.fill();g.restore();}
 }
 class AfterglowEngine{
@@ -151,9 +173,9 @@ class AfterglowEngine{
  this.materials=new Materials();this.world=new CityWorld(this.scene,this.materials);this.factory=new VehicleFactory(this.scene,this.materials);this.playerCar=this.factory.create();this.player=new VehiclePhysics(this.world,this.playerCar);this.traffic=new TrafficSystem(this.scene,this.factory);this.police=new PoliceAI(this.scene,this.factory);this.input=new InputManager();this.hud=new Dashboard();this.active=false;this.paused=false;this.cameraMode=0;this.clock=0;this.lastViolation=-99;this.signalRed=false;this.lastMap=0;this.lastHud=0;this.last=0;this.bindUI();addEventListener('resize',()=>this.resize());this.resize();this.frame=this.frame.bind(this);requestAnimationFrame(this.frame);}
  bindUI(){ $('start').onclick=()=>{this.active=true;$('overlay').classList.add('hidden');};$('pause').onclick=()=>{this.paused=!this.paused;$('pause').textContent=this.paused?'Weiter':'Pause';};$('camera').onclick=()=>this.cameraMode=1-this.cameraMode;$('mapbtn').onclick=()=>$('mapbox').classList.toggle('hidden');}
  resize(){this.camera.aspect=innerWidth/innerHeight;this.camera.updateProjectionMatrix();this.renderer.setSize(innerWidth,innerHeight);}
- update(dt){this.clock+=dt;this.signalRed=Math.floor(this.clock/16)%2===0;this.world.signals.forEach(s=>{s.red.visible=this.signalRed;s.green.visible=!this.signalRed;});const oldX=this.player.x,oldZ=this.player.z;this.player.update(dt,this.input);this.traffic.update(dt);
- // Detect a genuine intersection crossing, not every street block.
- const ix=Math.round(this.player.x/100),iz=Math.round(this.player.z/100),nearX=Math.abs(this.player.x-ix*100),nearZ=Math.abs(this.player.z-iz*100);if(this.signalRed&&Math.abs(this.player.speed)>8&&nearX<3&&nearZ<3&&this.clock-this.lastViolation>14){this.lastViolation=this.clock;this.police.summon(this.player.x,this.player.z,this.player.yaw,this.clock);}
+ update(dt){this.clock+=dt;this.signalRed=Math.floor(this.clock/16)%2===0;this.world.signals.forEach(s=>{s.red.visible=this.signalRed;s.green.visible=!this.signalRed;});const oldX=this.player.x,oldZ=this.player.z;this.player.update(dt,this.input,this.traffic.cars);this.traffic.update(dt);
+ // Trigger only when crossing a grid junction, not along every street.
+ const nearGrid=v=>Math.abs(v-Math.round(v/100)*100),nearX=nearGrid(this.player.x),nearZ=nearGrid(this.player.z);const crossedX=Math.floor(oldX/100)!==Math.floor(this.player.x/100),crossedZ=Math.floor(oldZ/100)!==Math.floor(this.player.z/100);if(this.signalRed&&Math.abs(this.player.speed)>8&&((crossedX&&nearZ<16)||(crossedZ&&nearX<16))&&this.clock-this.lastViolation>14){this.lastViolation=this.clock;this.police.summon(this.player.x,this.player.z,this.player.yaw,this.clock);}
  this.police.update(dt,this.player,this.clock);
  const back=this.cameraMode?4:15,height=this.cameraMode?3.2:7.2,target=new THREEJS.Vector3(this.player.x+Math.sin(this.player.yaw)*back,this.playerCar.group.position.y+height,this.player.z-Math.cos(this.player.yaw)*back);this.camera.position.lerp(target,1-Math.pow(.001,dt));this.camera.lookAt(this.player.x,1.2,this.player.z);
  if(this.clock-this.lastHud>.12){this.hud.update(this.player,this.clock,this.police.unit?this.police.activeUntil:0,this.signalRed);this.lastHud=this.clock;}if(performance.now()-this.lastMap>220){this.hud.minimap(this.player);this.lastMap=performance.now();}

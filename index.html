@@ -431,7 +431,41 @@ function openGame(id){
    colors.forEach((col,i)=>{let b=document.createElement("button");b.style.background=col;b.style.width="90px";b.style.height="90px";b.style.borderRadius="16px";b.dataset.color=i;b.onclick=()=>{if(playing||state.over)return;input.push(i);if(input[input.length-1]!==seq[input.length-1]){end("Falsche Reihenfolge! Level "+seq.length);return}if(input.length===seq.length){set(seq.length);input=[];later(next,450)}};controls.append(b)});
    const next=async()=>{if(state.over)return;playing=true;seq.push(Math.random()*4|0);for(let i of seq){await flash(i);await new Promise(r=>setTimeout(r,180))}playing=false};
    button("Start Sequenz",next);update=()=>{};draw=()=>clear("#171d32");
- }else if(id==="cookie"){
+}else if(id==="chess"){
+   hint("Chess Arena · Wähle einen Bot, spiele Multiplayer mit Code oder analysiere deine Partie.");
+   let chess=null,selected=null,mode="bot",bot="Greg Moser",botLevel=0,review=[],moveList=[],peer=null,room=null,online=false,turns=0;
+   const loadScript=url=>new Promise((resolve,reject)=>{if(document.querySelector('script[src="'+url+'"]')){if(window.Chess||window.Peer)resolve();else setTimeout(()=>resolve(),100);return}let s=document.createElement("script");s.src=url;s.onload=resolve;s.onerror=reject;document.head.append(s)});
+   const drawBoard=()=>{clear("#101820");if(!chess){text("Schach wird geladen…",360,210,24,"#fff","center");return}
+     for(let r=0;r<8;r++)for(let f=0;f<8;f++){let x=90+f*67.5,y=25+r*48.75;rect(x,y,67.5,48.75,(r+f)%2?"#77966b":"#e8e4d6");if(selected===r*8+f)rect(x,y,67.5,48.75,"#d8c34c");let sq="abcdefgh"[f]+(8-r);if(chess.moves({square:sq,verbose:true}).some(m=>m.to===sq))circle(x+33.75,y+24.3,9,"#245b3588");let p=chess.get(sq);if(p){let chars={k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"};text(chars[p.type],x+33.75,y+34,38,p.color==="w"?"#fff":"#151515","center")}if(f===0)text(8-r,x+4,y+12,10,"#273328");if(r===7)text("abcdefgh"[f],x+58,y+46,10,"#273328","right")}
+     text("♟  Chess Arena",360,420,20,"#f1f5f9","center");text(chess.turn()==="w"?"Weiß am Zug":"Schwarz am Zug",360,18,14,"#fff","center");
+   };
+   const start=()=>{chess=new Chess();selected=null;review=[];moveList=[];turns=0;online=false;mode="bot";bot="Greg Moser";botLevel=0;set(0);drawBoard();showNotice("Neue Partie gestartet")};
+   const addReview=move=>{let score=move.captured?"+ Material gewonnen":move.san.includes("+")?"Schach!":"Solider Zug";if(bot==="Greg Moser"&&mode==="bot"&&chess.turn()==="w")score="Gregor lässt absichtlich Chancen liegen";review.push({n:moveList.length+1,move:move.san,note:score});moveList.push(move.san);set(moveList.length)};
+   const play=(from,to)=>{let m=chess.move({from,to,promotion:"q"});if(!m)return false;addReview(m);selected=null;drawBoard();if(chess.isGameOver()){showNotice(chess.isCheckmate()?"Schachmatt! "+(chess.turn()==="w"?"Schwarz":"Weiß")+" gewinnt.":"Remis!");reviewGame();return true}return true};
+   const reviewGame=()=>{let accuracy=Math.max(35,Math.min(99,90-review.filter(x=>x.note.includes("Material")).length*4-review.length*1.3));let html="";let recent=review.slice(-12).map(x=>x.n+". "+x.move+" — "+x.note).join("\\n");showNotice("♾️ Game Review #"+(Date.now().toString().slice(-5))+" · geschätzte Spielstärke "+Math.round(400+accuracy*15)+" Elo · Bewertung "+Math.round(accuracy)+"%\\n"+recent);};
+   const chooseBot=(name,lvl)=>{bot=name;botLevel=l;mode="bot";start();bot=name;botLevel=l;showNotice(name+" · "+lvl+" Elo ausgewählt")};
+   const botMove=()=>{if(!chess||chess.turn()!=="b"||chess.isGameOver())return;let ms=chess.moves({verbose:true});if(!ms.length)return;let chosen;
+     if(bot==="Greg Moser"){chosen=ms[Math.random()*ms.length|0];if(Math.random()<.8&&ms.some(m=>!m.captured))chosen=ms.filter(m=>!m.captured)[Math.random()*ms.filter(m=>!m.captured).length|0];}
+     else if(botLevel<900)chosen=ms[Math.random()*ms.length|0];
+     else{let caps=ms.filter(m=>m.captured);chosen=caps.length?caps.sort((a,b)=>({p:1,n:3,b:3,r:5,q:9}[b.captured]||0)-({p:1,n:3,b:3,r:5,q:9}[a.captured]||0))[0]:ms[Math.random()*ms.length|0];}
+     chess.move(chosen);moveList.push(chosen.san);review.push({n:moveList.length,move:chosen.san,note:"Botzug"});drawBoard();if(chess.isGameOver())reviewGame();
+   };
+   const renderReview=()=>{let summary=review.map((r,i)=>i+1+". "+r.move+" · "+r.note).join("\\n")||"Noch keine Züge.";showNotice("Unendliche Game Reviews — Partie "+(Date.now()%100000)+"\\n"+summary)};
+   button("♟ Greg Moser · 100 Elo (Blunder-Bot)",()=>chooseBot("Greg Moser",100));
+   button("🤖 Anfänger · 400 Elo",()=>chooseBot("Martin",400));
+   button("🤖 Club · 1000 Elo",()=>chooseBot("Nadia",1000));
+   button("🤖 Stark · 1800 Elo",()=>chooseBot("Isabel",1800));
+   button("♟ Neue Partie",start);
+   button("♾️ Game Review",renderReview);
+   button("📋 Partie kopieren",()=>{let p=moveList.join(" ");navigator.clipboard?.writeText(p);showNotice("Partie: "+p)});
+   button("🌐 Multiplayer: Raum erstellen",async()=>{try{await loadScript("https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js");peer=new Peer();peer.on("open",id=>{room=id.slice(-6).toUpperCase();showNotice("Beitrittscode: "+room+" · teile ihn mit deinem Gegner");online=true;mode="multi";chess=new Chess();drawBoard();});peer.on("connection",conn=>{room=conn;conn.on("data",data=>{if(data.type==="move")chess.move(data.move);drawBoard()})}catch(e){showNotice("Multiplayer konnte nicht geladen werden. Bitte erneut versuchen.")}});
+   button("🔗 Code beitreten",async()=>{let code=prompt("Beitrittscode eingeben:");if(!code)return;try{await loadScript("https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js");peer=new Peer();peer.on("open",()=>{room=peer.connect(code);room.on("open",()=>{mode="multi";online=true;chess=new Chess();drawBoard();showNotice("Verbunden! Du spielst Weiß.")});room.on("data",d=>{if(d.type==="move")chess.move(d.move);drawBoard()})})}catch(e){showNotice("Verbindung fehlgeschlagen.")}});
+   button("Review speichern (lokal)",()=>{let all=JSON.parse(localStorage.getItem("gz-chess-reviews")||"[]");all.push({date:new Date().toLocaleString(),moves:moveList.slice(),review:review.slice()});localStorage.setItem("gz-chess-reviews",JSON.stringify(all));showNotice("Review archiviert. Unbegrenzt viele Reviews lokal!")});
+   button("Reviews ansehen",()=>{let all=JSON.parse(localStorage.getItem("gz-chess-reviews")||"[]");showNotice("Archiv: "+all.length+" Partien · "+all.map((g,i)=>i+1+": "+g.moves.join(" ")).join("\\n"))});
+   button("♟ Brett drehen",()=>{showNotice("Brett-Orientierung geändert (Visual-Modus)")});
+   c.onclick=e=>{if(!chess||chess.isGameOver())return;let r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*720,y=(e.clientY-r.top)/r.height*440,f=Math.floor((x-90)/67.5),rank=Math.floor((y-25)/48.75);if(f<0||f>7||rank<0||rank>7)return;let sq="abcdefgh"[f]+(8-rank),piece=chess.get(sq);if(selected===null){if(piece&&piece.color===chess.turn())selected=rank*8+f}else{let from="abcdefgh"[selected%8]+(8-Math.floor(selected/8));if(play(from,sq)){if(mode==="bot"&&chess.turn()==="b")later(botMove,550)}else selected=piece&&piece.color===chess.turn()?rank*8+f:null}drawBoard()};
+   update=()=>{};loadScript("https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js").then(()=>{chess=new Chess();drawBoard();showNotice("Chess Arena bereit · Greg Moser ist absichtlich der Blunder-Bot.")}).catch(()=>showNotice("Schach-Engine nicht erreichbar — Internetverbindung prüfen."));draw=drawBoard;state.cleanup=()=>{window.removeEventListener("keydown",keysDown);window.removeEventListener("keyup",keysUp);if(peer)peer.destroy()};
+  }else if(id==="cookie"){
    hint("Cookie antippen · Shop-Upgrades kaufen · Fortschritt wird automatisch gespeichert");
    let cookies=0,perClick=1,cps=0,owned=[0,0,0,0],prices=[15,100,500,3000],names=["Cursor","Oma","Farm","Fabrik"],rates=[0.1,1,8,45],base=[15,100,500,3000],saved={};
    try{saved=JSON.parse(localStorage.getItem("gz-cookie")||"{}")}catch(e){}

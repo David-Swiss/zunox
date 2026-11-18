@@ -6,7 +6,8 @@ export const TYPES={
  kamikaze:{hp:14,speed:125,r:9,damage:16,xp:2,color:"#ff4bd8",explode:true},
  tank:{hp:115,speed:27,r:19,damage:15,xp:7,color:"#e8a65b",score:3},
  splitter:{hp:48,speed:48,r:14,damage:10,xp:4,color:"#71f5c0",split:true},
- teleporter:{hp:42,speed:67,r:12,damage:11,xp:4,color:"#51efff",teleport:true},\n shield:{hp:78,speed:39,r:16,damage:12,xp:6,color:"#71dfff",shield:true}
+ teleporter:{hp:42,speed:67,r:12,damage:11,xp:4,color:"#51efff",teleport:true},
+ shield:{hp:78,speed:39,r:16,damage:12,xp:6,color:"#71dfff",shield:true}
 };
 export function spawnEnemy(list,player,time,scale=1,type){const keys=Object.keys(TYPES),kind=type||pick(time<180?["drone","drone","drone","hunter","shooter"]:time<360?["drone","hunter","shooter","kamikaze","tank","splitter"]:["hunter","shooter","kamikaze","tank","splitter","teleporter","shield","shield"]);const d=TYPES[kind],a=rand(0,TAU),rad=rand(520,720);list.push({type:kind,x:player.x+Math.cos(a)*rad,y:player.y+Math.sin(a)*rad,hp:d.hp*scale,maxHp:d.hp*scale,r:d.r, speed:d.speed*(1+Math.min(.65,time/900)),damage:d.damage,xp:d.xp,color:d.color,shoot:d.shoot,explode:d.explode,split:d.split,teleport:d.teleport,shield:d.shield,shieldHp:d.shield?d.hp*.8:0,shot:rand(1,3),blink:rand(3,6),flash:0,elite:false,boss:false,phase:0,attack:2,telegraph:0});}
 export function spawnElite(list,player,time){spawnEnemy(list,player,time,3,pick(["tank","shooter","splitter","teleporter"]));const e=list[list.length-1];e.elite=true;e.r*=1.25;e.color="#ffe36e";e.hp*=1.6;e.maxHp=e.hp;e.xp*=3;}

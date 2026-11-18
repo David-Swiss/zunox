@@ -1,0 +1,1 @@
+const KEY="zunox-chess-state",VERSION=1;export function loadState(){try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(!d||d.version!==VERSION)return {};return d.data||{};}catch{return {};}}export function saveState(data){try{localStorage.setItem(KEY,JSON.stringify({version:VERSION,data}));return true;}catch{return false;}}

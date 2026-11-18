@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0a1020"><meta name="description" content="VOID SURVIVORS – Überlebe das Void, entwickle deinen Build und besiege den Kollektor.">
+<title>VOID SURVIVORS · ZUNOX</title><link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main id="app">
+<canvas id="game" aria-label="VOID SURVIVORS Spielfeld"></canvas><div class="vignette"></div>
+<header class="topbar"><a class="brand" href="../../index.html"><b>V</b><span>VOID <i>SURVIVORS</i></span></a><div><button id="soundButton" class="smallbtn" aria-label="Ton umschalten">♫</button><button id="pauseButton" class="smallbtn" aria-label="Pause">Ⅱ</button></div></header>
+<section id="hud" class="hud hidden">
+<div class="stats"><div><small>ÜBERLEBEN</small><strong id="timer">00:00</strong></div><div><small>ELIMINIERUNGEN</small><strong id="kills">0</strong></div><div><small>WELLE</small><strong id="wave">01</strong></div></div>
+<div class="barline"><span>♥</span><div class="track"><i id="healthFill"></i></div><b id="healthText">100 / 100</b></div>
+<div class="barline xp"><span>✦</span><div class="track"><i id="xpFill"></i></div><b id="levelText">LV 1</b></div>
+<div id="bossBar" class="bossbar hidden"><small>VOID-KOLLEKTOR</small><div class="track"><i id="bossFill"></i></div></div>
+<div id="weaponDock" class="weapons"></div>
+</section>
+<section id="overlay" class="overlay"><div class="panel menu">
+<div class="eyebrow">ZUNOX ORIGINAL · SURVIVAL PROTOCOL</div><h1>VOID<br><em>SURVIVORS</em></h1><p>Ein Schiff. Ein endloses Void. Wie lange hältst du durch?</p>
+<div class="ship-art"><span>◆</span><i></i><b></b></div>
+<button id="startButton" class="primary">RUN STARTEN <span>→</span></button>
+<div class="menu-grid"><button id="shopButton">VOID-SHOP</button><button id="shipsButton">RAUMSCHIFFE</button><button id="missionsButton">MISSIONEN</button></div>
+<footer><span><b id="coreCount">0</b> VOID-KERNE</span><span>BESTZEIT <b id="bestTime">--:--</b></span></footer>
+</div></section>
+<section id="pauseOverlay" class="overlay hidden"><div class="panel"><div class="eyebrow">SYSTEM UNTERBROCHEN</div><h2>PAUSIERT</h2><p>Das Void wartet auf dich.</p><button id="resumeButton" class="primary">WEITER →</button><button id="quitButton" class="secondary">RUN BEENDEN</button></div></section>
+<section id="levelOverlay" class="overlay hidden"><div class="panel levelpanel"><div class="eyebrow">EVOLUTION ERKANNT · LEVEL UP</div><h2>WÄHLE DEINEN <em>PFAD</em></h2><p>Wähle eine Verbesserung für deinen Build.</p><div id="upgradeCards" class="cards"></div><footer><span id="rerollsLeft">REROLLS: 2</span><button id="rerollButton" class="reroll">↻ NEU MISCHEN</button></footer></div></section>
+<section id="shopOverlay" class="overlay hidden"><div class="panel wide"><button class="close" data-close="shopOverlay">✕</button><div class="eyebrow">PERMANENTE VERBESSERUNGEN</div><h2>VOID <em>SHOP</em></h2><div id="shopItems" class="rows"></div><footer id="shopCoreCount2"></footer></div></section>
+<section id="shipsOverlay" class="overlay hidden"><div class="panel wide"><button class="close" data-close="shipsOverlay">✕</button><div class="eyebrow">DEINE FLOTTE</div><h2>RAUM<em>SCHIFFE</em></h2><div id="shipItems" class="rows"></div></div></section>
+<section id="missionsOverlay" class="overlay hidden"><div class="panel wide"><button class="close" data-close="missionsOverlay">✕</button><div class="eyebrow">LANGZEIT-ZIELE</div><h2>MISSIONEN</h2><div id="missionItems" class="rows"></div></div></section>
+<section id="resultOverlay" class="overlay hidden"><div class="panel result"><div class="eyebrow">RUN ABGESCHLOSSEN</div><h2 id="resultTitle">RUN <em>OVER</em></h2><p id="resultMessage">Das Void hat dich verschlungen.</p><div class="resultgrid"><div><small>ÜBERLEBT</small><b id="resultTime">00:00</b></div><div><small>KILLS</small><b id="resultKills">0</b></div><div><small>LEVEL</small><b id="resultLevel">1</b></div><div><small>KERNE</small><b id="resultCores">0</b></div></div><button id="againButton" class="primary">NOCH EIN RUN →</button><button id="menuButton" class="secondary">ZUM HAUPTMENÜ</button></div></section>
+<div id="bossWarning" class="warning hidden">⚠ WARNUNG – ANOMALIE ERKANNT ⚠</div><div id="toast" class="toast hidden"></div>
+<div id="joystick" class="joystick hidden"><div class="joyknob" id="joystickKnob"></div></div>
+</main><script type="module" src="./js/main.js"></script></body></html>

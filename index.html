@@ -138,7 +138,7 @@ class CityWorld{
   }
   // Warm street lamps; emissive bulbs are cheap compared with hundreds of dynamic lights.
   const poleMat=new THREEJS.MeshStandardMaterial({color:0x263444,metalness:.7,roughness:.4}),bulbMat=new THREEJS.MeshBasicMaterial({color:0xffd69a});
-  for(let n=-6;n<=6;n++)for(let q=-6;q<=6;q+=2){for(const axis of [0,1]){const x=axis?n*100+15:q*100+15,z=axis?q*100+15:n*100+15;if(Math.abs(x)>680||Math.abs(z)>680)continue;
+  for(let n=-6;n<=6;n+=2)for(let q=-6;q<=6;q+=4){for(const axis of [0,1]){const x=axis?n*100+15:q*100+15,z=axis?q*100+15:n*100+15;if(Math.abs(x)>680||Math.abs(z)>680)continue;
    const group=new THREEJS.Group();group.position.set(x,0,z);this.scene.add(group);
    const pole=new THREEJS.Mesh(new THREEJS.CylinderGeometry(.12,.19,7,8),poleMat);pole.position.y=3.5;group.add(pole);
    const arm=this.box(2.2,.12,.12,poleMat,axis?0:1.05,6.9,axis?1.05:0,group);

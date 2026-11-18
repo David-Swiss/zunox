@@ -38,7 +38,7 @@ html,body{background:#111923}
 .panel{background:rgba(10,17,27,.88);border:1px solid rgba(191,211,230,.22);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.28);backdrop-filter:blur(12px)}
 .profile{top:18px;left:18px;width:215px;padding:15px 17px;border-left:3px solid #39d9a0}
 .profile:before{content:"FAHRERPROFIL";display:block;color:#8fa6bc;font-size:9px;letter-spacing:2px;font-weight:800;margin-bottom:7px}
-.money{font-size:23px;line-height:1.1;color:#44e5a4}
+.money{font-size:23px;line-height:1.1;color:#44e5a4}.nitro-wrap{margin-top:10px}.nitro-label{display:flex;justify-content:space-between;color:#aebdca;font-size:9px;letter-spacing:1px;font-weight:800;margin-bottom:5px}.nitro-track{height:6px;background:#263443;border-radius:9px;overflow:hidden}.nitro-fill{height:100%;width:100%;border-radius:9px;background:linear-gradient(90deg,#20c9ad,#7deaff);transition:width .12s}
 .muted{font-size:11px;color:#bdc9d5;margin-top:7px}
 .mission{top:18px;left:50%;transform:translateX(-50%);min-width:270px;padding:12px 22px;text-align:left;border-radius:12px}
 .mission:before{content:"AKTIVER AUFTRAG";display:block;font-size:9px;letter-spacing:2px;color:#7de8ed;font-weight:900;margin-bottom:5px}
@@ -62,6 +62,7 @@ html,body{background:#111923}
 .dialog h1{letter-spacing:-1px}
 button{cursor:pointer;touch-action:manipulation}
 @media(max-width:900px){
+.nitro-wrap{margin-top:7px}.nitro-label{font-size:8px}.nitro-track{height:5px}
 .profile{top:10px;left:10px;width:155px;padding:10px 11px}.profile:before{font-size:8px;margin-bottom:5px}.money{font-size:16px}.muted{font-size:9px;margin-top:4px}
 .mission{top:10px;left:50%;width:42%;min-width:0;padding:9px 11px}.mission:before{font-size:7px;margin-bottom:3px}.mission b{font-size:11px}.mission small{font-size:9px}
 .tools{top:68px;right:10px;gap:5px}.tools button{font-size:10px;padding:8px 9px}
@@ -79,7 +80,7 @@ button{cursor:pointer;touch-action:manipulation}
 .pedals{grid-template-columns:repeat(2,49px)}.control{width:49px;height:42px;font-size:9px}
 .steer .control{width:43px;height:45px}
 }
- .portal-link{position:fixed;z-index:20;top:14px;left:14px;padding:9px 12px;border-radius:9px;background:#101c2be8;border:1px solid #a9bfd044;color:#eef6ff;text-decoration:none;font-size:12px;font-weight:800;pointer-events:auto}@media(max-width:700px){.portal-link{top:8px;left:8px;padding:7px 9px;font-size:10px}}</style></head><body><a class="portal-link" href="../">← Alle Spiele</a><div id="world"></div><div class="hud"><div class="panel profile"><div class="money" id="cash">FREIE FAHRT</div><div class="muted">Führerschein · Klasse B</div><div class="muted" id="wanted">Keine Fahndung</div><div class="muted" id="vehicleState">Fahrzeugzustand <b>100 %</b></div></div><div class="panel mission"><b id="mission">Verkehrsregeln beachten</b><small id="distance">Bei Rotlicht droht eine Polizeiverfolgung</small></div><div class="tools"><button id="camera">Kamera</button><button id="mapbtn">Karte</button><button id="pause">Pause</button></div><div class="panel map" id="mapbox"><canvas id="minimap" width="240" height="240"></canvas></div><div class="speedo"><div class="speedinner"><div class="speed" id="speed">0</div><div class="unit">km/h</div><div class="gear" id="gear">N</div></div></div><div class="limit">50</div><div class="pedals"><button class="control" data-key="hand">Hand</button><button class="control" data-key="nitro">Nitro</button><button class="control" data-key="brake">Rückwärts</button><button class="control" data-key="gas">Vorwärts</button></div><div class="steer"><button class="control" data-key="left">◀</button><button class="control" data-key="right">▶</button></div><div class="help">W vorwärts · S rückwärts · A/D lenken · Shift Nitro · Leertaste Handbremse</div></div>
+ .portal-link{position:fixed;z-index:20;top:14px;left:14px;padding:9px 12px;border-radius:9px;background:#101c2be8;border:1px solid #a9bfd044;color:#eef6ff;text-decoration:none;font-size:12px;font-weight:800;pointer-events:auto}@media(max-width:700px){.portal-link{top:8px;left:8px;padding:7px 9px;font-size:10px}}</style></head><body><a class="portal-link" href="../">← Alle Spiele</a><div id="world"></div><div class="hud"><div class="panel profile"><div class="money" id="cash">FREIE FAHRT</div><div class="muted">Führerschein · Klasse B</div><div class="muted" id="wanted">Keine Fahndung</div><div class="muted" id="vehicleState">Fahrzeugzustand <b>100 %</b></div><div class="nitro-wrap"><div class="nitro-label"><span>NITRO</span><span id="nitroValue">100 %</span></div><div class="nitro-track"><div class="nitro-fill" id="nitroFill"></div></div></div></div><div class="panel mission"><b id="mission">Verkehrsregeln beachten</b><small id="distance">Bei Rotlicht droht eine Polizeiverfolgung</small></div><div class="tools"><button id="camera">Kamera</button><button id="mapbtn">Karte</button><button id="pause">Pause</button></div><div class="panel map" id="mapbox"><canvas id="minimap" width="240" height="240"></canvas></div><div class="speedo"><div class="speedinner"><div class="speed" id="speed">0</div><div class="unit">km/h</div><div class="gear" id="gear">N</div></div></div><div class="limit">50</div><div class="pedals"><button class="control" data-key="hand">Hand</button><button class="control" data-key="nitro">Nitro</button><button class="control" data-key="brake">Rückwärts</button><button class="control" data-key="gas">Vorwärts</button></div><div class="steer"><button class="control" data-key="left">◀</button><button class="control" data-key="right">▶</button></div><div class="help">W vorwärts · S rückwärts · A/D lenken · Shift Nitro · Leertaste Handbremse</div></div>
 <div class="overlay" id="overlay"><div class="dialog"><div style="color:#75edff;letter-spacing:3px;font-size:11px">ZUNOX ORIGINAL</div><h1>AFTERGLOW CITY</h1><p>Willkommen in deiner Stadt. Fahre frei durch die Downtown. Überfahre keine rote Ampel: Sonst nimmt die Polizei die Verfolgung auf. W fährt vorwärts, S rückwärts.</p><button id="start">MOTOR STARTEN</button></div></div>
 <script>
 (()=> {
@@ -191,18 +192,18 @@ class VehiclePhysics{
   const boost=input.down('shift')||input.down('nitro');
   const hand=input.down(' ')||input.down('hand');
   const steer=(input.down('a')||input.down('arrowleft')||input.down('left')?-1:0)+(input.down('d')||input.down('arrowright')||input.down('right')?1:0);
-  const max=boost&&this.nitro>0?52:34;
-  // Sanfte Beschleunigung, kräftige Bremse und Rollwiderstand statt abruptem Tempo-Wechsel.
-  if(forward&&!reverse)this.speed=clamp(this.speed+dt*(boost?17:8.5),-12,max);
-  else if(reverse&&!forward){if(this.speed>1)this.speed=Math.max(0,this.speed-dt*23);else this.speed=clamp(this.speed-dt*7,-12,0);}
-  else this.speed*=Math.pow(hand ? .982 : .994,dt*60);
+  const max=boost&&this.nitro>0?55:36;
+  // Progressive throttle, decisive braking and a small engine-brake when coasting.
+  if(forward&&!reverse)this.speed=clamp(this.speed+dt*(boost?20:9.5),-13,max);
+  else if(reverse&&!forward){if(this.speed>1)this.speed=Math.max(0,this.speed-dt*30);else this.speed=clamp(this.speed-dt*8.5,-13,0);}
+  else this.speed*=Math.pow(hand ? .975 : .989,dt*60);
   if(boost&&this.speed>0&&this.nitro>0)this.nitro=Math.max(0,this.nitro-dt*30);
   else this.nitro=Math.min(100,this.nitro+dt*12);
-  const speedFactor=clamp(Math.abs(this.speed)/12,0,1.7);
-  const yawRate=(.18+speedFactor*.92)*(hand?1.5:1);
+  const speedFactor=clamp(Math.abs(this.speed)/36,0,1);
+  const yawRate=(.12+speedFactor*1.05)*(hand?1.38:1);
   this.yaw+=steer*dt*yawRate*(this.speed<0?-1:1);
-  const lateralTarget=steer*this.speed*(hand ? 0.42 : 0.055);
-  const lateralResponse=1-Math.exp(-dt*(hand ? 2.6 : 8.5));
+  const lateralTarget=steer*this.speed*(hand ? 0.48 : 0.035);
+  const lateralResponse=1-Math.exp(-dt*(hand ? 2.1 : 11));
   this.lateralSpeed+=(lateralTarget-this.lateralSpeed)*lateralResponse;
   this.lateralSpeed=clamp(this.lateralSpeed,-14,14);
   const fx=Math.sin(this.yaw),fz=-Math.cos(this.yaw),rx=Math.cos(this.yaw),rz=Math.sin(this.yaw);
@@ -210,7 +211,7 @@ class VehiclePhysics{
   const nz=this.z+(fz*this.speed+rz*this.lateralSpeed)*dt;
   const trafficHit=traffic.some(n=>Math.hypot(nx-n.car.group.position.x,nz-n.car.group.position.z)<3.25);
   if(!this.world.collides(nx,nz)&&!trafficHit){this.x=nx;this.z=nz;}
-  else{this.speed*=-.24;this.lateralSpeed*=-.25;if(this.hitCooldown===0){this.condition=Math.max(0,this.condition-5);this.hitCooldown=1.1;}}
+  else{this.speed*=-.18;this.lateralSpeed*=-.18;if(this.hitCooldown===0){this.condition=Math.max(0,this.condition-(trafficHit?8:4));this.hitCooldown=1.0;}}
   this.car.group.position.set(this.x,0,this.z);
   this.car.group.rotation.y=this.yaw;
   this.car.wheels.forEach(w=>w.rotation.x+=this.speed*dt*1.4);
@@ -227,7 +228,7 @@ class PoliceAI{
 }
 class Dashboard{
  constructor(){this.last=0;}
- update(player,clock,wanted,red){$('speed').textContent=Math.round(Math.abs(player.speed)*3.6);$('gear').textContent=player.speed<-.5?'R':player.speed>.5?'D':'N';$('cash').textContent='FREIE FAHRT';$('wanted').textContent=clock<wanted?'POLIZEI · VERFOLGUNG':'Keine Fahndung';$('vehicleState').innerHTML='Fahrzeugzustand <b>'+Math.round(player.condition)+' %</b>';$('distance').textContent=clock<wanted?'Polizeistreife verfolgt dich':red?'AMPEL ROT · STOPPEN':'AMPEL GRÜN · FREIE FAHRT';}
+ update(player,clock,wanted,red){$('speed').textContent=Math.round(Math.abs(player.speed)*3.6);$('gear').textContent=player.speed<-.5?'R':player.speed>.5?'D':'N';$('cash').textContent='FREIE FAHRT';$('wanted').textContent=clock<wanted?'POLIZEI · VERFOLGUNG':'Keine Fahndung';$('vehicleState').innerHTML='Fahrzeugzustand <b>'+Math.round(player.condition)+' %</b>';$('nitroValue').textContent=Math.round(player.nitro)+' %';$('nitroFill').style.width=player.nitro+'%';$('distance').textContent=clock<wanted?'Polizeistreife verfolgt dich':red?'AMPEL ROT · STOPPEN':'AMPEL GRÜN · FREIE FAHRT';}
  minimap(player){const c=$('minimap'),g=c.getContext('2d');g.fillStyle='#17232e';g.fillRect(0,0,240,240);g.strokeStyle='#56616b';g.lineWidth=7;for(let i=0;i<240;i+=30){g.beginPath();g.moveTo(i,0);g.lineTo(i,240);g.stroke();g.beginPath();g.moveTo(0,i);g.lineTo(240,i);g.stroke();}g.fillStyle='#41624d';for(let i=0;i<12;i++)g.fillRect((i*47)%225,(i*71)%225,11,11);g.save();g.translate(120,120);g.rotate(-player.yaw);g.fillStyle='#62f3bc';g.beginPath();g.moveTo(0,-11);g.lineTo(-7,8);g.lineTo(7,8);g.fill();g.restore();}
 }
 class AfterglowEngine{

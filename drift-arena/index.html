@@ -57,7 +57,7 @@ const keys={left:false,right:false,gas:false,brake:false,hand:false};
 let dpr=1,vw=innerWidth,vh=innerHeight,scale=1,camX=0,camY=0,cameraFollow=true;
 let car={x:220,y:350,vx:0,vy:0,a:-Math.PI/2,steer:0};
 let marks=[],smoke=[],particles=[],started=false,running=false,lap=0,lapStart=0,lastTime=0,elapsed=0,driftScore=0,driftCombo=0,lapDrift=0;
-const safeStorage={getItem(key){try{return window.safeStorage.getItem(key)}catch{return null}},setItem(key,value){try{window.safeStorage.setItem(key,String(value))}catch{}}};
+const safeStorage={getItem(key){try{return window.localStorage.getItem(key)}catch{return null}},setItem(key,value){try{window.localStorage.setItem(key,String(value))}catch{}}};
 let best=Number(safeStorage.getItem('zunox_drift_best')||0),lapComplete=false,frame=0;
 let stars=Number(safeStorage.getItem('zunox_drift_stars')||0),engineLevel=Number(safeStorage.getItem('zunox_drift_engine')||0),gripLevel=Number(safeStorage.getItem('zunox_drift_grip')||0),paintIndex=Number(safeStorage.getItem('zunox_drift_paint')||0);
 const paints=['#e5f0f2','#ff5b65','#65aaff','#ffd45c','#b98aff','#75ed9a'];let carPaint=paints[paintIndex%paints.length];

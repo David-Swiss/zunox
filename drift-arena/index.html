@@ -43,7 +43,7 @@
 <div class="pad left"><button class="ctrl" data-key="left" aria-label="Links">◀</button><button class="ctrl" data-key="right" aria-label="Rechts">▶</button></div>
 <div class="pad right"><button class="ctrl brake" data-key="brake" aria-label="Bremsen">▼</button><button class="ctrl hand" data-key="hand" aria-label="Drift">DRIFT</button><button class="ctrl gas" data-key="gas" aria-label="Gas">▲</button></div>
 </div>
-<div id="overlay"><div class="dialog"><div class="tag">ZUNOX RACING</div><h1>DRIFT<br>ARENA</h1><p>Fahre eine komplette Runde ohne Checkpoints und sammle Driftpunkte und knacke deine Bestzeit. Bleib auf dem Asphalt – das Gras bremst dich!</p><button id="start">RENNEN STARTEN</button><div class="sub">MULTI-TOUCH · WASD / PFEILTASTEN · SPACE · R · C</div><div id="garage" class="garage"><div class="wallet">⭐ <b id="stars">0</b> STERNE</div><div class="shopgrid"><button data-buy="engine">MOTOR-UPGRADE · 3 ⭐</button><button data-buy="grip">REIFEN-UPGRADE · 4 ⭐</button><button data-buy="paint">LACKIERUNG · 2 ⭐</button><button data-buy="box">MYSTERY CAR BOX · 6 ⭐<br><small>Öffnen & Überraschungsauto erhalten</small></button></div><div class="sub" id="shopmsg">Sterne sammeln und dein Auto verbessern.</div></div></div></div>
+<div id="overlay"><div class="dialog"><div class="tag">ZUNOX RACING</div><h1>DRIFT<br>ARENA</h1><p>Fahre saubere Kurven, kontrolliere den Heckschwung und sammle Driftpunkte. Asphalt gibt Grip, das Gras kostet Tempo. Schaffe die Runde und knacke deine Bestzeit!</p><button id="start">RENNEN STARTEN</button><div class="sub">WASD / PFEILE · SPACE = HANDBREMSE · AUF TOUCH: PEDALE + LENKUNG</div><div id="garage" class="garage"><div class="wallet">⭐ <b id="stars">0</b> STERNE</div><div class="shopgrid"><button data-buy="engine">MOTOR-UPGRADE · 3 ⭐</button><button data-buy="grip">REIFEN-UPGRADE · 4 ⭐</button><button data-buy="paint">LACKIERUNG · 2 ⭐</button><button data-buy="box">MYSTERY CAR BOX · 6 ⭐<br><small>Öffnen & Überraschungsauto erhalten</small></button></div><div class="sub" id="shopmsg">Sterne sammeln und dein Auto verbessern.</div></div></div></div>
 <script>
 (()=>{'use strict';
 const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
@@ -85,28 +85,34 @@ let throttle=keys.gas?1:0,brake=keys.brake?1:0,hand=keys.hand?1:0;
 let fwdX=Math.cos(car.a),fwdY=Math.sin(car.a),rightX=-fwdY,rightY=fwdX;
 let forward=car.vx*fwdX+car.vy*fwdY,side=car.vx*rightX+car.vy*rightY;
 let near=nearest(car.x,car.y),onRoad=near.d<roadW*.47;
-let upgradeSpeed=1+engineLevel*.08,grassFactor=onRoad?1:.9;
-let maxSpeed=280*grassFactor*upgradeSpeed;
-forward+=throttle*225*grassFactor*upgradeSpeed*dt;
-if(brake)forward-=Math.sign(forward)*Math.min(Math.abs(forward),520*dt);
-if(!throttle&&!brake)forward*=Math.pow(.988,dt*60);
-forward=Math.max(-90,Math.min(maxSpeed,forward));
+let upgradeSpeed=1+engineLevel*.08,grassFactor=onRoad?1:.68;
+let maxSpeed=(onRoad?330:190)*upgradeSpeed;
+forward+=throttle*(onRoad?270:155)*upgradeSpeed*dt;
+if(brake)forward-=Math.sign(forward)*Math.min(Math.abs(forward),620*dt);
+if(!throttle&&!brake)forward*=Math.pow(onRoad?.994:.975,dt*60);
+forward=Math.max(-105,Math.min(maxSpeed,forward));
 let steer=(keys.right?1:0)-(keys.left?1:0);
-let speedFactor=Math.min(1,Math.abs(forward)/90);
-let turnRate=(.85+speedFactor*1.75)*(hand?1.9:1);
+let speedFactor=Math.min(1,Math.abs(forward)/110);
+// Steering is progressive: a quick response at low speed, stable at racing speed.
+let turnRate=(.7+speedFactor*1.55)*(hand?1.28:1);
 car.a+=steer*turnRate*dt*Math.sign(forward||1);
-// Steering automatically breaks rear grip in corners, so drifting needs no handbrake.
-let grip=hand?.94:(onRoad?Math.min(.94,.91+gripLevel*.006):.84);
-side+=steer*Math.abs(forward)*(hand?1.05:.85)*dt;
+fwdX=Math.cos(car.a);fwdY=Math.sin(car.a);rightX=-fwdY;rightY=fwdX;
+// Rear grip is deliberately lower under steering, creating a controllable power-slide.
+let grip=hand?.982:(onRoad?(steer?.972:.91):.86);
+side+=steer*Math.abs(forward)*(hand?1.7:1.12)*dt;
 side*=Math.pow(grip,dt*60);
-let velocityDamp=onRoad?1:.99;
-car.vx=(Math.cos(car.a)*forward+rightX*side)*Math.pow(velocityDamp,dt*60);
-car.vy=(Math.sin(car.a)*forward+rightY*side)*Math.pow(velocityDamp,dt*60);
+let velocityDamp=onRoad?1:.975;
+car.vx=(fwdX*forward+rightX*side)*Math.pow(velocityDamp,dt*60);
+car.vy=(fwdY*forward+rightY*side)*Math.pow(velocityDamp,dt*60);
 car.x+=car.vx*dt;car.y+=car.vy*dt;
+// Leaving the asphalt now has a clear cost and gently pulls the car back toward the road.
+near=nearest(car.x,car.y);
+if(near.d>roadW*.49){let dx=near.p.x-car.x,dy=near.p.y-car.y,len=Math.hypot(dx,dy)||1;let pull=Math.min(1,(near.d-roadW*.49)/45)*dt*5;car.vx+=dx/len*pull*150;car.vy+=dy/len*pull*150;}
+if(near.d>roadW*.82){car.vx*=.94;car.vy*=.94;}
 // fixed arena walls with elastic bounce
 const r=14;if(car.x<wall+r){car.x=wall+r;car.vx=Math.abs(car.vx)*.48;car.vy*=.82}if(car.x>W-wall-r){car.x=W-wall-r;car.vx=-Math.abs(car.vx)*.48;car.vy*=.82}if(car.y<wall+r){car.y=wall+r;car.vy=Math.abs(car.vy)*.48;car.vx*=.82}if(car.y>H-wall-r){car.y=H-wall-r;car.vy=-Math.abs(car.vy)*.48;car.vx*=.82}
 let slip=Math.atan2(Math.abs(side),Math.max(25,Math.abs(forward)));
-if(onRoad&&Math.abs(forward)>75&&slip>.075&&(Math.abs(steer)>0||hand)){let gain=Math.round((slip*42+Math.abs(forward)*.025)*(hand?2.4:1));driftCombo+=gain;driftScore+=gain;lapDrift+=gain;if(frame%2===0){for(let sideSign of [-1,1])smoke.push({x:car.x-fwdX*15+rightX*sideSign*10,y:car.y-fwdY*15+rightY*sideSign*10,vx:-car.vx*.12+rightX*sideSign*(8+Math.random()*12),vy:-car.vy*.12+rightY*sideSign*(8+Math.random()*12),r:9+Math.random()*9,a:.42+Math.random()*.12,life:.9+Math.random()*.35});}}
+if(onRoad&&Math.abs(forward)>85&&slip>.11&&(Math.abs(steer)>0||hand)){let gain=Math.round((slip*68+Math.abs(forward)*.035)*(hand?1.8:1));driftCombo+=gain;driftScore+=gain;lapDrift+=gain;if(frame%2===0){for(let sideSign of [-1,1])smoke.push({x:car.x-fwdX*15+rightX*sideSign*10,y:car.y-fwdY*15+rightY*sideSign*10,vx:-car.vx*.12+rightX*sideSign*(8+Math.random()*12),vy:-car.vy*.12+rightY*sideSign*(8+Math.random()*12),r:9+Math.random()*9,a:.42+Math.random()*.12,life:.9+Math.random()*.35});}}
 else driftCombo=Math.max(0,driftCombo-50*dt);
 if(onRoad&&Math.abs(side)>22&&Math.abs(forward)>75&&frame%2===0){for(let s of [-1,1])marks.push({x:car.x-fwdX*15+rightX*s*9,y:car.y-fwdY*15+rightY*s*9,a:car.a,life:1.4});}
 marks.forEach(m=>m.life-=dt*.012);marks=marks.filter(m=>m.life>0);smoke.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=Math.pow(.94,dt*60);p.vy*=Math.pow(.94,dt*60);p.life-=dt;p.r+=dt*18;p.a*=Math.pow(.975,dt*60)});smoke=smoke.filter(p=>p.life>0);
@@ -137,7 +143,15 @@ ctx.setLineDash([16,18]);path();ctx.strokeStyle='#e7e7d2';ctx.globalAlpha=.34;ct
 
 ctx.save();ctx.translate(pts[0].x,pts[0].y);ctx.rotate(Math.PI/2);let cell=11;for(let y=-roadW/2;y<roadW/2;y+=cell)for(let x=-14;x<14;x+=cell){ctx.fillStyle=((Math.floor((y+roadW/2)/cell)+Math.floor((x+14)/cell))%2)?'#f4f5ed':'#182128';ctx.fillRect(x,y,cell,cell);}ctx.restore();
 }
-function drawCar(){ctx.save();ctx.translate(car.x,car.y);ctx.rotate(car.a);ctx.shadowColor='#0009';ctx.shadowBlur=13;ctx.fillStyle='#08151c';ctx.fillRect(-20,-12,40,24);ctx.shadowBlur=0;ctx.fillStyle=carPaint;ctx.fillRect(-17,-10,34,20);ctx.fillStyle='#20a7a0';ctx.fillRect(-7,-9,16,18);ctx.fillStyle='#132a38';ctx.fillRect(-5,-7,12,14);ctx.fillStyle='#ffdf91';ctx.fillRect(14,-8,3,5);ctx.fillRect(14,3,3,5);ctx.fillStyle='#f34f50';ctx.fillRect(-18,-8,3,5);ctx.fillRect(-18,3,3,5);ctx.fillStyle='#101820';ctx.fillRect(-11,-14,9,4);ctx.fillRect(7,-14,9,4);ctx.fillRect(-11,10,9,4);ctx.fillRect(7,10,9,4);ctx.restore();}
+function drawCar(){ctx.save();ctx.translate(car.x,car.y);ctx.rotate(car.a);
+ctx.shadowColor='#000b';ctx.shadowBlur=16;ctx.fillStyle='#080e14';
+for(let x of [-13,8])for(let y of [-15,11])ctx.fillRect(x,y,9,6);
+ctx.shadowBlur=0;ctx.fillStyle=carPaint;ctx.beginPath();ctx.moveTo(23,0);ctx.lineTo(13,-11);ctx.lineTo(-13,-10);ctx.lineTo(-19,-6);ctx.lineTo(-19,6);ctx.lineTo(-13,10);ctx.lineTo(13,11);ctx.closePath();ctx.fill();
+ctx.fillStyle='#102a3a';ctx.beginPath();ctx.moveTo(10,-7);ctx.lineTo(2,-8);ctx.lineTo(-8,-7);ctx.lineTo(-11,0);ctx.lineTo(-8,7);ctx.lineTo(2,8);ctx.lineTo(10,7);ctx.closePath();ctx.fill();
+ctx.fillStyle='#9eeaff';ctx.globalAlpha=.8;ctx.fillRect(1,-6,8,12);ctx.globalAlpha=1;
+ctx.fillStyle='#fff0b5';ctx.fillRect(18,-7,4,4);ctx.fillRect(18,3,4,4);
+ctx.fillStyle='#ff4d58';ctx.fillRect(-18,-7,3,4);ctx.fillRect(-18,3,3,4);
+ctx.restore();}
 function render(){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,vw,vh);let s=scale,ox=(vw-W*s)/2,oy=(vh-H*s)/2;if(cameraFollow&&started){let targetX=Math.max(0,Math.min(W-vw/s,car.x-vw/s/2)),targetY=Math.max(0,Math.min(H-vh/s,car.y-vh/s/2));camX+=(targetX-camX)*.08;camY+=(targetY-camY)*.08;}else{camX=0;camY=0;}ctx.save();ctx.translate(ox,oy);ctx.scale(s,s);ctx.translate(-camX,-camY);drawTrack();marks.forEach(m=>{ctx.save();ctx.translate(m.x,m.y);ctx.rotate(m.a);ctx.globalAlpha=Math.min(.22,m.life*.22);ctx.fillStyle='#080b0d';ctx.fillRect(-16,-2.5,32,5);ctx.restore();});smoke.forEach(p=>{let g=ctx.createRadialGradient(p.x,p.y,1,p.x,p.y,p.r);g.addColorStop(0,'rgba(245,250,250,.48)');g.addColorStop(.55,'rgba(205,218,220,.25)');g.addColorStop(1,'rgba(180,195,198,0)');ctx.globalAlpha=Math.max(0,p.a);ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;drawCar();ctx.strokeStyle='#ffffff15';ctx.lineWidth=wall;ctx.strokeRect(wall/2,wall/2,W-wall,H-wall);ctx.restore();}
 let prev=performance.now();function loop(now){let dt=(now-prev)/1000;prev=now;update(dt);render();requestAnimationFrame(loop);}requestAnimationFrame(loop);
 })();

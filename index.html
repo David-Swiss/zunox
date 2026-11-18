@@ -428,11 +428,77 @@ main{max-width:1360px}
 .suggested-play:hover{background:#eaff91}
 @media(max-width:620px){.suggested-section{margin:22px 0 28px;padding-top:17px}.suggested-head h2{font-size:21px}.suggested-row{grid-auto-columns:minmax(235px,82vw)}.suggested-art{height:108px}}
 </style>
+<style>
+/* GAMEZONE landing refresh — original arcade editorial direction */
+:root{--bg:#101522;--panel:#1a2232;--panel2:#222e42;--text:#f5f2e9;--muted:#aab4c5;--accent:#ffbd59;--accent2:#5ce1d2;--line:#354157}
+html,body{background:#101522;color:#f5f2e9}
+body{background:radial-gradient(ellipse at 82% 5%,#26364b 0,transparent 35%),#101522}
+.top{background:#101522ed;border-bottom:1px solid #354157}
+.logo{background:linear-gradient(90deg,#ffbd59,#5ce1d2);-webkit-background-clip:text}
+.nav{max-width:1280px;padding-top:17px;padding-bottom:17px}
+.navlinks button:hover,.navlinks button.active{background:#253247;border-color:#46546a;color:#ffca78}
+.search{background:#1a2434;border-color:#3b4960}
+main{max-width:1280px;padding-top:28px}
+.hero{min-height:430px;display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:24px;padding:clamp(24px,4vw,52px);border:1px solid #536078;border-radius:10px;background:linear-gradient(115deg,#202b3d 0%,#182334 58%,#28394a 100%);box-shadow:0 25px 70px #0005;isolation:isolate}
+.hero:after{right:20%;top:-170px;width:420px;height:420px;background:radial-gradient(circle,#ffbd5928,transparent 68%)}
+.brandmark{display:flex;align-items:center;gap:10px;margin-bottom:34px}
+.brand-glyph{display:grid;place-items:center;width:39px;height:39px;background:#ffbd59;color:#17202c;font-weight:1000;font-size:17px;transform:rotate(-7deg);border-radius:8px}
+.brandmark b{font-size:15px;letter-spacing:1.4px}.brandmark small{display:block;color:#aeb9c8;font-size:8px;letter-spacing:2px;margin-top:3px}
+.kicker{color:#5ce1d2;font-size:10px;letter-spacing:3px}
+.hero h1{font-size:clamp(43px,6.3vw,78px);line-height:.88;letter-spacing:-4px;margin:18px 0 17px;font-weight:1000}
+.hero h1 em{font-style:normal;color:#ffbd59}
+.hero p{font-size:14px;line-height:1.7;color:#c0c9d4;max-width:480px}
+.heroactions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:24px}
+.primary{background:#ffbd59;color:#18202b;border-radius:7px;padding:14px 19px;font-size:11px;letter-spacing:1px;box-shadow:4px 4px 0 #5ce1d2}
+.primary:hover{background:#ffd18a;transform:translate(-1px,-1px)}
+.hero-count{font-size:9px;letter-spacing:1.3px;color:#c5ced8;font-weight:900}.hero-count i{color:#5ce1d2;font-style:normal;padding:0 5px}
+.stats{margin-top:27px}.stat{background:#111a28aa;border:1px solid #46536a;color:#bfc9d5;border-radius:4px;font-size:8px;letter-spacing:1px}
+.hero-art{height:350px;display:flex;align-items:center;justify-content:center;position:relative}
+.feature-frame{width:min(100%,370px);padding:13px;background:#f0eee7;color:#18202b;box-shadow:15px 17px 0 #0b111b88;transform:rotate(2deg);border-radius:5px;position:relative;z-index:1}
+.feature-top,.feature-bottom{display:flex;justify-content:space-between;align-items:center;font-size:9px;font-weight:1000;letter-spacing:1.4px}
+.feature-top{color:#536071;padding:2px 3px 11px}
+.feature-visual{height:220px;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 85%,#5ce1d266,transparent 42%),linear-gradient(145deg,#192d43,#34546a 60%,#f0a34e)}
+.feature-visual:before,.feature-visual:after{content:"";position:absolute;width:150%;height:1px;background:#ffffff55;transform:rotate(-27deg);top:48%}
+.feature-visual:after{transform:rotate(27deg);top:68%}
+.feature-orbit{position:absolute;width:210px;height:210px;border:1px solid #ffffff70;border-radius:50%;box-shadow:0 0 0 20px #ffffff10,0 0 0 40px #ffffff08}
+.feature-emoji{font-size:112px;z-index:1;filter:drop-shadow(0 18px 12px #0008);transform:rotate(-8deg)}
+.feature-speed{position:absolute;right:13px;top:14px;color:#fff;font-size:10px;font-weight:1000;letter-spacing:2px;line-height:1.3;text-align:right}
+.feature-bottom{padding:13px 3px 3px}.feature-bottom small{display:block;color:#687487;font-size:8px;letter-spacing:1.5px;margin-bottom:4px}.feature-bottom strong{font-size:17px;letter-spacing:-.5px}
+.feature-arrow{display:grid;place-items:center;background:#ffbd59;width:35px;height:35px;border-radius:50%;font-size:19px}
+.hero-side-note{position:absolute;right:-3px;bottom:0;color:#5ce1d2;font-size:8px;font-weight:900;letter-spacing:2px;line-height:1.6;transform:rotate(-90deg) translateX(100%);transform-origin:right bottom}
+.suggested-section{margin:36px 0 40px;padding:25px 0 8px;border-top:1px solid #3b4659;border-bottom:1px solid #3b4659}
+.suggested-eyebrow{color:#5ce1d2}.suggested-head h2{font-size:27px;letter-spacing:-1px}.suggested-stamp{border-color:#ffbd5970;color:#ffca78;border-radius:4px}
+.suggested-row{scrollbar-color:#ffbd59 #1b2534}
+.suggested-card{background:#1a2433;border:1px solid #3c4a60;border-radius:7px}
+.suggested-card:hover{border-color:#5ce1d2}
+.suggested-play{background:#ffbd59;color:#18202b;border-radius:4px}
+.sectionhead{margin-top:42px}.sectionhead h2:before{color:#5ce1d2}
+.filter{background:#1a2433;border-color:#3b4960;border-radius:5px}
+.filter.selected{background:#5ce1d2;color:#10202a;border-color:#5ce1d2;box-shadow:3px 3px 0 #ffbd59}
+.gamecard{background:linear-gradient(150deg,#202b3b,#151e2c);border-color:#39475c;border-radius:8px}
+.gamecard:hover{border-color:#5ce1d2;box-shadow:0 18px 40px #0008,0 0 0 1px #5ce1d233}
+.thumbcaption{color:#ffca78}.tag{border-radius:4px}.playbtn{background:#ffbd59;color:#18202b;border-radius:4px;box-shadow:3px 3px 0 #5ce1d2}
+@media(max-width:760px){.hero{grid-template-columns:1fr;min-height:0}.hero-art{height:280px;max-width:430px;width:100%;margin:0 auto}.feature-frame{max-width:340px}.hero-side-note{right:0}.brandmark{margin-bottom:25px}}
+@media(max-width:620px){main{padding:13px 12px 40px}.hero{padding:23px 18px;border-radius:8px;gap:6px}.hero h1{font-size:clamp(48px,13vw,66px);letter-spacing:-3px}.hero p{font-size:13px}.hero-art{height:245px}.feature-visual{height:165px}.feature-emoji{font-size:88px}.feature-frame{max-width:300px}.hero-side-note{font-size:7px}.grid{grid-template-columns:1fr 1fr}.thumb{height:150px}.cardbody h3{font-size:16px}.cardbody p{font-size:11px}.suggested-head h2{font-size:21px}}
+</style>
 </head>
 <body>
 <header class="top"><nav class="nav"><div class="logo">GAMEZONE</div><div class="navlinks"><button class="active" data-nav="all">Start</button><button data-nav="Racing">Racing</button><button data-nav="Arcade">Arcade</button><button data-nav="Puzzle">Puzzle</button><button data-nav="Action">Action</button></div><input id="search" class="search" placeholder="Spiel suchen…" aria-label="Spiel suchen"></nav></header>
 <main>
-<section class="hero"><div class="hero-copy"><div class="brandmark" aria-label="GAMEZONE Play Lab"><span class="brand-glyph">GZ</span><b>GAMEZONE <small>PLAY LAB / 01</small></b></div><div class="kicker">DEIN NÄCHSTER HIGHscore BEGINNT HIER</div><h1>FIND<br><em>YOUR</em><br>PLAY.</h1><p>24 Welten. Unzählige Runs. Ein Platz für deine Rekorde. Such dir dein nächstes Spiel aus und leg direkt los.</p><div class="heroactions"><button class="primary" id="featured">▶ RANDOM RUN STARTEN</button><span class="hero-count">24 SPIELE <i>✳</i> NULL INSTALLATION</span></div><div class="stats"><span class="stat">01 / TOUCH READY</span><span class="stat">02 / KEYBOARD</span><span class="stat">03 / HIGHscores</span></div></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="art-core"><span>G</span><b>PLAY<br>ZONE</b></div><div class="art-chip chip-one">PRESS<br>START</div><div class="art-chip chip-two">EST. 2026</div><div class="art-index">GZ<br><strong>001</strong></div></div></section>
+<section class="hero">
+ <div class="hero-copy">
+  <div class="brandmark"><span class="brand-glyph">GZ</span><b>GAMEZONE <small>ARCADE CLUB / 2026</small></b></div>
+  <div class="kicker">DEIN SPIEL. DEIN MOMENT.</div>
+  <h1>PLAY<br><em>BEYOND</em><br>THE ORDINARY.</h1>
+  <p>Entdecke neue Challenges, knacke deine Rekorde und finde deinen nächsten Lieblings-Run. Alles direkt im Browser.</p>
+  <div class="heroactions"><button class="primary" id="featured">JETZT SPIELEN <span>↗</span></button><span class="hero-count">24 SPIELE <i>✳</i> KEIN DOWNLOAD</span></div>
+  <div class="stats"><span class="stat">01 / SOFORT STARTKLAR</span><span class="stat">02 / HIGHScore JAGD</span><span class="stat">03 / TOUCH & KEYBOARD</span></div>
+ </div>
+ <div class="hero-art" aria-label="Ausgewähltes Spiel: Neon Racer">
+  <div class="feature-frame"><div class="feature-top"><span>FEATURED RUN</span><span>GZ / 001</span></div><div class="feature-visual"><span class="feature-orbit"></span><span class="feature-emoji">🏎️</span><span class="feature-speed">TURBO<br>MODE</span></div><div class="feature-bottom"><div><small>RACING / ARCADE</small><strong>NEON RACER</strong></div><span class="feature-arrow">↗</span></div></div>
+  <div class="hero-side-note">PRESS START<br>AND MAKE IT COUNT</div>
+ </div>
+</section>
 <section class="suggested-section" aria-label="Vorgeschlagene Games"><div class="suggested-head"><div><span class="suggested-eyebrow">GAMEZONE PICKS / 01</span><h2>Vorgeschlagene Games</h2><p>Handverlesen für deinen nächsten Run.</p></div><span class="suggested-stamp">★ FÜR DICH</span></div><div class="suggested-row" id="suggestedGames"></div></section>
 <div class="sectionhead"><h2>Alle Spiele</h2><span id="count"></span></div>
 <div class="filters" id="filters"></div>

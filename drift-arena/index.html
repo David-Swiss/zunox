@@ -48,13 +48,14 @@
 (()=>{'use strict';
 const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
 const $=id=>document.getElementById(id);
-const W=1500,H=1000,roadW=118,wall=28;
-const controlPts=[{x:160,y:230},{x:330,y:170},{x:455,y:255},{x:570,y:145},{x:730,y:190},{x:815,y:310},{x:1010,y:235},{x:1180,y:155},{x:1325,y:260},{x:1260,y:390},{x:1400,y:505},{x:1290,y:650},{x:1120,y:585},{x:1000,y:760},{x:850,y:865},{x:710,y:760},{x:560,y:900},{x:400,y:820},{x:275,y:900},{x:145,y:760},{x:245,y:620},{x:105,y:490},{x:245,y:385},{x:120,y:315}];
+const W=1900,H=1300,roadW=148,wall=30;
+// A much larger circuit with long straights and four broad bends.
+const controlPts=[{x:220,y:280},{x:520,y:190},{x:920,y:170},{x:1320,y:220},{x:1640,y:390},{x:1750,y:650},{x:1660,y:900},{x:1450,y:1090},{x:1100,y:1160},{x:720,y:1120},{x:390,y:1000},{x:180,y:790},{x:130,y:540},{x:220,y:360}];
 function buildTrack(points,steps=8){let out=[];for(let i=0;i<points.length;i++){let p0=points[(i-1+points.length)%points.length],p1=points[i],p2=points[(i+1)%points.length],p3=points[(i+2)%points.length];for(let j=0;j<steps;j++){let t=j/steps,t2=t*t,t3=t2*t;out.push({x:.5*((2*p1.x)+(-p0.x+p2.x)*t+(2*p0.x-5*p1.x+4*p2.x-p3.x)*t2+(-p0.x+3*p1.x-3*p2.x+p3.x)*t3),y:.5*((2*p1.y)+(-p0.y+p2.y)*t+(2*p0.y-5*p1.y+4*p2.y-p3.y)*t2+(-p0.y+3*p1.y-3*p2.y+p3.y)*t3)});}}return out;}
 const pts=buildTrack(controlPts);
 const keys={left:false,right:false,gas:false,brake:false,hand:false};
 let dpr=1,vw=innerWidth,vh=innerHeight,scale=1,camX=0,camY=0,cameraFollow=true;
-let car={x:160,y:285,vx:0,vy:0,a:-Math.PI/2,steer:0};
+let car={x:220,y:350,vx:0,vy:0,a:-Math.PI/2,steer:0};
 let marks=[],smoke=[],particles=[],started=false,running=false,lap=0,lapStart=0,lastTime=0,elapsed=0,driftScore=0,driftCombo=0,lapDrift=0;
 let best=Number(localStorage.getItem('zunox_drift_best')||0),lapComplete=false,frame=0;
 let stars=Number(localStorage.getItem('zunox_drift_stars')||0),engineLevel=Number(localStorage.getItem('zunox_drift_engine')||0),gripLevel=Number(localStorage.getItem('zunox_drift_grip')||0),paintIndex=Number(localStorage.getItem('zunox_drift_paint')||0);
@@ -64,7 +65,7 @@ function resize(){dpr=Math.min(devicePixelRatio||1,2);vw=innerWidth;vh=innerHeig
 addEventListener('resize',resize);resize();
 function fmt(ms){if(!ms)return'--:--.---';let t=Math.max(0,ms),m=Math.floor(t/60000),s=Math.floor(t/1000)%60,z=Math.floor(t%1000);return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+'.'+String(z).padStart(3,'0')}
 $('best').textContent=fmt(best);refreshShop();
-function resetCar(){car={x:160,y:285,vx:0,vy:0,a:-Math.PI/2,steer:0};marks=[];smoke=[];particles=[];lap=0;lapStart=0;elapsed=0;driftScore=0;driftCombo=0;lapDrift=0;lapComplete=false;$('lap').textContent='0 / 1';$('time').textContent='00:00.000';$('drift').textContent='0';}
+function resetCar(){car={x:220,y:350,vx:0,vy:0,a:-Math.PI/2,steer:0};marks=[];smoke=[];particles=[];lap=0;lapStart=0;elapsed=0;driftScore=0;driftCombo=0;lapDrift=0;lapComplete=false;$('lap').textContent='0 / 1';$('time').textContent='00:00.000';$('drift').textContent='0';}
 function refreshShop(){ $('stars').textContent=stars;document.querySelectorAll('[data-buy]').forEach(b=>{let cost={engine:3,grip:4,paint:2,box:6}[b.dataset.buy];b.disabled=stars<cost;}); }
 function shopMessage(t){$('shopmsg').textContent=t;}
 function buy(item){let cost={engine:3,grip:4,paint:2,box:6}[item];if(stars<cost){shopMessage('Dafür hast du noch nicht genug Sterne.');return;}stars-=cost;if(item==='engine'){engineLevel++;localStorage.setItem('zunox_drift_engine',engineLevel);shopMessage('Motor verbessert! Höhere Beschleunigung und Endgeschwindigkeit.');}if(item==='grip'){gripLevel++;localStorage.setItem('zunox_drift_grip',gripLevel);shopMessage('Reifen verbessert! Mehr Kontrolle in Kurven.');}if(item==='paint'){paintIndex=(paintIndex+1)%paints.length;carPaint=paints[paintIndex];localStorage.setItem('zunox_drift_paint',paintIndex);shopMessage('Neue Lackierung freigeschaltet!');}if(item==='box'){let n=Math.floor(Math.random()*paints.length);paintIndex=n;carPaint=paints[n];localStorage.setItem('zunox_drift_paint',paintIndex);shopMessage('MYSTERY CAR: Überraschungs-Lackierung erhalten!');}localStorage.setItem('zunox_drift_stars',stars);refreshShop();}

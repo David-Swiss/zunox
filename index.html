@@ -8,7 +8,7 @@ const S=300,R=100,B=190;function building(g,h){return {x:g*S+R/2+12,y:h*S+R/2+12
 function rnd(n){let a=Math.sin(n*127.1+311.7)*43758.5453;return a-Math.floor(a)}function blocked(px,py){return buildings.some(b=>px>b.x-10&&px<b.x+b.w+10&&py>b.y-10&&py<b.y+b.h+10)}
 function newTarget(){let t=[[-450,-650],[750,-450],[-900,600],[600,900],[1200,-900],[-1200,-300],[300,1200]][jobs%7];target={x:t[0],y:t[1]};document.getElementById('ms').textContent='Fahre zum goldenen Ziel · Auftrag '+(jobs+1)}
 function pop(s){let z=document.getElementById('toast');z.textContent=s;z.classList.add('show');msgT=2}
-function particles(px,py,col,n){for(let i=0;i<n;i++){let a=Math.random()*6.28,v=Math.random()*3;sparks.push({x:px,y:py,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:.5+Math.random()*.5,col})}
+function particles(px,py,col,n){for(let i=0;i<n;i++){let a=Math.random()*6.28,v=Math.random()*3;sparks.push({x:px,y:py,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:.5+Math.random()*.5,col})}}
 function start(){go=true;document.getElementById('overlay').classList.add('hide');last=performance.now();if(!target)newTarget()}
 function reset(){go=false;jobs=0;score=0;boost=100;player={x:0,y:0,a:-Math.PI/2,v:0};target=null;cars=[];coins=[];localStorage.agcash=0;document.getElementById('overlay').classList.remove('hide');document.getElementById('start').textContent='NOCHMAL STARTEN';updateUI()}
 function updateUI(){document.getElementById('cash').textContent='$'+score;document.getElementById('jobs').textContent=jobs+'/3';document.getElementById('speed').textContent=Math.round(Math.abs(player.v)*18);document.getElementById('boost').textContent=Math.round(boost)+'%'}

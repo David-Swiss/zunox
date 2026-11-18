@@ -4,11 +4,15 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#0a1020"><meta name="description" content="VOID SURVIVORS – Überlebe das Void, entwickle deinen Build und besiege den Kollektor.">
 <title>VOID SURVIVORS · ZUNOX</title><link rel="stylesheet" href="./style.css?v=4">
+<style>
+.zuno-back{position:fixed!important;top:max(10px,env(safe-area-inset-top))!important;left:12px!important;z-index:99999!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:42px!important;padding:0 15px!important;border:1px solid #ffffff38!important;border-radius:13px!important;background:rgba(8,17,31,.88)!important;color:#fff!important;font:800 13px/1 system-ui,-apple-system,sans-serif!important;letter-spacing:.2px!important;text-decoration:none!important;box-shadow:0 5px 20px #0005!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;user-select:none!important;-webkit-user-select:none!important}
+.zuno-back:active{transform:scale(.96)!important;background:rgba(28,48,70,.96)!important}
+</style>
 </head>
 <body>
 <main id="app">
 <canvas id="game" aria-label="VOID SURVIVORS Spielfeld"></canvas><div class="vignette"></div>
-<header class="topbar"><a class="brand" href="../../index.html"><b>V</b><span>VOID <i>SURVIVORS</i></span></a><div><button id="soundButton" class="smallbtn" aria-label="Ton umschalten">♫</button><button id="pauseButton" class="smallbtn" aria-label="Pause">Ⅱ</button></div></header>
+<header class="topbar"><a class="zuno-back" href="../../index.html" aria-label="Zur ZUNOX-Startseite">← Zurück</a><div><button id="soundButton" class="smallbtn" aria-label="Ton umschalten">♫</button><button id="pauseButton" class="smallbtn" aria-label="Pause">Ⅱ</button></div></header>
 <section id="hud" class="hud hidden">
 <div class="stats"><div><small>ÜBERLEBEN</small><strong id="timer">00:00</strong></div><div><small>ELIMINIERUNGEN</small><strong id="kills">0</strong></div><div><small>WELLE</small><strong id="wave">01</strong></div></div>
 <div class="barline"><span>♥</span><div class="track"><i id="healthFill"></i></div><b id="healthText">100 / 100</b></div>

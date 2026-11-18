@@ -709,7 +709,7 @@ function openGame(id){
    let driftCombo=0,driftPoints=0;
    if(id==="drift")button("🌀 Drift (Space)",()=>{state.keys[" "]=!state.keys[" "];showNotice(state.keys[" "]?"Drift-Modus aktiv!":"Drift-Modus aus")});
    update=dt=>{distance+=dt;carX+=((state.keys.arrowright||state.keys.d)?5:0)-((state.keys.arrowleft||state.keys.a)?5:0);carX=Math.max(200,Math.min(520,carX));if(tick%45===0)traffic.push({x:220+Math.random()*280,y:-100,s:3+Math.random()*2});traffic.forEach(t=>t.y+=t.s*dt);traffic=traffic.filter(t=>t.y<500);let drifting=id==="drift"&&(state.keys[" "]||state.keys.shift)&&((state.keys.arrowleft||state.keys.a)||(state.keys.arrowright||state.keys.d));if(drifting){driftCombo=Math.min(10,driftCombo+dt*.05);driftPoints+=Math.floor(dt*(1+driftCombo));set(Math.floor(distance*1.1)+driftPoints)}else{driftCombo=Math.max(0,driftCombo-dt*.1);if(id==="racer")set(Math.floor(distance*2));}if(traffic.some(t=>t.y>320&&t.y<410&&Math.abs(t.x-carX)<43))end(id==="drift"?"Crash! Driftpunkte: "+score:"Crash! Strecke: "+score)};
-   draw=()=>{clear("#15402e");rect(185,0,350,440,"#303641");rect(195,0,8,440,"#eee");rect(527,0,8,440,"#eee");for(let y=(tick*6)%70-70;y<440;y+=70)rect(355,y,10,35,"#d7d7d7");traffic.forEach(t=>{rect(t.x-20,t.y,40,70,"#ff6b7e");rect(t.x-14,t.y+8,28,15,"#bcecff")});if(id==="drift"&&driftCombo>0)text("DRIFT ×"+driftCombo.toFixed(1),360,45,20,"#ff85d1","center");rect(carX-22,340,44,76,id==="drift"&&(state.keys[" "]||state.keys.shift)&&((state.keys.arrowleft||state.keys.a)||(state.keys.arrowright||state.keys.d))?"#ff82d3":"#58e6ff");rect(carX-14,350,28,18,"#d6fbff")};
+   draw=()=>{clear("#06151b");rect(0,0,720,440,"#0b2923");for(let y=0;y<440;y+=44){rect(0,y,175,2,"#123b30");rect(545,y,175,2,"#123b30")}rect(185,0,350,440,"#202633");rect(185,0,12,440,"#697586");rect(523,0,12,440,"#697586");rect(197,0,4,440,"#e8eef6");rect(527,0,4,440,"#e8eef6");for(let y=(tick*7)%72-72;y<440;y+=72){rect(352,y,7,34,"#f7e7a4");rect(361,y+39,7,34,"#f7e7a4")}const drawCar=(x,y,col)=>{rect(x-26,y+8,52,68,"#090d13");rect(x-22,y,44,76,col);rect(x-17,y+13,34,19,"#9deeff");rect(x-17,y+44,34,14,"#13202d");rect(x-24,y+4,8,15,"#fff3c5");rect(x+16,y+4,8,15,"#fff3c5");rect(x-24,y+62,8,9,"#ff526b");rect(x+16,y+62,8,9,"#ff526b");rect(x-29,y+18,6,16,"#10151e");rect(x+23,y+18,6,16,"#10151e")};traffic.forEach(t=>drawCar(t.x,t.y,"#ff5a79"));drawCar(carX,340,id==="drift"&&(state.keys[" "]||state.keys.shift)&&((state.keys.arrowleft||state.keys.a)||(state.keys.arrowright||state.keys.d))?"#fb78f2":"#45dfff");if(id==="drift"&&driftCombo>0){text("DRIFT ×"+driftCombo.toFixed(1),360,45,20,"#ff85d1","center");circle(carX,390,38,"#ff70dd22")}text("DISTANZ "+Math.floor(distance),28,28,15,"#bdeaff");};
  }else if(id==="2048"){
    hint("Pfeiltasten / W A S D · Zahlen kombinieren");
    let board=Array(16).fill(0);const spawn=()=>{let empty=board.map((v,i)=>v===0?i:-1).filter(i=>i>=0);if(empty.length)board[empty[Math.random()*empty.length|0]]=Math.random()<.9?2:4};spawn();spawn();
@@ -969,4 +969,21 @@ render();
 })();
 </script>
 </body>
-</html>
+</html><style>
+/* Premium game presentation pass */
+.gamecard{border-radius:20px;background:linear-gradient(155deg,#1b2840,#0c1321);box-shadow:0 8px 28px #0003}
+.thumb{height:158px;overflow:hidden;background-image:radial-gradient(circle at 50% 25%,#ffffff25,transparent 35%),linear-gradient(135deg,var(--c1),var(--c2))}
+.thumbicon{filter:drop-shadow(0 8px 15px #0009);transform:translateY(-2px);transition:transform .25s}
+.gamecard:hover .thumbicon{transform:scale(1.12) rotate(-4deg)}
+.thumb:before{content:"";position:absolute;inset:12px;border:1px solid #ffffff22;border-radius:12px;z-index:1;pointer-events:none}
+.cardbody{padding:16px}
+.cardbody h3{font-size:16px;font-weight:850}
+.playbtn{background:linear-gradient(135deg,#31d9f4,#8878ff);color:#06121e;font-weight:900}
+.canvaswrap{min-height:0;background:#050916;border:1px solid #3b5274;border-radius:16px;box-shadow:inset 0 0 40px #0008,0 0 35px #5be5ff12}
+.canvaswrap canvas{width:min(100%,720px)!important;border-radius:12px}
+.modal{background:linear-gradient(160deg,#17243a,#0a101d);border:1px solid #456080;box-shadow:0 35px 100px #000b}
+.modalhead{background:#111c2d}
+.controls button,.mobilepad button{background:linear-gradient(145deg,#2b4263,#18263b);border-color:#456283;box-shadow:0 4px 0 #09111d}
+.controls button:active,.mobilepad button:active{transform:translateY(2px);box-shadow:none}
+@media(max-width:620px){.thumb{height:140px}.cardbody{padding:12px}.gamearea{padding:10px}.canvaswrap{min-height:0}}
+</style>

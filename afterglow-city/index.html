@@ -199,7 +199,10 @@ class VehiclePhysics{
   const reverse=input.down('s')||input.down('arrowdown')||input.down('brake');
   const boost=input.down('shift')||input.down('nitro');
   const hand=input.down(' ')||input.down('hand');
-  const steer=(input.down('a')||input.down('arrowleft')||input.down('left')?-1:0)+(input.down('d')||input.down('arrowright')||input.down('right')?1:0);
+  const steerTarget=(input.down('a')||input.down('arrowleft')||input.down('left')?-1:0)+(input.down('d')||input.down('arrowright')||input.down('right')?1:0);
+  // Smooth steering input to prevent abrupt, twitchy direction changes.
+  this.steerInput+=(steerTarget-this.steerInput)*(1-Math.exp(-9*dt));
+  const steer=this.steerInput;
   const hasNitro=boost&&this.nitro>0&&forward;
   const maxSpeed=hasNitro?48:36;
   // Engine, service brake and rolling resistance are independent forces.
@@ -214,8 +217,8 @@ class VehiclePhysics{
   if(hasNitro)this.nitro=Math.max(0,this.nitro-dt*26);
   else this.nitro=Math.min(100,this.nitro+dt*10);
   const speedRatio=clamp(Math.abs(this.speed)/36,0,1);
-  // Steering builds smoothly with speed; reverse steering is naturally inverted.
-  const steeringAuthority=.12+Math.pow(speedRatio,.72)*1.42;
+  // Predictable steering: responsive at city speeds, calmer at high speed.
+  const steeringAuthority=.48+Math.pow(speedRatio,.8)*.62;
   this.yaw+=steer*steeringAuthority*dt*(this.speed<-.15?-1:this.speed>.15?1:0);
   // Normal tyres strongly resist sideways motion. Handbrake deliberately loosens the rear.
   const lateralGrip=hand?3.2:13.5;

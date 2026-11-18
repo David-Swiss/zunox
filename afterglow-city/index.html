@@ -88,7 +88,7 @@ if(!window.THREE){document.querySelector('.dialog p').textContent='3D konnte nic
 const THREEJS=window.THREE, $=id=>document.getElementById(id), clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 class InputManager{
  constructor(){this.keys=new Set();this.touch=new Set();this.bind();this.actions={};}
- bind(){const allowed=new Set(['w','a','s','d','shift',' ','arrowup','arrowdown','arrowleft','arrowright']);addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(allowed.has(k)){this.keys.add(k);e.preventDefault();}});addEventListener('keyup',e=>this.keys.delete(e.key.toLowerCase()));addEventListener('blur',()=>this.clear());document.addEventListener('visibilitychange',()=>{if(document.hidden)this.clear();});document.querySelectorAll('[data-key]').forEach(b=>{const k=b.dataset.key;const release=()=>{this.touch.delete(k);b.classList.remove('active');};b.addEventListener('pointerdown',e=>{e.preventDefault();this.touch.add(k);b.classList.add('active');try{b.setPointerCapture(e.pointerId);}catch(_){}});['pointerup','pointercancel','lostpointercapture','pointerleave'].forEach(ev=>b.addEventListener(ev,release));});}
+ bind(){const allowed=new Set(['w','a','s','d','shift',' ','arrowup','arrowdown','arrowleft','arrowright']);addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(allowed.has(k)){this.keys.add(k);e.preventDefault();}});addEventListener('keyup',e=>this.keys.delete(e.key.toLowerCase()));addEventListener('blur',()=>this.clear());document.addEventListener('visibilitychange',()=>{if(document.hidden)this.clear();});document.querySelectorAll('[data-key]').forEach(b=>{const k=b.dataset.key;const release=()=>{this.touch.delete(k);b.classList.remove('active');};b.addEventListener('pointerdown',e=>{e.preventDefault();this.touch.add(k);b.classList.add('active');try{b.setPointerCapture(e.pointerId);}catch(_){}});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,release));});}
  clear(){this.keys.clear();this.touch.clear();document.querySelectorAll('[data-key]').forEach(b=>b.classList.remove('active'));}
  down(k){return this.keys.has(k)||this.touch.has(k);}
 }
@@ -198,12 +198,13 @@ class VehiclePhysics{
   else this.speed*=Math.pow(hand ? .982 : .994,dt*60);
   if(boost&&this.speed>0&&this.nitro>0)this.nitro=Math.max(0,this.nitro-dt*30);
   else this.nitro=Math.min(100,this.nitro+dt*12);
-  const speedFactor=clamp(Math.abs(this.speed)/9,0,1.6);
-  const yawRate=(.22+speedFactor*.78)*(hand?2.15:1);
+  const speedFactor=clamp(Math.abs(this.speed)/12,0,1.7);
+  const yawRate=(.18+speedFactor*.92)*(hand?1.5:1);
   this.yaw+=steer*dt*yawRate*(this.speed<0?-1:1);
-  const lateralGrip=hand?0.72:5.8;
-  const lateralAcceleration=steer*this.speed*speedFactor*(hand?4.2:0.72);
-  this.lateralSpeed+=(lateralAcceleration-this.lateralSpeed*lateralGrip)*dt;
+  const lateralTarget=steer*this.speed*(hand ? 0.42 : 0.055);
+  const lateralResponse=1-Math.exp(-dt*(hand ? 2.6 : 8.5));
+  this.lateralSpeed+=(lateralTarget-this.lateralSpeed)*lateralResponse;
+  this.lateralSpeed=clamp(this.lateralSpeed,-14,14);
   const fx=Math.sin(this.yaw),fz=-Math.cos(this.yaw),rx=Math.cos(this.yaw),rz=Math.sin(this.yaw);
   const nx=this.x+(fx*this.speed+rx*this.lateralSpeed)*dt;
   const nz=this.z+(fz*this.speed+rz*this.lateralSpeed)*dt;

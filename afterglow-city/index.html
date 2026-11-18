@@ -200,12 +200,13 @@ class VehiclePhysics{
   if(boost&&this.speed>0&&this.nitro>0)this.nitro=Math.max(0,this.nitro-dt*30);
   else this.nitro=Math.min(100,this.nitro+dt*12);
   const speedFactor=clamp(Math.abs(this.speed)/36,0,1);
-  const yawRate=(.12+speedFactor*1.05)*(hand?1.38:1);
+  // Stable arcade handling: the car follows its heading instead of sliding sideways.
+  const yawRate=(.16+speedFactor*.78)*(hand?1.12:1);
   this.yaw+=steer*dt*yawRate*(this.speed<0?-1:1);
-  const lateralTarget=steer*this.speed*(hand ? 0.48 : 0.035);
-  const lateralResponse=1-Math.exp(-dt*(hand ? 2.1 : 11));
+  const lateralTarget=hand?steer*this.speed*.12:0;
+  const lateralResponse=1-Math.exp(-dt*(hand?5:16));
   this.lateralSpeed+=(lateralTarget-this.lateralSpeed)*lateralResponse;
-  this.lateralSpeed=clamp(this.lateralSpeed,-14,14);
+  this.lateralSpeed=clamp(this.lateralSpeed,-4,4);
   const fx=Math.sin(this.yaw),fz=-Math.cos(this.yaw),rx=Math.cos(this.yaw),rz=Math.sin(this.yaw);
   const nx=this.x+(fx*this.speed+rx*this.lateralSpeed)*dt;
   const nz=this.z+(fz*this.speed+rz*this.lateralSpeed)*dt;
@@ -241,7 +242,7 @@ class AfterglowEngine{
  // Trigger only when crossing a grid junction, not along every street.
  const nearGrid=v=>Math.abs(v-Math.round(v/100)*100),nearX=nearGrid(this.player.x),nearZ=nearGrid(this.player.z);const crossedX=Math.floor(oldX/100)!==Math.floor(this.player.x/100),crossedZ=Math.floor(oldZ/100)!==Math.floor(this.player.z/100);if(this.signalRed&&Math.abs(this.player.speed)>8&&((crossedX&&nearZ<16)||(crossedZ&&nearX<16))&&this.clock-this.lastViolation>14){this.lastViolation=this.clock;this.police.summon(this.player.x,this.player.z,this.player.yaw,this.clock);}
  this.police.update(dt,this.player,this.clock);
- const speedFactor=Math.min(Math.abs(this.player.speed)/35,1),back=(this.cameraMode?5:13)+speedFactor*3,height=(this.cameraMode?3.4:6.4)+speedFactor*1.2,lookAhead=4+speedFactor*7,target=new THREEJS.Vector3(this.player.x+Math.sin(this.player.yaw)*back,this.playerCar.group.position.y+height,this.player.z-Math.cos(this.player.yaw)*back),look=new THREEJS.Vector3(this.player.x-Math.sin(this.player.yaw)*lookAhead,1.1,this.player.z+Math.cos(this.player.yaw)*lookAhead);this.camera.position.lerp(target,1-Math.pow(.0008,dt));this.camera.lookAt(look);
+ const speedFactor=Math.min(Math.abs(this.player.speed)/35,1),back=(this.cameraMode?7:15)+speedFactor*3,height=(this.cameraMode?4.2:7)+speedFactor*1.2,lookAhead=4+speedFactor*7,target=new THREEJS.Vector3(this.player.x-Math.sin(this.player.yaw)*back,this.playerCar.group.position.y+height,this.player.z+Math.cos(this.player.yaw)*back),look=new THREEJS.Vector3(this.player.x+Math.sin(this.player.yaw)*lookAhead,1.1,this.player.z-Math.cos(this.player.yaw)*lookAhead);this.camera.position.lerp(target,1-Math.pow(.0008,dt));this.camera.lookAt(look);
  if(this.clock-this.lastHud>.12){this.hud.update(this.player,this.clock,this.police.unit?this.police.activeUntil:0,this.signalRed);this.lastHud=this.clock;}if(performance.now()-this.lastMap>220){this.hud.minimap(this.player);this.lastMap=performance.now();}
  }
  frame(t){requestAnimationFrame(this.frame);const dt=this.last?Math.min(.04,(t-this.last)/1000):0;this.last=t;if(this.active&&!this.paused)this.update(dt);this.renderer.render(this.scene,this.camera);}

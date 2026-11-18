@@ -84,6 +84,7 @@ main{max-width:1200px;margin:auto;padding:24px 18px 60px}
 (()=> {
 "use strict";
 const games=[
+{id:"cookie",name:"Cookie Clicker",cat:"Arcade",icon:"🍪",desc:"Backe dein Cookie-Imperium: Klicke Cookies, kaufe Cursor, Omas, Farmen und Fabriken. Upgrades steigern deine Produktion – speichert automatisch.",colors:["#503018","#d99a43"]},
 {id:"racer",name:"Neon Racer",cat:"Racing",icon:"🏎️",desc:"Rase durch den Neonverkehr, weiche Autos aus und sammle Strecke für deinen Highscore. Je länger du überlebst, desto schneller wird es.",colors:["#102c4b","#087c96"]},
 {id:"drift",name:"Drift Challenge",cat:"Racing",icon:"🛞",desc:"Lenke durch den Verkehr, halte die Ideallinie und sammle Punkte für jede überstandene Sekunde. Wie weit schaffst du es ohne Crash?",colors:["#3b1e50","#b53a79"]},
 {id:"snake",name:"Snake X",cat:"Arcade",icon:"🐍",desc:"Iss die Früchte, wachse mit jedem Bissen und plane deine Route voraus. Wand oder eigener Schwanz bedeuten Game Over.",colors:["#123d34","#26a269"]},
@@ -264,7 +265,21 @@ function openGame(id){
    colors.forEach((col,i)=>{let b=document.createElement("button");b.style.background=col;b.style.width="90px";b.style.height="90px";b.style.borderRadius="16px";b.dataset.color=i;b.onclick=()=>{if(playing||state.over)return;input.push(i);if(input[input.length-1]!==seq[input.length-1]){end("Falsche Reihenfolge! Level "+seq.length);return}if(input.length===seq.length){set(seq.length);input=[];later(next,450)}};controls.append(b)});
    const next=async()=>{if(state.over)return;playing=true;seq.push(Math.random()*4|0);for(let i of seq){await flash(i);await new Promise(r=>setTimeout(r,180))}playing=false};
    button("Start Sequenz",next);update=()=>{};draw=()=>clear("#171d32");
- }else if(id==="clicker"){
+ }else if(id==="cookie"){
+   hint("Cookie antippen · Shop-Upgrades kaufen · Fortschritt wird automatisch gespeichert");
+   let cookies=0,perClick=1,cps=0,owned=[0,0,0,0],prices=[15,100,500,3000],names=["Cursor","Oma","Farm","Fabrik"],rates=[0.1,1,8,45],base=[15,100,500,3000],saved={};
+   try{saved=JSON.parse(localStorage.getItem("gz-cookie")||"{}")}catch(e){}
+   cookies=saved.cookies||0;perClick=saved.perClick||1;owned=saved.owned||owned;prices=base.map((p,i)=>Math.floor(p*Math.pow(1.15,owned[i]||0)));cps=owned.reduce((n,v,i)=>n+v*rates[i],0);
+   let bounce=0,particles=[];
+   const save=()=>localStorage.setItem("gz-cookie",JSON.stringify({cookies,perClick,owned}));
+   const buy=(i)=>{if(cookies<prices[i]){showNotice("Du brauchst noch mehr Cookies!");return}cookies-=prices[i];owned[i]++;prices[i]=Math.floor(base[i]*Math.pow(1.15,owned[i]));cps=owned.reduce((n,v,j)=>n+v*rates[j],0);showNotice(names[i]+" gekauft!");save();shopRender()};
+   const shopRender=()=>{controls.innerHTML="";names.forEach((n,i)=>{let b=button("🍪 "+n+" · "+owned[i]+"  |  "+prices[i].toLocaleString("de-CH")+" Cookies  (+ "+rates[i]+" CPS)",()=>buy(i));b.disabled=cookies<prices[i];b.style.opacity=b.disabled?".55":"1";b.style.minWidth="min(100%, 270px)";b.style.background=b.disabled?"#243149":"linear-gradient(135deg,#634326,#9a6835)";});button("⬆️ Cookie-Upgrade · "+(Math.floor(100*Math.pow(1.8,perClick-1)))+" Cookies (+1 pro Klick)",()=>{let p=Math.floor(100*Math.pow(1.8,perClick-1));if(cookies>=p){cookies-=p;perClick++;showNotice("Klickkraft verbessert!");save();shopRender()}else showNotice("Nicht genug Cookies!")});button("🗑️ Spiel zurücksetzen",()=>{if(confirm("Cookie Clicker wirklich komplett zurücksetzen?")){cookies=0;perClick=1;owned=[0,0,0,0];prices=base.slice();cps=0;save();shopRender()}})};
+   c.onclick=()=>{if(state.over)return;cookies+=perClick;score=Math.floor(cookies);set(score);bounce=1;for(let i=0;i<8;i++)particles.push({x:360+(Math.random()-.5)*70,y:245,vx:(Math.random()-.5)*4,vy:-2-Math.random()*3,life:35});save();shopRender()};
+   shopRender();update=dt=>{cookies+=cps*dt/60;score=Math.floor(cookies);set(score);bounce=Math.max(0,bounce-dt*.08);particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=.12*dt;p.life-=dt});particles=particles.filter(p=>p.life>0);if(tick%180===0)save()};
+   draw=()=>{clear("#2b1c12");for(let y=0;y<440;y+=44){rect(0,y,720,1,"#ffffff08")}ctx.fillStyle="#e7b66c";ctx.font="bold 24px system-ui";ctx.textAlign="center";ctx.fillText("🍪 COOKIE EMPIRE",360,48);text(cookies.toLocaleString("de-CH",{maximumFractionDigits:1})+" Cookies",360,100,30,"#ffe4a8","center");text("+"+perClick+" pro Klick   ·   "+cps.toFixed(1)+" pro Sekunde",360,135,17,"#ffdca0","center");ctx.save();ctx.translate(360,260);ctx.scale(1-bounce*.08,1-bounce*.08);ctx.font="180px system-ui";ctx.textAlign="center";ctx.shadowColor="#ffb74d";ctx.shadowBlur=30;ctx.fillText("🍪",0,55);ctx.restore();particles.forEach(p=>{text("+ "+perClick,p.x,p.y,16,"#fff1aa","center")});text("Tippe auf den Cookie!",360,390,19,"#ffdfa3","center");text("Produktion: "+owned.reduce((a,b)=>a+b,0)+" Helfer",360,420,14,"#c7a87d","center")};
+   // Offline earnings (up to 8 hours)
+   let last=saved.last||Date.now();cookies+=Math.min(28800,Math.max(0,(Date.now()-last)/1000))*cps;save();state.cleanup=()=>{window.removeEventListener("keydown",keysDown);window.removeEventListener("keyup",keysUp);save()};
+   }else if(id==="clicker"){
    hint("Klicke auf den Button so oft du kannst in 15 Sekunden");
    let remaining=15,started=false;
    let big=document.createElement("button");big.className="primary";big.style.fontSize="25px";big.style.padding="28px 50px";big.textContent="KLICK!";controls.append(big);

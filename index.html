@@ -405,11 +405,35 @@ main{max-width:1360px}
 @media(max-width:760px){.hero{grid-template-columns:1fr;min-height:0}.hero-art{height:230px;max-width:360px;width:100%;margin:4px auto 0}.orbit-a{width:205px;height:205px}.orbit-b{width:175px;height:240px}.art-core{width:135px;height:135px}.art-core span{font-size:62px}.art-core b{font-size:13px}.chip-one{right:8px;top:15px}.chip-two{left:4px;bottom:15px}}
 @media(max-width:620px){main{padding:12px 12px 40px}.hero{padding:23px 18px;border-radius:17px}.hero h1{font-size:58px;letter-spacing:-3px}.hero p{font-size:14px}.brandmark{margin-bottom:21px}.stats{gap:6px}.stat{font-size:8px;padding:7px}.grid{grid-template-columns:1fr;gap:13px}.thumb{height:165px}.thumbicon{font-size:68px}.cardbody p{min-height:0}.sectionhead{margin-top:30px}}
 </style>
+<style>
+/* Curated GAMEZONE picks — editorial horizontal shelf */
+.suggested-section{margin:30px 0 34px;padding:22px 0 5px;border-top:1px solid #ffffff18;border-bottom:1px solid #ffffff18}
+.suggested-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:17px}
+.suggested-eyebrow{color:#d7ff3f;font-size:9px;font-weight:1000;letter-spacing:2.2px}
+.suggested-head h2{font-size:25px;letter-spacing:-1px;margin:5px 0 3px;color:#f4f5ef}
+.suggested-head p{margin:0;color:#a9b2c0;font-size:13px}
+.suggested-stamp{padding:8px 11px;border:1px solid #d7ff3f66;border-radius:6px;color:#d7ff3f;font-size:10px;font-weight:1000;letter-spacing:1px;white-space:nowrap}
+.suggested-row{display:grid;grid-auto-columns:minmax(245px,1fr);grid-auto-flow:column;gap:13px;overflow-x:auto;padding:2px 2px 16px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#d7ff3f #171d2a}
+.suggested-card{min-width:0;scroll-snap-align:start;overflow:hidden;background:#151b28;border:1px solid #394357;border-radius:12px;box-shadow:0 8px 22px #0004;transition:transform .18s,border-color .18s}
+.suggested-card:hover{transform:translateY(-3px);border-color:#d7ff3f}
+.suggested-art{height:118px;position:relative;display:grid;place-items:center;background:linear-gradient(125deg,var(--s1),var(--s2));overflow:hidden}
+.suggested-art:before{content:"";position:absolute;width:170px;height:170px;border:1px solid #ffffff55;border-radius:50%;box-shadow:0 0 0 17px #ffffff0b,0 0 0 36px #ffffff0a}
+.suggested-number{position:absolute;top:9px;left:11px;color:#ffffffb5;font-size:9px;font-weight:900;letter-spacing:1px}
+.suggested-icon{font-size:57px;filter:drop-shadow(0 6px 8px #0007);z-index:1}
+.suggested-cat{position:absolute;right:10px;bottom:9px;color:#fff;font-size:9px;font-weight:1000;letter-spacing:1.4px;text-shadow:0 1px 5px #000}
+.suggested-info{padding:12px;display:flex;align-items:center;justify-content:space-between;gap:9px}
+.suggested-info h3{margin:0 0 4px;color:#f5f6f0;font-size:14px}
+.suggested-info p{margin:0;color:#aab4c3;font-size:10px;line-height:1.4;max-width:190px}
+.suggested-play{flex:none;background:#d7ff3f;color:#12170a;border-radius:6px;padding:9px 10px;font-size:9px;font-weight:1000;letter-spacing:.5px}
+.suggested-play:hover{background:#eaff91}
+@media(max-width:620px){.suggested-section{margin:22px 0 28px;padding-top:17px}.suggested-head h2{font-size:21px}.suggested-row{grid-auto-columns:minmax(235px,82vw)}.suggested-art{height:108px}}
+</style>
 </head>
 <body>
 <header class="top"><nav class="nav"><div class="logo">GAMEZONE</div><div class="navlinks"><button class="active" data-nav="all">Start</button><button data-nav="Racing">Racing</button><button data-nav="Arcade">Arcade</button><button data-nav="Puzzle">Puzzle</button><button data-nav="Action">Action</button></div><input id="search" class="search" placeholder="Spiel suchen…" aria-label="Spiel suchen"></nav></header>
 <main>
 <section class="hero"><div class="hero-copy"><div class="brandmark" aria-label="GAMEZONE Play Lab"><span class="brand-glyph">GZ</span><b>GAMEZONE <small>PLAY LAB / 01</small></b></div><div class="kicker">DEIN NÄCHSTER HIGHscore BEGINNT HIER</div><h1>FIND<br><em>YOUR</em><br>PLAY.</h1><p>24 Welten. Unzählige Runs. Ein Platz für deine Rekorde. Such dir dein nächstes Spiel aus und leg direkt los.</p><div class="heroactions"><button class="primary" id="featured">▶ RANDOM RUN STARTEN</button><span class="hero-count">24 SPIELE <i>✳</i> NULL INSTALLATION</span></div><div class="stats"><span class="stat">01 / TOUCH READY</span><span class="stat">02 / KEYBOARD</span><span class="stat">03 / HIGHscores</span></div></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="art-core"><span>G</span><b>PLAY<br>ZONE</b></div><div class="art-chip chip-one">PRESS<br>START</div><div class="art-chip chip-two">EST. 2026</div><div class="art-index">GZ<br><strong>001</strong></div></div></section>
+<section class="suggested-section" aria-label="Vorgeschlagene Games"><div class="suggested-head"><div><span class="suggested-eyebrow">GAMEZONE PICKS / 01</span><h2>Vorgeschlagene Games</h2><p>Handverlesen für deinen nächsten Run.</p></div><span class="suggested-stamp">★ FÜR DICH</span></div><div class="suggested-row" id="suggestedGames"></div></section>
 <div class="sectionhead"><h2>Alle Spiele</h2><span id="count"></span></div>
 <div class="filters" id="filters"></div>
 <div class="grid" id="catalog"></div>
@@ -442,6 +466,12 @@ const categories=["Alle","Open World","Racing","Survival","Arcade","Action","Puz
 const catalog=document.getElementById("catalog"),filters=document.getElementById("filters"),search=document.getElementById("search");
 const safeRead=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)||"null")??fallback}catch(e){return fallback}};const safeWrite=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch(e){}};
  let category="Alle", active=null, gameState=null, loopId=0, lastTime=0, score=0, highs=safeRead("gz-highs",{});
+function renderSuggested(){
+ const picks=["racer","cookie","city","boss","platform","tetris"].map(id=>games.find(g=>g.id===id)).filter(Boolean);
+ const host=document.getElementById("suggestedGames");
+ host.innerHTML=picks.map((g,i)=>`<article class="suggested-card" style="--s1:${g.colors[0]};--s2:${g.colors[1]}"><div class="suggested-art"><span class="suggested-number">0${i+1}</span><span class="suggested-icon">${g.icon}</span><span class="suggested-cat">${g.cat.toUpperCase()}</span></div><div class="suggested-info"><div><h3>${g.name}</h3><p>${g.desc.split(".")[0]}.</p></div><button class="suggested-play" data-suggested-play="${g.id}" aria-label="${g.name} spielen">SPIELEN ↗</button></div></article>`).join("");
+}
+document.getElementById("suggestedGames").addEventListener("click",e=>{const b=e.target.closest("[data-suggested-play]");if(b)openGame(b.dataset.suggestedPlay)});
 function render(){
  const q=search.value.toLowerCase().trim();const shown=games.filter(g=>(category==="Alle"||g.cat===category)&&(g.name.toLowerCase().includes(q)||g.desc.toLowerCase().includes(q)));
  catalog.innerHTML=shown.map(g=>`<article class="gamecard"><div class="thumb" data-game="${g.id}" style="--c1:${g.colors[0]};--c2:${g.colors[1]}"><span class="thumbicon">${g.icon}</span><span class="thumbshine"></span><span class="thumbcaption">${g.cat.toUpperCase()} · PLAY NOW</span></div><div class="cardbody"><h3>${g.name}</h3><p>${g.desc}</p><div class="cardbottom"><span class="tag">${g.cat}${highs[g.id]?" · 🏆 "+highs[g.id]:""}</span><button class="playbtn" data-play="${g.id}">Spielen ▶</button></div></div></article>`).join("");
@@ -787,7 +817,8 @@ function openGame(id){
  state.draw=draw;state.update=update;startLoop();
 }
 try{
- render();
+ renderSuggested();
+render();
  if(!catalog.children.length){
   catalog.innerHTML=games.map(g=>`<article class="gamecard"><div class="thumb" style="--c1:${g.colors?.[0]||"#17243b"};--c2:${g.colors?.[1]||"#315b82"}"><span class="thumbicon">${g.icon||"🎮"}</span></div><div class="cardbody"><h3>${g.name||"Spiel"}</h3><p>${g.desc||"Direkt spielbar."}</p><div class="cardbottom"><span class="tag">${g.cat||"Game"}</span><button class="playbtn" data-play="${g.id}">Spielen ▶</button></div></div></article>`).join("");
   document.getElementById("count").textContent=`${games.length} Spiele`;

@@ -334,11 +334,82 @@ html,body{background:radial-gradient(ellipse at 50% -18%,#176b4b 0,transparent 4
 .notice{background:linear-gradient(100deg,#174b36,#245b3d);border-color:#6bc88a;color:#f0fff4}
 .hint,.gameinfo{color:#c3dfce}
 </style>
+<style>
+/* GAMEZONE ORIGINAL IDENTITY — SIGNAL//ARCADE */
+:root{--bg:#0b0d16;--panel:#171b29;--panel2:#202638;--text:#f5f6f2;--muted:#a5adbd;--accent:#d7ff3f;--accent2:#ff654f;--line:#30394c}
+html,body{background:radial-gradient(ellipse at 78% 0%,#242d49 0,transparent 38%),linear-gradient(150deg,#0a0c14,#101522 58%,#090b11);background-attachment:fixed}
+.top{background:#0a0d16eF;border-bottom:1px solid #ffffff18}
+.logo{background:linear-gradient(90deg,#e3ff5a,#ff775e);-webkit-background-clip:text}
+.navlinks button:hover,.navlinks button.active{background:#ffffff0d;border-color:#d7ff3f55;color:#f6ffda}
+.search{background:#171c29;border-color:#394257}
+main{max-width:1360px}
+.hero{min-height:440px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);align-items:center;gap:20px;text-align:left;padding:clamp(24px,5vw,58px);border:1px solid #41495b;border-radius:26px;background:linear-gradient(112deg,#171d2b 0%,#111725 58%,#222a38 100%);box-shadow:0 24px 70px #0008,inset 0 1px #ffffff19}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;background:repeating-linear-gradient(135deg,transparent 0 23px,#ffffff0b 24px,#ffffff0b 25px,transparent 26px 48px);z-index:-1}
+.hero:after{right:0;top:auto;bottom:-120px;width:360px;height:360px;background:radial-gradient(circle,#d7ff3f18,transparent 68%)}
+.hero-copy{position:relative;z-index:2}
+.brandmark{display:inline-flex;align-items:center;gap:11px;margin:0 0 26px;padding:8px 13px 8px 8px;border:1px solid #ffffff25;border-radius:12px;background:#090d16;box-shadow:5px 5px 0 #d7ff3f}
+.brand-glyph{display:grid;place-items:center;width:43px;height:43px;background:#d7ff3f;color:#10140a;font-weight:1000;font-size:18px;letter-spacing:-2px;clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%)}
+.brandmark b{font-size:15px;letter-spacing:1.6px;color:#fff}
+.brandmark b small{display:block;margin-top:3px;color:#aeb8c9;font-size:8px;letter-spacing:2.1px}
+.kicker{color:#d7ff3f;font-size:10px;letter-spacing:2.4px;font-weight:900}
+.hero h1{font-size:clamp(54px,8vw,94px);line-height:.78;letter-spacing:-5px;margin:22px 0 20px;font-weight:1000}
+.hero h1 em{font-style:normal;color:#d7ff3f;background:none;-webkit-text-fill-color:initial}
+.hero p{color:#b9c1ce;font-size:15px;line-height:1.65;max-width:470px;margin:0 0 24px}
+.heroactions{display:flex;align-items:center;justify-content:flex-start;gap:12px;flex-wrap:wrap}
+.primary{background:#d7ff3f;color:#12170a;padding:14px 19px;border-radius:9px;font-weight:1000;box-shadow:4px 4px 0 #ff654f;letter-spacing:.2px}
+.primary:hover{background:#e8ff83;transform:translate(-1px,-1px)}
+.hero-count{background:#0b101b;border:1px solid #485267;border-radius:9px;padding:12px 14px;color:#e7eaf0;font-size:11px;font-weight:900;letter-spacing:1px}
+.hero-count i{color:#d7ff3f;font-style:normal;padding:0 5px}
+.stats{justify-content:flex-start;gap:8px;margin-top:25px}
+.stat{background:#0b101b;border:1px solid #313b50;color:#b8c2d2;border-radius:6px;font-size:9px;font-weight:900;letter-spacing:1px;padding:8px 10px}
+.hero-art{height:330px;position:relative;display:grid;place-items:center;isolation:isolate}
+.orbit{position:absolute;border:1px solid #d7ff3f65;border-radius:50%;transform:rotate(-28deg)}
+.orbit-a{width:270px;height:270px;border-left-color:transparent;border-bottom-color:#ff654f}
+.orbit-b{width:220px;height:310px;border-color:#ffffff28;border-top-color:#ff654f;transform:rotate(38deg)}
+.art-core{width:176px;height:176px;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(145deg,#d7ff3f,#a7d629);color:#11170a;clip-path:polygon(0 0,82% 0,100% 18%,100% 100%,18% 100%,0 82%);box-shadow:0 0 65px #d7ff3f35;transform:rotate(-8deg)}
+.art-core span{font-size:78px;font-weight:1000;letter-spacing:-12px}
+.art-core b{font-size:16px;line-height:.95;letter-spacing:1px}
+.art-chip{position:absolute;background:#ff654f;color:#190c0a;padding:9px 12px;font-size:10px;line-height:1.15;font-weight:1000;letter-spacing:1.4px;box-shadow:4px 4px 0 #080b12}
+.chip-one{right:0;top:44px;transform:rotate(7deg)}
+.chip-two{left:0;bottom:38px;background:#f4f3eb;transform:rotate(-6deg)}
+.art-index{position:absolute;right:10px;bottom:8px;color:#a8b1c1;font-size:10px;letter-spacing:2px;text-align:right}
+.art-index strong{color:#d7ff3f;font-size:22px}
+.sectionhead{margin:38px 0 15px}
+.sectionhead h2{font-size:24px;letter-spacing:-.7px}
+.sectionhead h2:before{content:"/ ";color:#d7ff3f}
+.filters{gap:8px}
+.filter{background:#151b29;border:1px solid #343e52;color:#b8c2d2;border-radius:7px;font-weight:800}
+.filter.selected{background:#d7ff3f;color:#11170a;border-color:#d7ff3f;box-shadow:3px 3px 0 #ff654f}
+.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.gamecard{background:linear-gradient(155deg,#1b2231,#111722);color:#f5f6f2;border:1px solid #354055;border-radius:14px;box-shadow:0 12px 30px #0005}
+.gamecard:hover{border-color:#d7ff3f;box-shadow:0 18px 40px #0008,0 0 0 1px #d7ff3f35;transform:translateY(-5px)}
+.thumb{height:190px;border-bottom:1px solid #ffffff20}
+.thumb:after{background:linear-gradient(0deg,#090d16d9,transparent 72%)}
+.thumbicon{font-size:76px}
+.thumbcaption{color:#d7ff3f;font-size:9px}
+.cardbody{padding:16px}
+.cardbody h3{color:#f6f6f0;font-size:19px;letter-spacing:-.4px}
+.cardbody p{color:#aab4c4;font-size:13px;line-height:1.55;min-height:60px}
+.tag{background:#252e40;color:#d8e0ed;border:1px solid #3a465c;border-radius:6px;font-weight:800}
+.playbtn{background:#d7ff3f;color:#10150a;border-radius:7px;font-weight:1000;box-shadow:3px 3px 0 #ff654f}
+.playbtn:hover{background:#e8ff83}
+.overlay{background:#05070dee;backdrop-filter:blur(12px)}
+.modal{background:linear-gradient(145deg,#1b2231,#0d121c);border:1px solid #515d70;border-radius:16px}
+.modalhead{background:#121925;border-bottom:1px solid #394357}
+.modalhead h2{color:#f4f6f0}
+.iconbtn{background:#252f40;border:1px solid #46536a;border-radius:8px}
+.canvaswrap{background:#070b12;border:1px solid #46536a;border-radius:10px}
+.controls button,.mobilepad button{background:#222d3f;border:1px solid #4a5870;border-radius:8px}
+.notice{background:#27351c;border:1px solid #d7ff3f;color:#f0ffd0;border-radius:8px}
+.hint,.gameinfo{color:#b5c0d0}
+@media(max-width:760px){.hero{grid-template-columns:1fr;min-height:0}.hero-art{height:230px;max-width:360px;width:100%;margin:4px auto 0}.orbit-a{width:205px;height:205px}.orbit-b{width:175px;height:240px}.art-core{width:135px;height:135px}.art-core span{font-size:62px}.art-core b{font-size:13px}.chip-one{right:8px;top:15px}.chip-two{left:4px;bottom:15px}}
+@media(max-width:620px){main{padding:12px 12px 40px}.hero{padding:23px 18px;border-radius:17px}.hero h1{font-size:58px;letter-spacing:-3px}.hero p{font-size:14px}.brandmark{margin-bottom:21px}.stats{gap:6px}.stat{font-size:8px;padding:7px}.grid{grid-template-columns:1fr;gap:13px}.thumb{height:165px}.thumbicon{font-size:68px}.cardbody p{min-height:0}.sectionhead{margin-top:30px}}
+</style>
 </head>
 <body>
 <header class="top"><nav class="nav"><div class="logo">GAMEZONE</div><div class="navlinks"><button class="active" data-nav="all">Start</button><button data-nav="Racing">Racing</button><button data-nav="Arcade">Arcade</button><button data-nav="Puzzle">Puzzle</button><button data-nav="Action">Action</button></div><input id="search" class="search" placeholder="Spiel suchen…" aria-label="Spiel suchen"></nav></header>
 <main>
-<section class="hero"><div class="brandmark" aria-label="GAMEZONE Logo"><span>🎮</span><b>GAME<span>ZONE</span></b></div><div class="kicker">DEINE ARCADE. DEINE REGELN.</div><h1>SPIELEN.<br><em>ENTDECKEN.</em><br>LEVEL UP.</h1><p>Entdecke 24 kostenlose Games – direkt im Browser spielbar. Von Racing und Action bis Puzzle und Strategie.</p><div class="heroactions"><button class="primary" id="featured">▶ FEATURED GAME STARTEN</button><span class="hero-count">⚡ 24 GAMES · 100% GRATIS</span></div><div class="stats"><span class="stat">📱 Für iPad & Mobile</span><span class="stat">🎮 Touch + Tastatur</span><span class="stat">🏆 Deine Highscores</span></div></section>
+<section class="hero"><div class="hero-copy"><div class="brandmark" aria-label="GAMEZONE Play Lab"><span class="brand-glyph">GZ</span><b>GAMEZONE <small>PLAY LAB / 01</small></b></div><div class="kicker">DEIN NÄCHSTER HIGHscore BEGINNT HIER</div><h1>FIND<br><em>YOUR</em><br>PLAY.</h1><p>24 Welten. Unzählige Runs. Ein Platz für deine Rekorde. Such dir dein nächstes Spiel aus und leg direkt los.</p><div class="heroactions"><button class="primary" id="featured">▶ RANDOM RUN STARTEN</button><span class="hero-count">24 SPIELE <i>✳</i> NULL INSTALLATION</span></div><div class="stats"><span class="stat">01 / TOUCH READY</span><span class="stat">02 / KEYBOARD</span><span class="stat">03 / HIGHscores</span></div></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="art-core"><span>G</span><b>PLAY<br>ZONE</b></div><div class="art-chip chip-one">PRESS<br>START</div><div class="art-chip chip-two">EST. 2026</div><div class="art-index">GZ<br><strong>001</strong></div></div></section>
 <div class="sectionhead"><h2>Alle Spiele</h2><span id="count"></span></div>
 <div class="filters" id="filters"></div>
 <div class="grid" id="catalog"></div>

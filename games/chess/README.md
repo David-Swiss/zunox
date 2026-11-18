@@ -11,9 +11,9 @@ Eigenständiges Browser-Schachspiel für GitHub Pages. Alle Pfade sind relativ; 
    - Ziel: `games/chess/vendor/chess.js`
    - Das ist die ES-Modul-Version, die die Regel- und FEN/PGN-Logik bereitstellt.
 2. Lade **Stockfish 17.1.0**, Single-Thread-Lite-Build, aus dem npm-Paket herunter: https://www.npmjs.com/package/stockfish
-   - Quelle im Paket: `package/bin/stockfish-17.1-lite-single-03e3232.js`
+   - Quelle im Paket: `package/src/stockfish-17.1-lite-single-03e3232.js`
    - Zielname: `games/chess/vendor/stockfish.js`
-   - Dazu die passende Datei `package/bin/stockfish-17.1-lite-single-03e3232.wasm`
+   - Dazu die passende Datei `package/src/stockfish-17.1-lite-single-03e3232.wasm`
    - Zielname: `games/chess/vendor/stockfish.wasm`
    - Beide Dateien müssen im selben Ordner liegen. Kein Multi-Thread-Build verwenden: GitHub Pages setzt hier keine COOP/COEP-Header.
 3. Lege beide Bibliotheken selbst in `vendor/`. Sie werden nicht von einem fremden Server geladen.

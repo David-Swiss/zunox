@@ -70,6 +70,56 @@ main{max-width:1200px;margin:auto;padding:24px 18px 60px}
 .controls button:active,.mobilepad button:active{transform:scale(.96);filter:brightness(1.2)}
 .canvaswrap{touch-action:pan-y}
 @media(max-width:620px){.cardbody p{min-height:64px;font-size:12px}.gameinfo span{max-width:100%}}
+</style><style>
+/* Clean, compact game overlay */
+.overlay{padding:clamp(8px,2vw,22px);background:rgba(4,7,14,.78);backdrop-filter:blur(14px);align-items:flex-start!important}
+.overlay.open{overflow-y:auto}
+.modal{width:min(1000px,100%);margin:auto;border-radius:22px;background:linear-gradient(160deg,#121c2e,#0b1220);border:1px solid #2c405f;box-shadow:0 24px 90px #0009}
+.modalhead{padding:14px 18px;background:#111a2a;position:sticky;top:0;z-index:2;gap:10px}
+.modalhead h2{font-size:18px;font-weight:850;letter-spacing:.1px}
+.iconbtn{font-size:13px;font-weight:700;padding:9px 12px;border:1px solid #304461;background:#1c2a40;transition:.15s}
+.iconbtn:hover{background:#2b4261;transform:translateY(-1px)}
+.gamearea{padding:clamp(10px,2vw,18px)}
+.gameinfo{margin:0 0 12px;padding:10px 12px;border-radius:12px;background:#0c1524;border:1px solid #243650}
+.gameinfo #score{color:#e8f2ff;background:#1a2b43;padding:7px 10px;border-radius:9px;font-size:13px}
+.canvaswrap{min-height:0;padding:8px;background:linear-gradient(145deg,#0b1423,#060b13);border-radius:16px;border:1px solid #2c405b}
+.canvaswrap canvas{width:min(100%,720px)!important;max-height:58vh;object-fit:contain;border-radius:11px}
+.controls{margin-top:12px;gap:8px}
+.controls button{border-radius:11px;padding:10px 13px;font-weight:750;font-size:13px;border:1px solid #344c6c;background:#1c2d45;box-shadow:0 2px 0 #0a101a;transition:.14s}
+.controls button:hover:not(:disabled){background:#2b4565;border-color:#5277a1;transform:translateY(-1px)}
+.controls button:disabled{cursor:not-allowed;opacity:.42}
+.hint{margin:10px 0 2px;font-size:12px;line-height:1.5}
+.notice{margin-top:10px;border:1px solid #39577c;background:#182b45;border-radius:12px}
+.mobilepad button{border:1px solid #385270;box-shadow:0 3px 0 #111b2b}
+.overlay[data-game="cookie"] .modal{max-width:860px}
+.overlay[data-game="cookie"] .gamearea{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:12px;align-items:start}
+.overlay[data-game="cookie"] .gameinfo{grid-column:1/-1;margin:0}
+.overlay[data-game="cookie"] .canvaswrap{min-height:300px;grid-row:2}
+.overlay[data-game="cookie"] .canvaswrap canvas{max-height:none}
+.overlay[data-game="cookie"] .controls{grid-column:2;grid-row:2;display:grid;grid-template-columns:1fr;justify-content:stretch;margin:0;max-height:410px;overflow-y:auto;padding-right:3px}
+.overlay[data-game="cookie"] .controls button{width:100%;text-align:left;min-width:0!important;padding:12px 13px;line-height:1.35;border-radius:12px;background:linear-gradient(135deg,#342b21,#4a3828);border-color:#6a5038;color:#ffe5b4}
+.overlay[data-game="cookie"] .controls button:hover:not(:disabled){background:linear-gradient(135deg,#493a2a,#65472e);border-color:#ad8454}
+.overlay[data-game="cookie"] .controls button:disabled{background:#182338;border-color:#283b56;color:#91a3bf}
+.overlay[data-game="cookie"] .hint{grid-column:1/-1}
+@media(max-width:680px){
+ .overlay{padding:5px;align-items:flex-start!important}
+ .modal{border-radius:15px}
+ .modalhead{padding:10px 11px;gap:6px}
+ .modalhead h2{font-size:15px}
+ .iconbtn{font-size:11px;padding:8px}
+ .gamearea{padding:9px}
+ .canvaswrap{padding:3px;border-radius:12px}
+ .canvaswrap canvas{max-height:48vh}
+ .gameinfo{padding:8px 9px;font-size:12px}
+ .gameinfo #score{font-size:12px}
+ .controls button{padding:9px 10px;font-size:12px}
+ .overlay[data-game="cookie"] .gamearea{grid-template-columns:1fr;gap:9px}
+ .overlay[data-game="cookie"] .canvaswrap{grid-row:2;min-height:0}
+ .overlay[data-game="cookie"] .canvaswrap canvas{max-height:42vh}
+ .overlay[data-game="cookie"] .controls{grid-column:1;grid-row:3;grid-template-columns:1fr 1fr;max-height:270px;gap:7px}
+ .overlay[data-game="cookie"] .controls button{padding:10px;font-size:11px}
+ .overlay[data-game="cookie"] .hint{grid-column:1;grid-row:4}
+}
 </style></head>
 <body>
 <header class="top"><nav class="nav"><div class="logo">GAMEZONE</div><div class="navlinks"><button class="active" data-nav="all">Start</button><button data-nav="Racing">Racing</button><button data-nav="Arcade">Arcade</button><button data-nav="Puzzle">Puzzle</button><button data-nav="Action">Action</button></div><input id="search" class="search" placeholder="Spiel suchen…" aria-label="Spiel suchen"></nav></header>
@@ -130,7 +180,7 @@ function showNotice(t){notice.textContent=t;notice.classList.add("show")}
 function hideNotice(){notice.classList.remove("show")}
 function openGame(id){
  cleanupGame();active=games.find(g=>g.id===id);if(!active)return;
- overlay.classList.add("open");document.getElementById("gameTitle").textContent=active.icon+" "+active.name;
+ overlay.classList.add("open");overlay.dataset.game=id;document.getElementById("gameTitle").textContent=active.icon+" "+active.name;
  document.getElementById("gameDesc").textContent=active.desc;document.getElementById("hint").textContent="";wrap.innerHTML="";controls.innerHTML="";pad.innerHTML="";hideNotice();setScore(0);
  const c=document.createElement("canvas");c.width=720;c.height=440;c.style.width="min(100%, 720px)";c.style.height="auto";wrap.append(c);
  const ctx=c.getContext("2d");ctx.imageSmoothingEnabled=false;

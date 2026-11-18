@@ -31,6 +31,36 @@ main{max-width:1200px;margin:auto;padding:24px 18px 60px}
 <style>
 /* GAMEZONE 2.0 polish */
 .hero{box-shadow:0 18px 55px #03071370}.gamecard{display:flex;flex-direction:column}.cardbody{display:flex;flex-direction:column;flex:1}.cardbottom{margin-top:auto;padding-top:12px}.thumb{overflow:hidden}.thumb:before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;border:1px solid #ffffff22;transform:translate(55px,20px)}.gamecard:hover .thumb{filter:saturate(1.3)}.filter{transition:.15s}.filter:hover{border-color:#69dff3;color:white}.gamearea{max-width:100%;}.canvaswrap canvas{border-radius:10px}.search{box-shadow:inset 0 1px 2px #0003}
+</style><style>
+/* GAMEZONE cover art + game visual upgrade */
+.thumb{height:150px;background:radial-gradient(circle at 72% 20%,#ffffff38,transparent 25%),linear-gradient(145deg,var(--c1),var(--c2));isolation:isolate}
+.thumb:before{width:170px;height:170px;border:1px solid #ffffff20;right:-25px;top:-45px;transform:none;box-shadow:0 0 0 18px #ffffff08,0 0 0 36px #ffffff06}
+.thumb:after{background:linear-gradient(0deg,#070b18c9 0%,transparent 65%);z-index:0}
+.thumbicon{position:relative;z-index:1;font-size:66px;filter:drop-shadow(0 10px 10px #0008);transform:translateY(-3px);transition:transform .25s,filter .25s}
+.thumbshine{position:absolute;inset:0;z-index:0;opacity:.55;background:linear-gradient(120deg,transparent 25%,#ffffff18 48%,transparent 65%);transform:translateX(-80%);transition:transform .55s}
+.thumbcaption{position:absolute;z-index:2;bottom:9px;left:11px;font-size:9px;letter-spacing:1.5px;font-weight:900;color:#ffffffc9}
+.gamecard:hover .thumbshine{transform:translateX(80%)}
+.gamecard:hover .thumbicon{transform:translateY(-7px) scale(1.12);filter:drop-shadow(0 12px 14px #0009)}
+/* Different artwork atmospheres */
+.thumb[data-game="racer"],.thumb[data-game="drift"]{background:radial-gradient(ellipse at 50% 85%,#ffffff24,transparent 40%),linear-gradient(145deg,#081c36,#00a5c9)}
+.thumb[data-game="racer"]:before,.thumb[data-game="drift"]:before{border-radius:24px;transform:rotate(35deg);right:10px;top:12px;width:95px;height:180px}
+.thumb[data-game="shooter"],.thumb[data-game="dodge"]{background:radial-gradient(circle at 50% 50%,#7865ff65,transparent 45%),linear-gradient(145deg,#080b27,#31217a)}
+.thumb[data-game="snake"],.thumb[data-game="tower"],.thumb[data-game="platform"]{background:radial-gradient(circle at 30% 80%,#3cff9a35,transparent 40%),linear-gradient(145deg,#082d27,#126d4e)}
+.thumb[data-game="breakout"],.thumb[data-game="bubble"],.thumb[data-game="blocks"]{background:radial-gradient(circle at 70% 20%,#ff89e044,transparent 40%),linear-gradient(145deg,#27133e,#9c367b)}
+.thumb[data-game="2048"],.thumb[data-game="mines"],.thumb[data-game="solitaire"]{background:radial-gradient(circle at 50% 45%,#ffd18a44,transparent 40%),linear-gradient(145deg,#49321e,#b78242)}
+.thumb[data-game="memory"],.thumb[data-game="memory2"],.thumb[data-game="quiz"]{background:radial-gradient(circle at 70% 20%,#8bb6ff44,transparent 38%),linear-gradient(145deg,#15274c,#586fb4)}
+.thumb[data-game="penalty"],.thumb[data-game="basket"]{background:radial-gradient(circle at 50% 80%,#ffffff20,transparent 42%),linear-gradient(145deg,#10472e,#34a86a)}
+.thumb[data-game="reaction"],.thumb[data-game="aim"],.thumb[data-game="clicker"],.thumb[data-game="typing"]{background:radial-gradient(circle at 50% 50%,#ffffff20,transparent 45%),linear-gradient(145deg,#2a164b,#7d4cc8)}
+.thumb[data-game="runner"],.thumb[data-game="flappy"],.thumb[data-game="tetris"]{background:radial-gradient(circle at 70% 20%,#7ce7ff44,transparent 40%),linear-gradient(145deg,#0c2948,#267fae)}
+.thumb[data-game="ttt"],.thumb[data-game="connect"],.thumb[data-game="maze"],.thumb[data-game="whack"]{background:radial-gradient(circle at 50% 50%,#ffffff18,transparent 50%),linear-gradient(145deg,#1d2b45,#526fa5)}
+/* Canvas game screens */
+.canvaswrap{background:radial-gradient(ellipse at top,#1c2b47,#050a12 70%);border-color:#3b5274;box-shadow:inset 0 0 35px #0007,0 10px 35px #0004}
+.canvaswrap canvas{border:1px solid #ffffff0b;box-shadow:0 0 25px #58e6ff12;image-rendering:auto}
+.gamecard{border-color:#2b3d5b;background:linear-gradient(160deg,#18243a,#0d1424)}
+.gamecard:hover{border-color:#62d8f3;box-shadow:0 14px 35px #0005,0 0 0 1px #62d8f322}
+.cardbody h3{letter-spacing:.15px}
+.playbtn{background:linear-gradient(135deg,#2a4567,#355780);border:1px solid #456487}
+@media(max-width:620px){.thumb{height:110px}.thumbicon{font-size:52px}.thumbcaption{font-size:8px;bottom:7px;left:8px}}
 </style></head>
 <body>
 <header class="top"><nav class="nav"><div class="logo">GAMEZONE</div><div class="navlinks"><button class="active" data-nav="all">Start</button><button data-nav="Racing">Racing</button><button data-nav="Arcade">Arcade</button><button data-nav="Puzzle">Puzzle</button><button data-nav="Action">Action</button></div><input id="search" class="search" placeholder="Spiel suchen…" aria-label="Spiel suchen"></nav></header>
@@ -70,7 +100,7 @@ const catalog=document.getElementById("catalog"),filters=document.getElementById
 let category="Alle", active=null, gameState=null, loopId=0, lastTime=0, score=0, highs=JSON.parse(localStorage.getItem("gz-highs")||"{}");
 function render(){
  const q=search.value.toLowerCase().trim();const shown=games.filter(g=>(category==="Alle"||g.cat===category)&&(g.name.toLowerCase().includes(q)||g.desc.toLowerCase().includes(q)));
- catalog.innerHTML=shown.map(g=>`<article class="gamecard"><div class="thumb" style="--c1:${g.colors[0]};--c2:${g.colors[1]}">${g.icon}</div><div class="cardbody"><h3>${g.name}</h3><p>${g.desc}</p><div class="cardbottom"><span class="tag">${g.cat}${highs[g.id]?" · 🏆 "+highs[g.id]:""}</span><button class="playbtn" data-play="${g.id}">Spielen ▶</button></div></div></article>`).join("");
+ catalog.innerHTML=shown.map(g=>`<article class="gamecard"><div class="thumb" data-game="${g.id}" style="--c1:${g.colors[0]};--c2:${g.colors[1]}"><span class="thumbicon">${g.icon}</span><span class="thumbshine"></span><span class="thumbcaption">${g.cat.toUpperCase()} · PLAY NOW</span></div><div class="cardbody"><h3>${g.name}</h3><p>${g.desc}</p><div class="cardbottom"><span class="tag">${g.cat}${highs[g.id]?" · 🏆 "+highs[g.id]:""}</span><button class="playbtn" data-play="${g.id}">Spielen ▶</button></div></div></article>`).join("");
  document.getElementById("count").textContent=`${shown.length} Spiele`;
 }
 filters.innerHTML=categories.map(c=>`<button class="filter ${c==="Alle"?"selected":""}" data-cat="${c}">${c}</button>`).join("");

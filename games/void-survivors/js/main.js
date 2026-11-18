@@ -35,7 +35,6 @@ addEventListener("keyup",e=>keys.delete(e.code));addEventListener("blur",()=>{ke
 function showLevel(){if(levelQueue<=0)return;state="level";levelQueue--;const choices=makeChoices(player);ui.choices(choices,chooseUpgrade);ui.el.rerollsLeft.textContent="REROLLS: "+rerolls;ui.el.rerollButton.disabled=rerolls<=0;}
 function chooseUpgrade(item){applyUpgrade(player,item);audio.level();ui.weapons(player);if(levelQueue>0){showLevel();}else{state=bossSpawned&&!bossDefeated?"boss":"playing";ui.show(null);}}
 function reroll(){if(state!=="level"||rerolls<=0)return;rerolls--;const choices=makeChoices(player);ui.choices(choices,chooseUpgrade);ui.el.rerollsLeft.textContent="REROLLS: "+rerolls;ui.el.rerollButton.disabled=rerolls<=0;}
-function openShop(){ui.renderShop(save,(id,cost)=>{if(save.cores<cost)return;save.cores-=cost;save.upgrades[id]++;saveNow();ui.renderShop(save,arguments.callee);});ui.show("shopOverlay");}
 function refreshMenu(){document.getElementById("coreCount").textContent=save.cores;document.getElementById("bestTime").textContent=save.best?fmtTime(save.best):"--:--";}
 document.getElementById("startButton").addEventListener("click",startRun);
 document.getElementById("pauseButton").addEventListener("click",pause);

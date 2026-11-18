@@ -98,9 +98,13 @@ if(onRoad&&Math.abs(forward)>95&&slip>.18&&Math.abs(steer)>0){let gain=Math.roun
 else driftCombo=Math.max(0,driftCombo-50*dt);
 if(onRoad&&Math.abs(side)>35&&Math.abs(forward)>100&&frame%2===0){for(let s of [-1,1])marks.push({x:car.x-fwdX*13+rightX*s*8,y:car.y-fwdY*13+rightY*s*8,a:car.a,life:1});}
 marks.forEach(m=>m.life-=dt*.018);marks=marks.filter(m=>m.life>0);smoke.forEach(p=>{p.life-=dt;p.r+=dt*9;p.a*=.986});smoke=smoke.filter(p=>p.life>0);
-// ordered checkpoint gates, then start/finish gate at first segment
-if(checkpoint<gates.length){let g=gates[checkpoint],p=gatePoint(g.index),next=pts[(g.index+1)%pts.length],ang=Math.atan2(next.y-p.y,next.x-p.x);if(Math.hypot(car.x-p.x,car.y-p.y)<roadW*.55)checkpoint++;}
-else {let a=pts[0],b=pts[1],ang=Math.atan2(b.y-a.y,b.x-a.x);if(prevY>a.y&&car.y<=a.y&&Math.abs(car.x-a.x)<roadW*.48&&forward>50){if(!lapStart){lapStart=performance.now();lap=1;$('lap').textContent='1 / 1';}else{elapsed=performance.now()-lapStart;if(!best||elapsed<best){best=elapsed;localStorage.setItem('zunox_drift_best',String(best));$('best').textContent=fmt(best);}lapComplete=true;running=false;$('overlay').style.display='grid';$('overlay').querySelector('h1').innerHTML='RUNDE<br>GESCHAFFT';$('overlay').querySelector('p').textContent='Zeit: '+fmt(elapsed)+' · Driftpunkte: '+driftScore+' · '+(elapsed===best?'Neue Bestzeit!':'Bestzeit: '+fmt(best));$('start').textContent='NOCH EINE RUNDE';started=false;}}}
+// Startlinie: erster Übertritt startet die Uhr, der nächste nach allen Checkpoints beendet die Runde.
+let a=pts[0],b=pts[1];
+let crossStart=prevY>a.y&&car.y<=a.y&&Math.abs(car.x-a.x)<roadW*.48&&forward>50;
+if(crossStart){
+ if(!lapStart){lapStart=performance.now();lap=1;$('lap').textContent='1 / 1';}
+ else if(checkpoint>=gates.length){elapsed=performance.now()-lapStart;if(!best||elapsed<best){best=elapsed;localStorage.setItem('zunox_drift_best',String(best));$('best').textContent=fmt(best);}lapComplete=true;running=false;$('overlay').style.display='grid';$('overlay').querySelector('h1').innerHTML='RUNDE<br>GESCHAFFT';$('overlay').querySelector('p').textContent='Zeit: '+fmt(elapsed)+' · Driftpunkte: '+driftScore+' · '+(elapsed===best?'Neue Bestzeit!':'Bestzeit: '+fmt(best));$('start').textContent='NOCH EINE RUNDE';started=false;}
+}else if(lapStart&&checkpoint<gates.length){let g=gates[checkpoint],p=gatePoint(g.index);if(Math.hypot(car.x-p.x,car.y-p.y)<roadW*.55)checkpoint++;}
 if(lapStart&&!lapComplete)$('time').textContent=fmt(performance.now()-lapStart);
 $('drift').textContent=String(driftScore);
 }

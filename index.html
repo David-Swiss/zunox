@@ -120,7 +120,40 @@ main{max-width:1200px;margin:auto;padding:24px 18px 60px}
  .overlay[data-game="cookie"] .controls button{padding:10px;font-size:11px}
  .overlay[data-game="cookie"] .hint{grid-column:1;grid-row:4}
 }
-</style></head>
+</style>
+<style>
+/* Fullscreen play mode: every game fills the screen, close button stays top-right */
+.overlay.open{padding:0!important;align-items:stretch!important;justify-content:stretch!important;overflow:hidden!important;background:#050812f5}
+.overlay.open .modal{width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;display:flex;flex-direction:column;overflow:hidden}
+.overlay.open .modalhead{flex:0 0 auto;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:#0d1625;border-bottom:1px solid #293c59}
+.overlay.open .modalhead h2{font-size:clamp(15px,2vw,20px)}
+.overlay.open #close{margin-left:auto;width:42px;height:42px;display:grid;place-items:center;font-size:21px;font-weight:900;border-radius:50%;background:#26364e;border:1px solid #405875}
+.overlay.open #close:hover{background:#b83c50;color:#fff}
+.overlay.open .gamearea{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;padding:clamp(8px,1.6vw,18px);gap:10px}
+.overlay.open .gameinfo{flex:0 0 auto;margin:0}
+.overlay.open .canvaswrap{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding:4px}
+.overlay.open .canvaswrap canvas{max-width:100%!important;max-height:100%!important;width:auto!important;height:auto!important;object-fit:contain}
+.overlay.open .controls{flex:0 0 auto;margin:0;padding:4px 0;max-height:25vh;overflow:auto}
+.overlay.open .hint{flex:0 0 auto;margin:0;padding-bottom:calc(5px + env(safe-area-inset-bottom))}
+.overlay.open .mobilepad{flex:0 0 auto;margin:0}
+.overlay.open .notice{flex:0 0 auto;margin:0}
+/* Cookie shop and canvas now use fullscreen available space */
+.overlay.open[data-game="cookie"] .gamearea{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr);grid-template-rows:auto minmax(0,1fr) auto;gap:10px}
+.overlay.open[data-game="cookie"] .canvaswrap{grid-row:2;min-height:0}
+.overlay.open[data-game="cookie"] .controls{grid-column:2;grid-row:2;max-height:100%;display:grid;grid-template-columns:1fr;align-content:start;overflow:auto}
+.overlay.open[data-game="cookie"] .hint{grid-column:1/-1;grid-row:3}
+@media(max-width:680px){
+ .overlay.open .modalhead{padding:calc(7px + env(safe-area-inset-top)) 10px 7px}
+ .overlay.open .gamearea{padding:7px;gap:7px}
+ .overlay.open .canvaswrap canvas{max-width:100%!important;max-height:100%!important}
+ .overlay.open .controls{max-height:22vh}
+ .overlay.open[data-game="cookie"] .gamearea{grid-template-columns:1fr;grid-template-rows:auto minmax(160px,1fr) minmax(0,auto) auto}
+ .overlay.open[data-game="cookie"] .canvaswrap{grid-row:2}
+ .overlay.open[data-game="cookie"] .controls{grid-column:1;grid-row:3;grid-template-columns:1fr 1fr;max-height:25vh}
+ .overlay.open[data-game="cookie"] .hint{grid-column:1;grid-row:4}
+}
+</style>
+</head>
 <body>
 <header class="top"><nav class="nav"><div class="logo">GAMEZONE</div><div class="navlinks"><button class="active" data-nav="all">Start</button><button data-nav="Racing">Racing</button><button data-nav="Arcade">Arcade</button><button data-nav="Puzzle">Puzzle</button><button data-nav="Action">Action</button></div><input id="search" class="search" placeholder="Spiel suchen…" aria-label="Spiel suchen"></nav></header>
 <main>

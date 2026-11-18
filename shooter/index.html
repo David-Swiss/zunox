@@ -8,7 +8,7 @@
 <div class="right"><b id="hp">100 HP</b><div class="health"><i id="healthbar"></i></div><div id="scoreline">BOTS 5 · DU 0</div></div>
 <canvas id="game"></canvas><div class="cross"></div>
 <div class="mobile"><div><button data-key="w">▲</button><br><button data-key="a">◀</button><button data-key="s">▼</button><button data-key="d">▶</button></div><div><button id="reloadTouch">R</button><button class="fire" id="fireTouch">FIRE</button></div></div>
-<div class="overlay" id="menu"><div class="panel"><h1>RIVAL STRIKE</h1><p>Spring in die Arena. Kämpfe gegen Bots, sammle Kills und gewinne jede Runde. Schnelle Matches, präzises Zielen und ein Arsenal zum Wechseln.</p><p class="help">WASD bewegen · Maus zielen · Linksklick halten = Dauerfeuer · Rechtsklick halten = Visier · Space springen · Q/X Dash · Shift sprinten · R nachladen · 1/2 Waffen · ESC Pause</p><button class="btn" id="start">MATCH STARTEN</button></div></div>
+<div class="overlay" id="menu"><div class="panel"><h1>RIVAL STRIKE</h1><p>Spring in die Arena. Kämpfe gegen Bots, sammle Kills und gewinne jede Runde. Schnelle Matches, präzises Zielen und ein Arsenal zum Wechseln.</p><p class="help">WASD bewegen · Maus bewegen = drehen & zielen · Linksklick = schießen · Space springen · Q/X Dash · Shift sprinten · R nachladen · Handy/Tablet: auf dem Spielfeld ziehen = rundherum drehen</p><button class="btn" id="start">MATCH STARTEN</button></div></div>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 const $=id=>document.getElementById(id),canvas=$('game');
@@ -34,8 +34,14 @@ function spawnBots(){bots.forEach(b=>scene.remove(b.g));bots=[];for(let i=0;i<5;
 function hud(){$('kills').textContent=player.kills;$('round').textContent=round;$('clock').textContent=Math.ceil(seconds);$('ammo').textContent=reloading?'LÄDT…':ammo+' / '+reserve;$('weapon').textContent=weapon===1?'RIFLE':'BURST';$('hp').textContent=Math.max(0,Math.ceil(player.hp))+' HP';$('healthbar').style.width=Math.max(0,player.hp)+'%';$('scoreline').textContent='BOTS '+bots.length+' · DU '+player.kills;}
 function start(){player.pos.set(0,1.7,12);player.yaw=Math.PI;player.pitch=0;player.hp=100;player.kills=0;round=1;seconds=90;ammo=30;reserve=90;verticalVelocity=0;onGround=true;dashCooldown=0;dashTime=0;shootHeld=false;aiming=false;playing=true;spawnBots();$('menu').style.display='none';hud();}
 $('start').onclick=start;
-function lock(){canvas.requestPointerLock?.()}canvas.addEventListener('click',()=>{if(playing&&document.pointerLockElement!==canvas)lock()});
+function lock(){canvas.requestPointerLock?.()}canvas.addEventListener('click',()=>{if(playing&&document.pointerLockElement!==canvas&&!('ontouchstart'in window))lock()});
 document.addEventListener('mousemove',e=>{if(document.pointerLockElement===canvas&&playing){player.yaw-=e.movementX*.0023;player.pitch=Math.max(-1.2,Math.min(1.2,player.pitch-e.movementY*.002));camera.rotation.set(player.pitch,player.yaw,0,'YXZ')}});
+// Touch-Steuerung: Auf dem Spielfeld ziehen, um die Kamera und den Spieler rundherum zu drehen.
+let touchLook=null;
+canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'&&playing){touchLook={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);}});
+canvas.addEventListener('pointermove',e=>{if(!touchLook||e.pointerId!==touchLook.id||!playing)return;const dx=e.clientX-touchLook.x,dy=e.clientY-touchLook.y;touchLook.x=e.clientX;touchLook.y=e.clientY;player.yaw-=dx*.006;player.pitch=Math.max(-1.2,Math.min(1.2,player.pitch-dy*.005));camera.rotation.set(player.pitch,player.yaw,0,'YXZ');});
+function stopTouchLook(e){if(touchLook&&e.pointerId===touchLook.id)touchLook=null}
+canvas.addEventListener('pointerup',stopTouchLook);canvas.addEventListener('pointercancel',stopTouchLook);
 addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;if(e.key.toLowerCase()==='r')reload();if(e.key==='1')weapon=1;if(e.key==='2')weapon=2;if(e.code==='Space'&&playing){e.preventDefault();if(onGround){verticalVelocity=7.2;onGround=false}}if(e.key.toLowerCase()==='q'||e.key.toLowerCase()==='x')dash()});addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
 function reload(){if(!playing||reloading||ammo===(weapon===1?30:18)||reserve<=0)return;reloading=true;setTimeout(()=>{let cap=weapon===1?30:18,take=Math.min(cap-ammo,reserve);ammo+=take;reserve-=take;reloading=false;hud()},weapon===1?1350:1100)}
 const ray=new THREE.Raycaster();

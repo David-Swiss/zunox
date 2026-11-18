@@ -9,7 +9,8 @@ import {makeChoices,applyUpgrade} from "./upgrades.js";
 import {UI} from "./ui.js";
 
 const canvas=document.getElementById("game"),ctx=canvas.getContext("2d",{alpha:false});
-const ui=new UI(),audio=new AudioEngine(),save=loadSave(),particles=new ParticleSystem();
+const ui=new UI(),audio=new AudioEngine(),save=loadSave();
+let particles=new ParticleSystem();
 let W=innerWidth,H=innerHeight,DPR=1,state="menu",player=null,enemies=[],shots=[],gems=[],drops=[],numbers=[],rings=[],stars=[];
 let elapsed=0,kills=0,wave=1,spawnClock=0,clock=0,camera={x:0,y:0},shake=0,hitStop=0,levelQueue=0,rerolls=2,runCores=0,bossSpawned=false,bossDefeated=false,miniSpawned=false,warningPhase=0;
 const keys=new Set(),input={x:0,y:0},touch={id:null,x:0,y:0,dx:0,dy:0};

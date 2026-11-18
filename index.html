@@ -145,7 +145,7 @@ main{max-width:1200px;margin:auto;padding:24px 18px 60px}
 @media(max-width:680px){
  .overlay.open .modalhead{padding:calc(7px + env(safe-area-inset-top)) 10px 7px}
  .overlay.open .gamearea{padding:7px;gap:7px}
- .overlay.open .canvaswrap canvas{max-width:100%!important;max-height:100%!important}\n  .overlay.open .mobilepad{display:flex;flex-wrap:wrap;justify-content:center}\n }
+ .overlay.open .canvaswrap canvas{max-width:100%!important;max-height:100%!important;touch-action:none}\n  .overlay.open .mobilepad{display:flex;flex-wrap:wrap;justify-content:center}\n }
  .overlay.open .controls{max-height:22vh}
  .overlay.open[data-game="cookie"] .gamearea{grid-template-columns:1fr;grid-template-rows:auto minmax(160px,1fr) minmax(0,auto) auto}
  .overlay.open[data-game="cookie"] .canvaswrap{grid-row:2}
@@ -317,7 +317,7 @@ function openGame(id){
  button("↻ Neu",()=>openGame(id));
  // Game implementations
  let update=()=>{},draw=()=>{},tick=0;
- const startLoop=()=>{lastTime=performance.now();const frame=now=>{if(!active||state!==gameState)return;const dt=Math.max(0,Math.min((now-lastTime)/16.67,2));lastTime=now;if(state.running&&!state.over){update(dt*gameDifficulty);tick++;}draw();loopId=requestAnimationFrame(frame)};loopId=requestAnimationFrame(frame)};
+ const startLoop=()=>{lastTime=performance.now();const frame=now=>{if(!active||state!==gameState)return;const dt=Math.max(0,Math.min((now-lastTime)/16.67,2));lastTime=now;if(state.running&&!state.over){update(dt*gameDifficulty);tick++;}draw();ctx.save();ctx.strokeStyle="rgba(160,205,235,.10)";ctx.lineWidth=2;ctx.strokeRect(1,1,718,438);ctx.restore();loopId=requestAnimationFrame(frame)};loopId=requestAnimationFrame(frame)};
  const set=val=>setScore(Number.isFinite(val)?val:0);
  if(id==="snake"){
    hint("Steuerung: Pfeile / WASD · Touch-Pfeile unten");
@@ -405,18 +405,18 @@ function openGame(id){
  }else if(id==="aim"){
    hint("Ziele anklicken · 30 Sekunden");
    let targets=[],remaining=30,last=performance.now(),hits=0;
-   const spawn=()=>targets=[{x:50+Math.random()*620,y:50+Math.random()*330,r:22}];
+   const spawn=()=>targets=[{x:65+Math.random()*590,y:60+Math.random()*300,r:22,vx:randAim(),vy:randAim()}];const randAim=()=>((Math.random()-.5)*2.8);
    spawn();c.onclick=e=>{if(state.over)return;let r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*720,y=(e.clientY-r.top)/r.height*440;if(targets.some(t=>Math.hypot(x-t.x,y-t.y)<t.r)){hits++;set(hits);spawn()}};
-   update=dt=>{remaining-=dt/60;if(remaining<=0)end("Treffer: "+hits+" in 30 Sekunden")};
+   update=dt=>{remaining-=dt/60;targets.forEach(t=>{t.x+=t.vx*dt;t.y+=t.vy*dt;if(t.x<t.r||t.x>720-t.r)t.vx*=-1;if(t.y<t.r||t.y>440-t.r)t.vy*=-1});if(remaining<=0)end("Treffer: "+hits+" in 30 Sekunden")};
    draw=()=>{clear();targets.forEach(t=>{circle(t.x,t.y,t.r,"#ff647f");circle(t.x,t.y,t.r*.65,"#fff");circle(t.x,t.y,t.r*.32,"#ff647f")});text("Zeit: "+Math.ceil(remaining),18,28,16)};
  }else if(id==="penalty"){
    hint("Klicke links, Mitte oder rechts zum Schießen");
-   let goalie=360,shot=null,shots=0,goals=0;
-   draw=()=>{clear("#125033");rect(90,60,540,310,"#287e4b");rect(180,90,360,220,"#ddd");rect(185,95,350,210,"#246c42");rect(260,90,200,100,"#fff");rect(260,95,200,95,"#246c42");rect(285,280,150,15,"#fff");rect(285,285,150,10,"#246c42");rect(goalie-40,105,80,18,"#ff9f69");circle(goalie,110,18,"#ff9f69");if(shot)circle(shot.x,shot.y,10,"#fff");text("Tore "+goals+"/"+shots,18,28,16)};
-   c.onclick=e=>{if(shot||state.over)return;let r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*720,y=(e.clientY-r.top)/r.height*440;shot={x,y};shots++;goalie=200+Math.random()*320;set(goals);later(()=>{if(!state.over){if(Math.abs(x-goalie)>48&&y<180)goals++;set(goals);shot=null;if(shots>=10)end("Ergebnis: "+goals+" von 10")}},500)};
-   update=()=>{};
+   let goalie=360,shot=null,shots=0,goals=0,keeperTarget=360;
+   draw=()=>{clear("#125033");rect(90,60,540,310,"#287e4b");for(let y=70;y<360;y+=24){ctx.strokeStyle="#ffffff12";ctx.beginPath();ctx.moveTo(90,y);ctx.lineTo(630,y);ctx.stroke()}rect(180,90,360,220,"#ddd");rect(185,95,350,210,"#246c42");rect(260,90,200,100,"#fff");rect(260,95,200,95,"#246c42");rect(285,280,150,15,"#fff");rect(285,285,150,10,"#246c42");rect(goalie-40,105,80,18,"#ff9f69");circle(goalie,110,18,"#ff9f69");if(shot)circle(shot.x,shot.y,10,"#fff");text("TORE "+goals+" / "+shots,18,28,16)};
+   c.onclick=e=>{if(shot||state.over||shots>=10)return;let r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*720,y=(e.clientY-r.top)/r.height*440;shot={x:360,y:300,tx:x,ty:y,step:0};shots++;keeperTarget=Math.max(300,Math.min(420,x+(Math.random()-.5)*95));};
+   update=dt=>{if(!shot)return;shot.step+=dt*1.8;shot.x+=(shot.tx-shot.x)*Math.min(1,.12*dt);shot.y+=(shot.ty-shot.y)*Math.min(1,.12*dt);goalie+=(keeperTarget-goalie)*Math.min(1,.09*dt);if(shot.step>22){if(shot.ty>=95&&shot.ty<=190&&shot.tx>=260&&shot.tx<=460&&Math.abs(shot.tx-goalie)>43)goals++;set(goals);shot=null;if(shots>=10)end("Ergebnis: "+goals+" von 10 · "+(goals>=7?"Weltklasse!":goals>=5?"Stark!":"Weiter trainieren!"))}};
  }else if(id==="tower"){
-   hint("Klicke auf freie Fläche, um einen Turm zu bauen · 5 Gegner");
+   hint("Baue Türme neben dem Weg (35 Credits) · 12 Gegnerwellen überstehen");
    let towers=[],enemies=[],wave=0,cash=100,leaks=0;
    const path=[{x:0,y:220},{x:170,y:220},{x:170,y:100},{x:380,y:100},{x:380,y:320},{x:720,y:320}];
    let spawnTimer=0;

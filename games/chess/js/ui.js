@@ -1,0 +1,1 @@
+export function $(id){return document.getElementById(id);}export function showScreen(name){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id==="screen-"+name));document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("active",b.dataset.screen===name));}

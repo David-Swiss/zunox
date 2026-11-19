@@ -1,4 +1,4 @@
-// Klassische, kontrastreiche Schachfiguren als SVG-Silhouetten.
+// Klassische Schachfiguren als klar unterscheidbare SVG-Silhouetten.
 const SHAPES={
  p:'<path d="M50 12 C40 12 34 20 34 29 C34 37 39 43 45 46 L41 57 C35 61 31 68 30 75 L22 82 Q20 85 25 87 H75 Q80 85 78 82 L70 75 C69 68 65 61 59 57 L55 46 C61 43 66 37 66 29 C66 20 60 12 50 12 Z"/>',
  r:'<path d="M22 16 H37 V29 H44 V16 H56 V29 H63 V16 H78 V43 H70 L74 72 L81 84 H19 L26 72 L30 43 H22 Z"/>',
@@ -9,7 +9,7 @@ const SHAPES={
 };
 export function pieceSVG(piece){
  const type=piece.type,white=piece.color==="w",color=white?"white":"black";
- const fill=white?"#fffdf5":"#172536",stroke=white?"#243b32":"#f8fbff";
+ const fill=white?"#ffffff":"#111827",stroke=white?"#172b24":"#f8fbff";
  const label={k:"König",q:"Dame",r:"Turm",b:"Läufer",n:"Springer",p:"Bauer"}[type]||"Schachfigur";
- return '<svg class="piece basic-piece '+color+'" viewBox="0 0 100 100" role="img" aria-label="'+label+'" xmlns="http://www.w3.org/2000/svg"><g fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+(white?5:3.5)+'" stroke-linejoin="round" stroke-linecap="round">'+(SHAPES[type]||"")+'</g></svg>';
+ return '<svg class="piece basic-piece '+color+'" data-piece-color="'+(white?"white":"black")+'" viewBox="0 0 100 100" role="img" aria-label="'+label+'" xmlns="http://www.w3.org/2000/svg"><g style="fill:'+fill+';stroke:'+stroke+';stroke-width:'+(white?4:3.5)+';stroke-linejoin:round;stroke-linecap:round">'+(SHAPES[type]||"")+'</g></svg>';
 }

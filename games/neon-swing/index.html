@@ -64,12 +64,12 @@ function update(dt){if(state!=='play')return;const scale=slow>0?.48:1;dt*=scale;
 p.vy+=C.G*dt;p.vx+=wind*dt;p.vx*=Math.pow(C.AIR,dt*60);p.vy*=Math.pow(C.AIR,dt*60);
 if(p.rope){const a=p.rope;if(!a.alive){p.rope=null;}else{if(a.moving)a.y=a.base+Math.sin(performance.now()*.0015+a.phase)*42;const dx=p.x-a.x,dy=p.y-a.y,d=Math.hypot(dx,dy)||1,nx=dx/d,ny=dy/d;if(d>p.ropeLen){const excess=d-p.ropeLen;p.x-=nx*excess;p.y-=ny*excess;const radial=p.vx*nx+p.vy*ny;p.vx-=radial*nx;p.vy-=radial*ny;}const tangent=p.vx*(-ny)+p.vy*nx;p.vx+=(-ny)*tangent*.003;p.vy+=nx*tangent*.003;}}
 p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.x>worldEnd-C.CHUNK*2)generateChunk();
-if(p.y>H-28)die('Boden berührt');if(p.y<8)die('Aus der Bahn geraten');
+if(p.y>H-28){if(shield){shield=0;p.y=H-40;p.vy=-500;camera.shake=10;burst(p.x,p.y,18,'#fff18b');}else die('Boden berührt');}if(p.y<8)die('Aus der Bahn geraten');
 for(const h of hazards){if(Math.abs(p.x-h.x)<h.w/2+p.r&&Math.abs(p.y-h.y)<h.h/2+p.r)die(h.type==='laser'?'Laser getroffen':'Stacheln erwischt');}
 for(const a of anchors){if(a.fragile&&a===p.rope&&p.rope&&Math.hypot(p.x-a.x,p.y-a.y)<p.ropeLen+4){a.life=(a.life||0)+dt;if(a.life>1){a.alive=false;p.rope=null;}}}
 for(const o of orbs){if(o.got)continue;if(magnet>0){const d=Math.hypot(o.x-p.x,o.y-p.y);if(d<210){o.x+=(p.x-o.x)*dt*3;o.y+=(p.y-o.y)*dt*3;}}if(Math.hypot(o.x-p.x,o.y-p.y)<24){o.got=true;runCoins++;burst(o.x,o.y,8,'#ffe77b');tone(900,.05,'sine');}}
 for(const u of powerups){if(!u.got&&Math.hypot(u.x-p.x,u.y-p.y)<23){u.got=true;runPower=true;if(u.type==='shield')shield=1;if(u.type==='magnet')magnet=10;if(u.type==='rope')doubleRope=8;if(u.type==='slow')slow=3;award('power');burst(u.x,u.y,15,'#fff18b');}}
-if(p.y>H-28&&shield){shield=0;p.y=H-40;p.vy=-500;camera.shake=10;return;}
+
 distance=Math.max(0,Math.floor((p.x-80)/10));trail.push({x:p.x,y:p.y});if(trail.length>800)trail.shift();if(distance>save.best){ghost=trail.slice(-400);}
 particles.forEach(q=>{q.x+=q.vx*dt;q.y+=q.vy*dt;q.vx*=.98;q.vy*=.98;q.life-=dt;});particles=particles.filter(q=>q.life>0);
 anchors=anchors.filter(a=>a.x>p.x-500);orbs=orbs.filter(o=>o.x>p.x-400&&!o.got);hazards=hazards.filter(h=>h.x>p.x-400);powerups=powerups.filter(u=>u.x>p.x-400&&!u.got);
@@ -89,6 +89,7 @@ for(const o of orbs){if(o.got)continue;ctx.shadowBlur=18;ctx.shadowColor='#ffe77
 for(const u of powerups){if(u.got)continue;ctx.fillStyle='#fff18b';ctx.shadowBlur=15;ctx.shadowColor='#fff18b';ctx.beginPath();ctx.arc(u.x,u.y,10,0,7);ctx.fill();ctx.shadowBlur=0;}
 const target=state==='play'&&!player.rope?nextAnchor():null;if(target){ctx.strokeStyle='#c4ffff88';ctx.setLineDash([5,7]);ctx.lineWidth=2;ctx.beginPath();ctx.arc(target.x,target.y,18+Math.sin(performance.now()*.008)*3,0,7);ctx.stroke();ctx.setLineDash([]);}
 if(player&&player.rope){ctx.shadowBlur=18;ctx.shadowColor=theme[0];ctx.strokeStyle=theme[0];ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(player.x,player.y);ctx.lineTo(player.rope.x,player.rope.y);ctx.stroke();ctx.shadowBlur=0;}
+if(save.ghost&&save.ghost.length>1){ctx.globalAlpha=.22;ctx.strokeStyle='#e8ffff';ctx.lineWidth=2;ctx.setLineDash([4,8]);ctx.beginPath();for(let i=0;i<save.ghost.length;i+=3){const q=save.ghost[i];if(i===0)ctx.moveTo(q[0],q[1]);else ctx.lineTo(q[0],q[1]);}ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;}
 if(player){ctx.globalAlpha=.17;ctx.strokeStyle=theme[1];ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<trail.length;i+=5){const q=trail[i];if(i===0)ctx.moveTo(q.x,q.y);else ctx.lineTo(q.x,q.y);}ctx.stroke();ctx.globalAlpha=1;
 ctx.shadowBlur=22;ctx.shadowColor=theme[0];ctx.fillStyle=save.skin==='Mint'?'#8bff77':(skins.find(s=>s[0]===save.skin)||skins[0])[1];ctx.beginPath();ctx.arc(player.x,player.y,player.r,0,7);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='#eaffff';ctx.lineWidth=2;ctx.stroke();}
 for(const q of particles){ctx.globalAlpha=Math.max(0,q.life/q.max);ctx.fillStyle=q.color;ctx.fillRect(q.x,q.y,3,3);}ctx.globalAlpha=1;ctx.restore();

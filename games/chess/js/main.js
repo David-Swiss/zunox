@@ -1,4 +1,4 @@
-import {Chess} from "../vendor/chess.js";
+const {Chess}=await import("https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm");
 import {ChessGame,CLOCKS} from "./game.js";
 import {BoardView} from "./board.js";
 import {BOTS,chooseBotMove} from "./bots.js";

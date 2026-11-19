@@ -1,1 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"><defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0f1b33"/><stop offset="1" stop-color="#0a1020"/></linearGradient><radialGradient id="halo"><stop stop-color="#52e9ff" stop-opacity=".22"/><stop offset="1" stop-color="#52e9ff" stop-opacity="0"/></radialGradient><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#8da9d0" stroke-opacity=".09"/></pattern><filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="640" height="360" rx="18" fill="url(#bg)"/><rect width="640" height="360" fill="url(#grid)"/><ellipse cx="320" cy="180" rx="235" ry="150" fill="url(#halo)"/><g fill="#d8f7ff" opacity=".45"><circle cx="74" cy="70" r="2"/><circle cx="560" cy="78" r="2"/><circle cx="520" cy="295" r="1.8"/><circle cx="112" cy="282" r="1.5"/><circle cx="420" cy="48" r="1.4"/></g><g stroke="#4dff6a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"><path d="M215 92h210" stroke="#52e9ff" opacity=".35"/><circle cx="220" cy="92" r="13"/><circle cx="425" cy="92" r="13"/><path d="M220 92 320 250M320 250 425 92" stroke="#52e9ff"/><path d="M250 280q70 45 145-10" stroke="#52e9ff" opacity=".5" stroke-dasharray="5 12"/><circle cx="320" cy="250" r="15" fill="#4dff6a"/><path d="m320 220v-22m-24 39-16-15m61 8 18-14m-34 68 3 20m-43-5-14 12m99-16 16 9m-16-35 19 4-12 15" stroke="#4dff6a"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101a3d"/><stop offset=".52" stop-color="#17123a"/><stop offset="1" stop-color="#071522"/></linearGradient>
+ <radialGradient id="burst"><stop stop-color="#ff62d5" stop-opacity=".42"/><stop offset="1" stop-color="#ff62d5" stop-opacity="0"/></radialGradient>
+ <linearGradient id="rope" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#59f7ff"/><stop offset=".55" stop-color="#b36cff"/><stop offset="1" stop-color="#ff68d8"/></linearGradient>
+ <linearGradient id="orb" x2=".8" y2="1"><stop stop-color="#ffffff"/><stop offset=".25" stop-color="#8dfff1"/><stop offset=".72" stop-color="#42bfff"/><stop offset="1" stop-color="#805cff"/></linearGradient>
+ <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#9dbbff" stroke-opacity=".09"/></pattern>
+ <filter id="glow" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="640" height="360" rx="18" fill="url(#bg)"/><rect width="640" height="360" fill="url(#grid)"/>
+<ellipse cx="365" cy="185" rx="270" ry="190" fill="url(#burst)"/>
+<g fill="#d9faff" opacity=".65"><circle cx="62" cy="80" r="2"/><circle cx="110" cy="270" r="1.5"/><circle cx="552" cy="58" r="2"/><circle cx="580" cy="282" r="1.7"/><circle cx="455" cy="320" r="1.2"/></g>
+<path d="M58 278Q130 95 272 106T555 78" fill="none" stroke="#5af5ef" stroke-opacity=".25" stroke-width="3" stroke-dasharray="8 13"/>
+<path d="M78 314Q190 254 236 190T386 74" fill="none" stroke="#ff69d8" stroke-opacity=".35" stroke-width="5" stroke-linecap="round"/>
+<g filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M210 70L392 70" stroke="#d7faff" stroke-opacity=".18" stroke-width="2"/>
+ <circle cx="210" cy="70" r="14" fill="#101a3d" stroke="#60f5ff" stroke-width="5"/>
+ <circle cx="392" cy="70" r="11" fill="#101a3d" stroke="#ff70db" stroke-width="4"/>
+ <path d="M210 70Q273 92 323 222" fill="none" stroke="url(#rope)" stroke-width="7"/>
+ <path d="M210 70Q272 92 323 222" fill="none" stroke="#ffffff" stroke-opacity=".8" stroke-width="1.5"/>
+ <path d="M283 226l-55 19M288 244l-73 26M296 258l-53 37" stroke="#63f5ff" stroke-opacity=".8" stroke-width="5"/>
+ <circle cx="323" cy="222" r="24" fill="url(#orb)" stroke="#eaffff" stroke-width="3"/>
+ <path d="M314 217q9-12 18 0" fill="none" stroke="#15345b" stroke-width="4"/>
+ <path d="M313 231q10 8 20 0" fill="none" stroke="#15345b" stroke-width="3"/>
+ <path d="M345 204l40-39m-29 56 59-4m-61 21 38 33" stroke="#ff72d9" stroke-width="5"/>
+</g>
+<g filter="url(#glow)" fill="none" stroke="#8bff77" stroke-width="3"><path d="M458 255l20-28 20 28-20 28Z"/><path d="M502 300l12-17 12 17-12 17Z"/></g>
+<path d="M380 294q80 28 151-13" fill="none" stroke="#58f4ef" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 12" opacity=".7"/>
+<text x="42" y="326" fill="#eafaff" font-family="system-ui,sans-serif" font-size="19" font-weight="900" letter-spacing="4">NEON SWING</text>
+<text x="44" y="346" fill="#8ca9ca" font-family="system-ui,sans-serif" font-size="8" font-weight="700" letter-spacing="3">GRAB · SWING · RELEASE</text>
+</svg>

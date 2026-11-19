@@ -31,3 +31,8 @@
 /* SVG-Figuren: füllen das Feld sichtbar aus, ohne Unicode-Schrift-Ränder. */
 .square .piece.basic-piece{display:block;width:96%;height:96%;max-width:none;max-height:none;filter:drop-shadow(0 2px 1px #0005);transform:none;pointer-events:none}
 .square .piece.basic-piece g{vector-effect:non-scaling-stroke}
+
+/* Kontrast der weissen und schwarzen SVG-Figuren auf hellen und dunklen Feldern */
+.square svg.piece.basic-piece{width:98%;height:98%;display:block;overflow:visible}
+.square svg.piece.basic-piece.white{opacity:1;filter:drop-shadow(0 1px 1px #14251e)}
+.square svg.piece.basic-piece.black{opacity:1;filter:drop-shadow(0 1px 1px #fff)}

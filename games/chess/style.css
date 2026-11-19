@@ -16,3 +16,14 @@
 .profile-extra span{color:var(--muted)}
 .profile-extra b{color:var(--text)}
 @media(max-width:620px){#puzzle-board{width:min(100%,calc(100vw - 24px))}.analysis-row{grid-template-columns:42px 1fr}.analysis-row small{grid-column:2}}
+
+/* Figuren: gross, gefüllt und ohne dicke Umrandung */
+.square .piece.basic-piece{
+  width:100%;height:100%;display:grid;place-items:center;
+  font-family:"DejaVu Sans","Segoe UI Symbol","Arial Unicode MS",serif;
+  font-size:clamp(34px,10vw,72px);font-weight:900;line-height:1;
+  filter:drop-shadow(0 1px 1px #0005);text-shadow:none;
+  transform:scale(.94);pointer-events:none;
+}
+.square .piece.basic-piece.white{color:#fff;text-shadow:0 1px 1px #273b36}
+.square .piece.basic-piece.black{color:#182536;text-shadow:none;filter:drop-shadow(0 1px 0 #ffffff55)}

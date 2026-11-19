@@ -1,4 +1,4 @@
-import {pieceSVG} from "./pieces.js?v=18";
+import {pieceSVG} from "./pieces.js?v=19";
 export class BoardView{
  constructor(root,game,callbacks){this.root=root;this.game=game;this.cb=callbacks;this.flipped=false;this.coordinates=true;this.theme="neo";this.selected=null;this.legal=[];this.last=null;this.longTimer=null;this.dragFrom=null;this.render();}
  setSelection(square,legal){this.selected=square;this.legal=legal;this.render();}

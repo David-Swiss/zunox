@@ -16,7 +16,8 @@ const GAMES=[
  {title:'Neon Orbit',control:'Tastatur / Touch',description:'Wechsle zwischen drei Neon-Umlaufbahnen, weiche Asteroiden und Lasern aus und sammle Energie.',category:'Arcade',path:'neon-orbit/',icon:'🚀',style:'drift',thumbnail:'assets/thumbs/neon-orbit.svg'},
  {title:'Drift Arena',control:'Tastatur / Touch',description:'Top-Down-Rennen mit Handbremse, Reifenspuren, Qualm, Checkpoints und Bestzeiten.',category:'Racing',path:'drift-arena/',icon:'🏁',style:'drift',thumbnail:'assets/thumbs/drift-arena.svg'},
  {title:'Rival Strike',control:'Tastatur / Maus',description:'Rasante Ego-Shooter-Arena: Kämpfe gegen Bots, wechsle Waffen und sammle Kills.',category:'Action',path:'shooter/',icon:'🎯',style:'shooter',thumbnail:'assets/thumbs/rival-strike.svg'},
- {title:'Chicken Valley',control:'Maus / Touch',description:'Kaufe Hühner, sammle Eier, verkaufe sie und baue deinen eigenen Chicken-Tycoon-Hof auf.',category:'Simulation',path:'farm/',icon:'🚜',style:'farm',thumbnail:'assets/thumbs/chicken-valley.svg'}
+ {title:'Chicken Valley',control:'Maus / Touch',description:'Kaufe Hühner, sammle Eier, verkaufe sie und baue deinen eigenen Chicken-Tycoon-Hof auf.',category:'Simulation',path:'farm/',icon:'🚜',style:'farm',thumbnail:'assets/thumbs/chicken-valley.svg'},
+ {title:'Ballstorm',tag:'NEU',control:'Maus / Touch',description:'Zerstöre Neon-Blöcke mit einer Salve Bälle, sammle Power-ups und überlebe immer schwierigere Wellen.',category:'Arcade',path:'games/ballstorm/',icon:'●',style:'drift',thumbnail:'assets/thumbs/ballstorm.svg'}
 ];
 const categories=['Alle',...new Set(GAMES.map(g=>g.category))];let active='Alle';
 const filters=document.querySelector('#filters'),grid=document.querySelector('#games'),search=document.querySelector('#search');

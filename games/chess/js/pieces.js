@@ -1,6 +1,6 @@
-// Klassische, schlichte Unicode-Schachfiguren ohne dekorative SVG-Hüllen.
+// Einheitliche, gut erkennbare Basic-Figuren: gefüllte klassische Schachsymbole.
 const GLYPHS={
-  w:{k:"♔",q:"♕",r:"♖",b:"♗",n:"♘",p:"♙"},
+  w:{k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"},
   b:{k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"}
 };
 export function pieceSVG(piece){

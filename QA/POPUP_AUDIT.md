@@ -5,7 +5,7 @@
 
 ## Umfang
 
-Statische Prüfung aller 12 Spiel-Einstiegspunkte im Portal. Geprüft wurden HTML-IDs, erkennbare Button-Verknüpfungen, Overlay-/Dialog-Strukturen und JavaScript-Syntax der Inline-Skripte. Das ist kein Ersatz für echte Browser- und iPad-Tests.
+Statische Prüfung aller 13 Spiel-Einstiegspunkte im Portal. Geprüft wurden HTML-IDs, erkennbare Button-Verknüpfungen, Overlay-/Dialog-Strukturen und JavaScript-Syntax der Inline-Skripte. Das ist kein Ersatz für echte Browser- und iPad-Tests.
 
 | Spiel | Geprüfte Menüs/Popups |
 |---|---|
@@ -13,6 +13,7 @@ Statische Prüfung aller 12 Spiel-Einstiegspunkte im Portal. Geprüft wurden HTM
 | Drift Arena | Start, Garage, Spielende/Reset |
 | Chicken Valley | Intro/Start, Shop, Inventar, Stall- und Aktionsfenster |
 | Ballstorm | Start, Pause, Upgrade-Auswahl, Shop, Ergebnis |
+| Lumen Realm | Start, Pause, Game Over, NPC-Dialog, Händler, Inventar, Aufträge, Karte |
 | ZUNOX Chess | Spielansicht, Puzzle, Analyse, Profil, Einstellungen, Bauernumwandlung |
 | Neon Swing | Menü, Pause, Shop, Erfolge, Game Over |
 | Panic Pizza | Menü, Pause, Garage, Trophäen, Ergebnis, Crash/Recovery |

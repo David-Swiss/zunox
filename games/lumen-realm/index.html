@@ -1,1 +1,26 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#0a1020"><title>Lumen Realm – ZUNOX</title><link rel="stylesheet" href="./style.css"></head><body><main><header><a href="../../">← Zurück zu ZUNOX</a><b>LUMEN REALM</b><button id="mute">♫</button></header><section class="stage"><canvas id="game" width="960" height="600"></canvas><div id="hud"><span id="hearts">♥ ♥ ♥</span><span>Wiesenland</span><span id="coords">0, 0</span><span id="weapon">Altes Schwert</span><span id="bag">Waffen 1 · Münzen 0</span></div><div id="menu" class="panel"><small>DAS LICHT IST ERLOSCHEN</small><h1>Lumen Realm</h1><p>Finde die Leuchtsteine und bringe das Licht zurück.</p><button id="start">Abenteuer beginnen</button><button id="continue">Spielstand laden</button><small>WASD bewegen · J/Leertaste Angriff · K Bogen · E Truhe · 1–4 Waffen · Shift Rolle</small></div><div id="pause" class="panel" hidden><h2>Pause</h2><button id="resume">Weiterspielen</button><button id="save">Speichern</button><button id="home">Hauptmenü</button></div><div id="gameover" class="panel" hidden><h2>Du bist gefallen</h2><p>Deine Reise ist noch nicht vorbei.</p><button id="restart">Erneut versuchen</button></div><div id="error" hidden></div></section><footer><span id="status">Bereit</span><span>Phase 2 · Beute & Kampf</span></footer></main><script type="module" src="./js/main.js"></script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0a1020"><title>Lumen Realm – ZUNOX</title><link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main>
+<header><a href="../../">← Zurück zu ZUNOX</a><b>LUMEN REALM</b><button id="mute" aria-label="Ton umschalten">♫</button></header>
+<section class="stage">
+<canvas id="game" width="960" height="600" aria-label="Lumen Realm Spielwelt"></canvas>
+<div id="hud"><span id="hearts">♥ ♥ ♥</span><span id="region">Wiesenland</span><span id="coords">0, 0</span><span id="weapon">Altes Schwert</span><span id="bag">Waffen 1 · Münzen 0</span></div>
+<nav id="quick" aria-label="Spielmenü"><button data-panel="inventory">Tasche</button><button data-panel="quests">Aufträge</button><button data-panel="map">Karte</button></nav>
+<div id="menu" class="panel"><small>DAS LICHT IST ERLOSCHEN</small><h1>Lumen Realm</h1><p>Erkunde das Wiesenland, sprich mit den Bewohnern und bringe das Licht zurück.</p><button id="start">Abenteuer beginnen</button><button id="continue">Spielstand laden</button><small>WASD bewegen · J/Leertaste Angriff · K Bogen · E Interagieren · I Tasche · Q Aufträge · M Karte · Shift Rolle</small></div>
+<div id="pause" class="panel" hidden><h2>Pause</h2><button id="resume">Weiterspielen</button><button id="save">Speichern</button><button id="home">Hauptmenü</button></div>
+<div id="gameover" class="panel" hidden><h2>Du bist gefallen</h2><p>Deine Reise ist noch nicht vorbei.</p><button id="restart">Erneut versuchen</button><button id="gameover-home">Hauptmenü</button></div>
+<div id="dialog-panel" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="dialog-title"><div class="modal-card"><button class="modal-x" data-close aria-label="Schliessen">×</button><small>BEGEGNUNG</small><h2 id="dialog-title">Bewohner</h2><p id="dialog-text"></p><div id="dialog-actions" class="actions"></div></div></div>
+<div id="inventory-panel" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="inventory-title"><div class="modal-card"><button class="modal-x" data-close aria-label="Schliessen">×</button><small>DEINE AUSRÜSTUNG</small><h2 id="inventory-title">Tasche</h2><div id="inventory-content"></div></div></div>
+<div id="quests-panel" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="quests-title"><div class="modal-card"><button class="modal-x" data-close aria-label="Schliessen">×</button><small>DEIN TAGEBUCH</small><h2 id="quests-title">Aufträge</h2><div id="quests-content"></div></div></div>
+<div id="map-panel" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="map-title"><div class="modal-card"><button class="modal-x" data-close aria-label="Schliessen">×</button><small>ERKUNDE DIE WELT</small><h2 id="map-title">Karte</h2><div id="map-content"></div></div></div>
+<div id="error" hidden></div>
+</section>
+<footer><span id="status">Bereit</span><span>Phase 3 · Dorf & Aufträge</span></footer>
+</main>
+<script type="module" src="./js/main.js"></script>
+</body></html>

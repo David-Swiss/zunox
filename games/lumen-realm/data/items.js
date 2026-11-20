@@ -1,0 +1,1 @@
+export const ITEM_DATA=[{id:"sword",name:"Wandererschwert"},{id:"bow",name:"Bogen"},{id:"lantern",name:"Laterne"},{id:"heart",name:"Herzsplitter"}]

@@ -34,7 +34,7 @@ function renderProfile(){
 function finish(){
  game.running=false;const status=game.status();
  $("game-message").textContent=status+" · "+(game.chess.isCheckmate()?(game.turn()===human?"Du hast verloren.":"Du hast gewonnen."):"Partie beendet.");
- if(resultRecorded)return;resultRecorded=true;
+ if(resultRecorded)return;resultRecorded=true;if(multiplayer){$("game-message").textContent+=" · Online-Partie beendet.";return;}
  const raw=game.result||(game.chess.isCheckmate()?(game.turn()==="w"?"0-1":"1-0"):"1/2-1/2");
  const score=raw==="1/2-1/2"?.5:((raw==="1-0"&&human==="w")||(raw==="0-1"&&human==="b")?1:0);
  const key=game.clockKey.startsWith("bullet")?"bullet":game.clockKey.startsWith("blitz")?"blitz":"rapid";

@@ -1,0 +1,1 @@
+export class AudioBus{constructor(){this.ctx=null;this.muted=false}unlock(){try{this.ctx??=new(window.AudioContext||window.webkitAudioContext)();this.ctx.resume()}catch{}}toggle(){this.muted=!this.muted;return this.muted}}

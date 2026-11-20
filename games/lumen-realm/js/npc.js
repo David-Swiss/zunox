@@ -1,0 +1,1 @@
+export const NPCS=[{id:"mira",name:"Mira",text:"Die Leuchtsteine halten unser Land am Leben."}]

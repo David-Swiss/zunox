@@ -1,0 +1,1 @@
+export function hitPlayer(state,n=1){const p=state.player;if(p.invuln>0)return false;p.hp=Math.max(0,p.hp-n);p.invuln=.8;if(!p.hp)state.mode="gameover";return true}export function swing(state){state.status="Das Schwertsystem folgt in Phase 2."}

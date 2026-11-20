@@ -1,0 +1,1 @@
+export function panel(id,on){const e=document.getElementById(id);if(e)e.hidden=!on}export function showError(text){const e=document.getElementById("error");e.hidden=false;e.textContent=text}

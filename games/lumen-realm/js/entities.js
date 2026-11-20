@@ -1,0 +1,1 @@
+import{uid}from"./utils.js";export function entity(type,x,y,extra={}){return{id:uid(),type,x,y,active:true,...extra}}export function removeEntity(state,e){if(e){e.active=false;state.entities.delete(e.id)}}

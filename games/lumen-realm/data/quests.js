@@ -1,0 +1,1 @@
+export const QUEST_DATA=[{id:"first-light",title:"Ein Funken Hoffnung",chapter:1,target:"crossing"}]

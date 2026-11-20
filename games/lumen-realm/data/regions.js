@@ -1,0 +1,1 @@
+export const REGIONS=[{id:"meadow",name:"Wiesenland"},{id:"gloamwood",name:"Düsterwald"},{id:"sunscar",name:"Wüste"},{id:"frostpeak",name:"Eisgebirge"},{id:"cinderreach",name:"Vulkan"}]

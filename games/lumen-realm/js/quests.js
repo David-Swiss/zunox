@@ -1,6 +1,6 @@
 import{QUEST_DATA}from"../data/quests.js";
 export const QUESTS=QUEST_DATA;
-export const makeQuestState=()=>Object.fromEntries(QUESTS.map(q=>[q.id,{active:q.id==="first-light",done:false,progress:0}]));
+export const makeQuestState=()=>Object.fromEntries(QUESTS.map(q=>[q.id,{active:q.id!=="last-light",done:false,progress:0}]));
 export function completeQuest(state,id){if(state[id]){state[id].done=true;state[id].active=false;state[id].progress=1}}
 export function activateQuest(state,id){if(state[id]&&!state[id].done)state[id].active=true}
 export function serializeQuests(state){return JSON.parse(JSON.stringify(state))}

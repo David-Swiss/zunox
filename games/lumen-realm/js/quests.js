@@ -1,0 +1,1 @@
+export const QUESTS=[{id:"first-light",title:"Ein Funken Hoffnung",target:"Wegkreuzung"}];export const makeQuestState=()=>Object.fromEntries(QUESTS.map(q=>[q.id,{done:false,progress:0}]))

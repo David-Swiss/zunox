@@ -1,6 +1,8 @@
 export const DUNGEONS=[
 {id:"root-hollow",name:"Wurzelgewölbe",region:"meadow",worldIndex:1,unlockWorld:2,entrance:{x:760,y:520},boss:{name:"Wurzelkoloss",hp:8,damage:1,speed:58},rooms:["Die versunkene Halle","Die Halle der zwei Runen","Das Herz der Wurzeln"],reward:"Leuchtstein"},
 {id:"thorn-vault",name:"Dornenkatakomben",region:"gloamwood",worldIndex:2,unlockWorld:3,entrance:{x:2240,y:520},boss:{name:"Dornhüter",hp:12,damage:1,speed:68},rooms:["Der überwucherte Eingang","Die Dornenkammer","Der Dornenthron"],reward:"Waldkern"},
-{id:"sunken-observatory",name:"Versunkene Sternwarte",region:"sunscar",worldIndex:3,unlockWorld:4,entrance:{x:3770,y:520},boss:{name:"Sternenwächter",hp:15,damage:1,speed:76},rooms:["Die Sandhalle","Das Sternenrätsel","Die Kuppel der Sonne"],reward:"Sonnenprisma"}
+{id:"sunken-observatory",name:"Versunkene Sternwarte",region:"sunscar",worldIndex:3,unlockWorld:4,entrance:{x:3770,y:520},boss:{name:"Sternenwächter",hp:15,damage:1,speed:76},rooms:["Die Sandhalle","Das Sternenrätsel","Die Kuppel der Sonne"],reward:"Sonnenprisma"},
+{id:"frostbound-sanctum",name:"Frostbund-Sanktuarium",region:"frostpeak",worldIndex:4,unlockWorld:5,entrance:{x:5300,y:520},boss:{name:"Gletscherwächter",hp:19,damage:1,speed:82},rooms:["Die Halle des Eises","Der Spiegelgang","Der gefrorene Thron"],reward:"Frostherz"},
+{id:"emberforge",name:"Aschenschmiede",region:"cinderreach",worldIndex:5,unlockWorld:5,entrance:{x:6840,y:520},boss:{name:"Schlackendrache",hp:24,damage:1,speed:92},rooms:["Die Kohlenpforte","Die Esse der Prüfung","Der Schlackenkern"],reward:"Glutkrone"}
 ];
 export const DUNGEON_DATA={...DUNGEONS[0],rooms:DUNGEONS[0].rooms.map((name,i)=>({id:"room-"+i,name,hint:["Suche den Schlüssel in der Truhe.","Aktiviere beide Runen und öffne das Siegel.","Besiege den Wächter und hole den Leuchtstein."][i]}))};

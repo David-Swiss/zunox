@@ -1,0 +1,1 @@
+export const BOSSES=[{id:"rootwarden",name:"Wurzelhüter",phases:2},{id:"nightmaw",name:"Nachtmaul",phases:2},{id:"dunecrown",name:"Dünenkrone",phases:2},{id:"frostheart",name:"Frostherz",phases:2},{id:"ashking",name:"Aschenkönig",phases:3}]

@@ -32,3 +32,5 @@
 #travel-content button{flex:1 1 42%;min-height:42px}
 #crafting-content button{min-width:102px}
 @media(max-width:600px){#quick{max-width:82%;gap:3px}#quick button{font-size:9px;padding:5px 6px}.map-grid{gap:2px}.map-cell{font-size:8px}.modal-card{max-height:88vh}}
+
+.tutorial{width:min(680px,100%);max-height:42%;overflow:auto;text-align:left;background:#101d2bd9;border:1px solid #77945b;border-radius:12px;padding:10px 14px;font-size:12px;line-height:1.45}.tutorial h2{color:#c7f078;font-size:17px;margin:0 0 6px}.tutorial p{margin:5px 0;max-width:none}.tutorial b{color:#e4f2bd}@media(max-height:650px){.tutorial{max-height:35%;font-size:11px;padding:7px 10px}}

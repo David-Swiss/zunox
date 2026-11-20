@@ -1,0 +1,1 @@
+export const DIALOGUES=[{id:"mira-intro",speaker:"Mira",text:"Die Leuchtsteine sind verstummt. Folge dem alten Pfad."}]

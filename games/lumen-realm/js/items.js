@@ -1,0 +1,1 @@
+export const ITEMS=[{id:"sword",name:"Wandererschwert",owned:true},{id:"bow",name:"Bogen",owned:false},{id:"boomerang",name:"Bumerang",owned:false},{id:"bomb",name:"Knallkugel",owned:false},{id:"hook",name:"Greifhaken",owned:false},{id:"lantern",name:"Laterne",owned:false}];export const makeInventory=()=>Object.fromEntries(ITEMS.map(i=>[i.id,{...i}]))

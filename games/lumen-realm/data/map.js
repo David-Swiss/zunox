@@ -1,0 +1,1 @@
+export const MAP={screensWide:8,screensHigh:8,spawn:{x:480,y:320},waypoints:[{id:"crossing",x:480,y:320}]}

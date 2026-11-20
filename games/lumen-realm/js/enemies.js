@@ -1,5 +1,5 @@
-import{hash,uid}from"./utils.js";
-export const ENEMIES=[{id:"mossling",name:"Moosling",hp:3,damage:1,speed:48,color:"#6eae55",weak:"axe"},{id:"shade",name:"Irrlicht",hp:2,damage:1,speed:70,color:"#a18bd8",weak:"sword"},{id:"thornbug",name:"Dornkäfer",hp:4,damage:1,speed:35,color:"#b87845",weak:"axe"},{id:"dustling",name:"Staubwicht",hp:3,damage:1,speed:55,color:"#c5ad70",weak:"bow"},{id:"emberkin",name:"Glutfunke",hp:3,damage:1,speed:62,color:"#ed7546",weak:"bow"}];
+import{hash,uid}from"./utils.js";import{ENEMY_DATA}from"../data/enemies.js";
+export const ENEMIES=ENEMY_DATA;
 export function spawnEnemies(sx,sy){const seed=hash(sx+233,sy+719);if(seed%100>48)return[];const count=1+seed%2;return Array.from({length:count},(_,i)=>{const type=ENEMIES[hash(seed,i)%ENEMIES.length];return{id:"enemy-"+sx+"-"+sy+"-"+i,kind:type.id,x:sx*960+250+hash(seed,i+21)%460,y:sy*600+190+hash(seed,i+44)%260,hp:type.hp,maxHp:type.hp,active:true,hit:0,attack:0}})}
 export function enemyData(e){return ENEMIES.find(x=>x.id===e.kind)||ENEMIES[0]}
 export function updateEnemies(s,dt){const p=s.player;for(const e of [...s.enemies.values()]){if(!e.active)continue;const dx=p.x-e.x,dy=p.y-e.y,d=Math.hypot(dx,dy),t=enemyData(e);if(d<270&&d>25){const nx=e.x+dx/d*t.speed*dt,ny=e.y+dy/d*t.speed*dt;if(!s.world.solidAt(nx,ny,22,22)){e.x=nx;e.y=ny}}e.hit=Math.max(0,e.hit-dt);e.attack=Math.max(0,e.attack-dt);if(d<30&&e.attack<=0&&p.invuln<=0){p.hp=Math.max(0,p.hp-t.damage);p.invuln=.85;e.attack=1.1;if(!p.hp)s.mode="gameover"}}}

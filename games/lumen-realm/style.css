@@ -19,4 +19,5 @@
 .touch-actions button{min-width:92px;padding:8px 9px;font-size:11px}
 @media(pointer:coarse){#touch-controls{display:flex}}
 @media(max-width:600px){#hotbar{gap:2px;padding:3px;bottom:5px} .hotbar-slot{width:36px;height:40px;padding:2px}.hotbar-slot .slot-icon{font-size:18px}#touch-controls{bottom:54px}.touch-dpad{grid-template-columns:repeat(3,33px);grid-template-rows:repeat(2,33px)}.touch-actions button{min-width:76px;font-size:10px;padding:7px 5px}#quick{top:48px;right:5px;gap:3px}#quick button{padding:6px 7px;font-size:10px}}
-\n#hotbar[hidden],#touch-controls[hidden]{display:none}\n
+
+#hotbar[hidden],#touch-controls[hidden]{display:none}

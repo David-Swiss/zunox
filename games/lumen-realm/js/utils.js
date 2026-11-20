@@ -1,0 +1,1 @@
+export const TILE=32,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));export const hash=(x,y)=>{let n=Math.imul(x^0x45d9f3b,0x45d9f3b)^Math.imul(y^0x119de1f3,0x119de1f3);return(n^(n>>>16))>>>0};export const uid=()=>globalThis.crypto?.randomUUID?.()??Math.random().toString(36).slice(2);

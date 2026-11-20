@@ -14,6 +14,7 @@ draw(c,cam){
 c.fillStyle="#202a32";c.fillRect(0,0,960,600);
 for(let room=0;room<3;room++){const ox=room*960-cam.x;c.fillStyle=room===2?"#352b30":room===1?"#263238":"#28352f";c.fillRect(ox+28,-cam.y+28,904,544);c.strokeStyle="#65746b";c.lineWidth=10;c.strokeRect(ox+28,-cam.y+28,904,544);c.strokeStyle="#41504a";c.lineWidth=1;for(let x=ox+48;x<ox+930;x+=48)for(let y=48-cam.y;y<590-cam.y;y+=48){c.strokeRect(x,y,48,48)}}
 c.fillStyle="#6a5942";for(const [x,y,w,h]of[[310,180,90,90],[570,340,88,100],[1180,150,72,92],[1450,350,90,86],[2200,130,90,100],[2600,420,82,75]])c.fillRect(x-cam.x,y-cam.y,w,h);
+c.fillStyle="#28352f";c.fillRect(932-cam.x,444-cam.y,56,118);if(this.state.gateOpen)c.fillRect(1892-cam.x,246-cam.y,56,120);
 if(!this.state.hasKey){c.fillStyle="#9a7448";c.fillRect(680-cam.x,270-cam.y,42,32);c.fillStyle="#e7c46e";c.fillRect(695-cam.x,270-cam.y,10,32)}else{c.fillStyle="#765d42";c.fillRect(680-cam.x,276-cam.y,42,18);c.fillStyle="#b99a62";c.fillRect(680-cam.x,265-cam.y,42,8)}
 c.fillStyle=this.state.hasKey?"#3e6559":"#d2a34f";c.beginPath();c.arc(1220-cam.x,255-cam.y,18,0,Math.PI*2);c.fill();c.fillStyle=this.state.runes[0]?"#b8f6e6":"#425f65";c.beginPath();c.arc(1220-cam.x,255-cam.y,9,0,7);c.fill();
 c.fillStyle=this.state.runes[1]?"#b8f6e6":"#425f65";c.beginPath();c.arc(1650-cam.x,255-cam.y,18,0,7);c.fill();c.fillStyle="#243d48";c.beginPath();c.arc(1650-cam.x,255-cam.y,9,0,7);c.fill();

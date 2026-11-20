@@ -1,0 +1,1 @@
+export function openDialog(s,n){s.dialog=n;s.mode="dialog"}export function closeDialog(s){s.dialog=null;s.mode="playing"}

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+<title id="title">Lumen Realm – Abenteuer im Reich des Lichts</title><desc id="desc">Ein pixelartiger Held steht vor einem leuchtenden Kristall, einem Dorf, uralten Ruinen, Bergen und einer geheimnisvollen Dungeon-Pforte.</desc>
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#14284e"/><stop offset=".52" stop-color="#496b83"/><stop offset="1" stop-color="#f2a45f"/></linearGradient>
+ <linearGradient id="grass" x2="0" y2="1"><stop stop-color="#6d9b59"/><stop offset="1" stop-color="#254d3c"/></linearGradient>
+ <linearGradient id="crystal" x2="1" y2="1"><stop stop-color="#efff9c"/><stop offset=".45" stop-color="#9dff57"/><stop offset="1" stop-color="#24a878"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#d9ff76" stop-opacity=".85"/><stop offset="1" stop-color="#b6ff58" stop-opacity="0"/></radialGradient>
+ <linearGradient id="title" x2="0" y2="1"><stop stop-color="#fff6bd"/><stop offset=".48" stop-color="#ffd36c"/><stop offset="1" stop-color="#c8792e"/></linearGradient>
+ <filter id="shadow"><feGaussianBlur stdDeviation="7"/></filter>
+ <pattern id="pixels" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M0 31.5H32M31.5 0V32" stroke="#fff" stroke-opacity=".06"/></pattern>
+</defs>
+<rect width="960" height="540" fill="url(#sky)"/>
+<circle cx="480" cy="186" r="190" fill="url(#glow)"/>
+<g fill="#fce8b5" opacity=".8"><circle cx="78" cy="75" r="2"/><circle cx="160" cy="112" r="2"/><circle cx="800" cy="62" r="2"/><circle cx="870" cy="130" r="2"/><circle cx="680" cy="95" r="1.5"/></g>
+<!-- distant snowy peaks -->
+<path d="M0 282 105 143 170 230 260 125 348 256 438 151 525 259 636 111 734 258 827 145 960 280V390H0Z" fill="#324e69"/>
+<path d="m105 143 35 50-28-10-18 30-13-11Zm155-18 47 72-43-25-23 27-14-22Zm376-14 53 89-48-28-25 32-17-22Zm191 34 48 65-44-25-22 22-15-18Z" fill="#dce9e8"/>
+<path d="M0 302 125 235l85 67 119-91 112 98 126-83 104 81 114-89 175 92v110H0Z" fill="#345c55"/>
+<!-- lava mountain -->
+<path d="m748 288 92-205 120 205Z" fill="#392f3e"/><path d="m824 126 16-43 16 43-12 29 22 40-18 22-20-45-19-14Z" fill="#ff7849"/><path d="m845 189 15 38-14 34 20 28-17 12-28-52Z" fill="#f7b04e"/>
+<!-- forest and hills -->
+<path d="M0 328q130-74 260 0t260-3q130-68 250 3t190-5v217H0Z" fill="url(#grass)"/>
+<path d="M0 398q170-66 320 0t320-6q160-50 320 9v139H0Z" fill="#315d43"/>
+<g fill="#173d35"><path d="m28 344 27-80 28 80h-16v30H43v-30Zm83 6 25-74 26 74h-15v28h-21v-28Zm720-8 30-92 30 92h-18v34h-24v-34Zm77 12 23-69 25 69h-15v27h-19v-27Z"/></g>
+<!-- river -->
+<path d="M555 540q-35-60-4-104t-12-82q-24-38 14-74" fill="none" stroke="#193d52" stroke-width="46"/><path d="M555 540q-35-60-4-104t-12-82q-24-38 14-74" fill="none" stroke="#63c8d2" stroke-width="30"/><path d="M555 540q-35-60-4-104t-12-82" fill="none" stroke="#c5f5df" stroke-opacity=".6" stroke-width="3"/>
+<!-- village -->
+<g transform="translate(68 294)"><path d="M0 60 58 10l58 50v69H0Z" fill="#79503a"/><path d="m-8 62 66-61 67 61Z" fill="#493b39"/><path d="M15 77h28v52H15z" fill="#d6a45c"/><path d="M70 77h28v23H70z" fill="#f6d58b"/><path d="M-8 62h133" stroke="#d49b57" stroke-width="5"/></g>
+<g transform="translate(202 340) scale(.76)"><path d="M0 60 58 10l58 50v69H0Z" fill="#8b5c3d"/><path d="m-8 62 66-61 67 61Z" fill="#563e38"/><path d="M15 77h28v52H15z" fill="#d6a45c"/><path d="M70 77h28v23H70z" fill="#f6d58b"/></g>
+<!-- ancient ruins -->
+<g fill="none" stroke="#9db3a0" stroke-width="12"><path d="M350 351V268h94v83M365 268v-32h64v32M374 236v-20m47 20v-20"/><path d="M337 351h121"/></g>
+<!-- dungeon gate -->
+<g transform="translate(758 304)"><path d="M0 66V0h128v66Z" fill="#263b48" stroke="#8ea6a2" stroke-width="8"/><path d="M24 66V28q0-29 40-29t40 29v38Z" fill="#071d2c" stroke="#4cd9d0" stroke-width="7"/><path d="M64 5v53m-22-28h44" stroke="#8effd0" stroke-width="4"/><path d="M-8 70h145" stroke="#b7c6a0" stroke-width="9"/></g>
+<!-- crystal and floating shards -->
+<g transform="translate(505 183)"><circle r="116" fill="url(#glow)" filter="url(#shadow)"/><ellipse rx="91" ry="20" fill="none" stroke="#d8ff8a" stroke-width="3" transform="rotate(-25)"/><ellipse rx="82" ry="17" fill="none" stroke="#f7e89b" stroke-width="2" transform="rotate(35)"/><path d="m0-75 34 52-11 76-23 31-23-31-11-76Z" fill="url(#crystal)" stroke="#e9ffb4" stroke-width="5"/><path d="m0-75 0 159 23-31 11-76Z" fill="#e5ffad" opacity=".65"/><path d="m0-75-11 52 11 20 12-20Z" fill="#fff9cb"/><path d="m-23-23 23 20 23-20" fill="none" stroke="#f3ffc5" stroke-width="4"/><path d="m-44-42-13-20 18 7m97 42 18-16-4 26" fill="#caff75" stroke="#efffb1" stroke-width="3"/></g>
+<!-- foreground path -->
+<path d="M0 465q165-38 286 17t247 58H0Z" fill="#8d8056"/><path d="M130 540q85-48 164-54t152 54" fill="none" stroke="#d6bd7a" stroke-width="16" stroke-linecap="round"/>
+<!-- hero -->
+<g transform="translate(463 393)"><ellipse cx="12" cy="91" rx="42" ry="11" fill="#10291f" opacity=".6"/><path d="M-15 28 24 28 35 82H-24Z" fill="#275f47"/><path d="m-13 34-26 22 11 10 30-17m26-17 23 18-9 12-28-16" fill="#1b4739"/><path d="m-19 80 19 0-3 19h-25Zm26 0h20l10 19H9Z" fill="#60422f"/><path d="m-23 29 25-12 25 12-8 44H-17Z" fill="#24724d" stroke="#a6d46b" stroke-width="3"/><path d="m-8 39 11-6 11 7-11 15Z" fill="#e4d66c"/><rect x="-12" y="-12" width="27" height="27" rx="7" fill="#b8794d"/><path d="M-15-12q16-23 32 0v9h-32Z" fill="#49352d"/><path d="M22 42 48-27" stroke="#b9d9df" stroke-width="8" stroke-linecap="round"/><path d="m48-27 8-18 3 22Z" fill="#e6f5ed"/><path d="M-31 36q-13-7-15-19l12-6 14 14Z" fill="#d63f38"/><path d="m-34 9 8-9 7 10" fill="#69a94d"/></g>
+<!-- title plate -->
+<path d="M24 22h394l-18 132H24Z" fill="#071629" opacity=".74" stroke="#f6d37b" stroke-opacity=".55" stroke-width="2"/>
+<text x="43" y="91" fill="url(#title)" font-family="Georgia,serif" font-size="65" font-weight="bold" letter-spacing="1" stroke="#53351f" stroke-width="2" paint-order="stroke">LUMEN</text>
+<text x="43" y="145" fill="url(#title)" font-family="Georgia,serif" font-size="65" font-weight="bold" letter-spacing="1" stroke="#53351f" stroke-width="2" paint-order="stroke">REALM</text>
+<path d="M43 161h320" stroke="#f7d77b" stroke-width="3"/><path d="m385 153 9 8-9 8-9-8Z" fill="#dfff89" stroke="#fff1b2" stroke-width="2"/>
+<rect width="960" height="540" fill="url(#pixels)"/>
+<rect x="7" y="7" width="946" height="526" fill="none" stroke="#e6d08b" stroke-opacity=".45" stroke-width="4"/>
+</svg>

@@ -1,1 +1,7 @@
-export const REGIONS=[{id:"meadow",name:"Wiesenland"},{id:"gloamwood",name:"Düsterwald"},{id:"sunscar",name:"Wüste"},{id:"frostpeak",name:"Eisgebirge"},{id:"cinderreach",name:"Vulkan"}]
+export const REGIONS=[
+{id:"meadow",name:"Wiesenland",start:0,end:1536,ground:["#78ad61","#83b96b"],detail:"#b8d982"},
+{id:"gloamwood",name:"Düsterwald",start:1536,end:3072,ground:["#496b50","#557b58"],detail:"#a2c58a"},
+{id:"sunscar",name:"Sonnenöde",start:3072,end:4608,ground:["#b58a4f","#c49a5d"],detail:"#f0d18b"},
+{id:"frostpeak",name:"Eisgrat",start:4608,end:6144,ground:["#9bb8c4","#b2cbd2"],detail:"#e3f4ef"},
+{id:"cinderreach",name:"Glutklamm",start:6144,end:7680,ground:["#76534b","#8a5d4c"],detail:"#e7a16d"}
+];

@@ -19,7 +19,7 @@ const near=(x,y,r=82)=>Math.hypot(px-x,py-y)<=r;
 const persist=()=>{d.progress[d.id]=snapshot(d)};
 const leave=()=>{persist();d.active=false;s.world=s.overworldWorld||new World();s.player.x=d.returnX;s.player.y=d.returnY;s.projectiles=[];s.bombsPlaced=[];s.status="Du verlässt das Gewölbe. Dein Fortschritt wurde behalten."};
 if(near(100,510,76)){leave();return}
-if(d.boss.defeated&&near(2760,520,100)){leave();return}
+if(d.boss.defeated&&p.x>=1920){leave();return}
 if(near(1920,306,104)){
 if(d.gateOpen){s.status="Das Runentor ist bereits geöffnet.";return}
 if(d.hasKey&&Array.isArray(d.runes)&&d.runes.length>=2&&d.runes.every(Boolean)){

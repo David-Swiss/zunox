@@ -1,0 +1,1 @@
+export const ENEMIES=[{id:"mossling",name:"Moosling",hp:2},{id:"shade",name:"Irrlicht",hp:1},{id:"thornbug",name:"Dornkäfer",hp:3},{id:"dustling",name:"Staubwicht",hp:2},{id:"emberkin",name:"Glutfunke",hp:2}]

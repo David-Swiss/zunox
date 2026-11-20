@@ -1,1 +1,2 @@
-export function openDialog(s,n){s.dialog=n;s.mode="dialog"}export function closeDialog(s){s.dialog=null;s.mode="playing"}
+export function openDialog(s,npc){s.dialog=npc;s.mode="dialog";s.status=npc.name+" – "+npc.role}
+export function closeDialog(s){s.dialog=null;if(s.mode==="dialog")s.mode="playing"}

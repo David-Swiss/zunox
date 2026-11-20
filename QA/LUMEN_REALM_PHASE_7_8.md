@@ -12,7 +12,7 @@
 - Aschenschmiede/Schlackendrache als finaler Bosskampf mit Abschlusssequenz.
 - Finale Quest wird beim Sieg abgeschlossen; Abschlussstatus wird gespeichert.
 - iPad- und Touch-UI für neue Werkbank-/Reisefunktionen erweitert.
-- Heldes Item ist sichtbar: Schwert, Axt, Bogen, Speer, Apfel, Brot, Beeren, Bombe oder Greifhaken.
+- Gehaltene Gegenstände sind sichtbar: Schwert, Axt, Bogen, Speer, Apfel, Brot, Beeren, Bombe oder Greifhaken.
 - Save-Version 8; Versionen 1–7 bleiben ladbar.
 
 ## Grössere Weltkarten

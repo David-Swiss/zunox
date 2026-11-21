@@ -43,7 +43,7 @@ button:disabled{filter:saturate(.35);cursor:not-allowed}
 'use strict';
 (()=>{
 // BALANCING: konstante Physik und fairer, deterministischer Chunk-Abstand.
-const C={STEP:1/120,G:480,AIR:.994,ROPE:230,MIN_ROPE:170,MAX_ROPE:260,RETRACT:10,BOOST:1.12,PERFECT_MIN:0.28,PERFECT_MAX:1.15,CHUNK:560,MAX_PARTICLES:180};
+const C={STEP:1/120,G:440,AIR:.992,ROPE:230,MIN_ROPE:170,MAX_ROPE:260,RETRACT:10,BOOST:1.08,PERFECT_MIN:0.28,PERFECT_MAX:1.15,CHUNK:560,MAX_PARTICLES:180};
 const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d',{alpha:false});
 let W=innerWidth,H=innerHeight,dpr=1,acc=0,last=0,raf=0,state='menu',muted=false,audio=null,beatTimer=0;
 const themes=[['#55f3ed','#a4ff7c'],['#ff55d8','#8c7cff'],['#8bff75','#c9ff7a'],['#ff9a4d','#ffe36a'],['#e8f6ff','#a6c9ff']];
@@ -71,7 +71,7 @@ function burst(x,y,n,color){for(let i=0;i<n&&particles.length<C.MAX_PARTICLES;i+
 function update(dt){if(state!=='play')return;perfectFlash=Math.max(0,perfectFlash-dt);const scale=slow>0?.58:1;dt*=scale;let p=player;if(down&&!p.rope){holdRetry-=dt;if(holdRetry<=0){hook();holdRetry=.12;}}else holdRetry=0;p.ropeLen=Math.max(C.MIN_ROPE,p.ropeLen-C.RETRACT*dt*(p.rope?1:0));if(doubleRope>0)doubleRope-=dt;if(magnet>0)magnet-=dt;if(slow>0)slow-=dt;wind=Math.sin(p.x*.003)*75;const oldX=p.x;
 p.vy+=C.G*dt;p.vx+=wind*dt;p.vx*=Math.pow(C.AIR,dt*60);p.vy*=Math.pow(C.AIR,dt*60);
 if(p.rope){const a=p.rope;if(!a.alive){p.rope=null;}else{if(a.moving)a.y=a.base+Math.sin(performance.now()*.0015+a.phase)*42;const dx=p.x-a.x,dy=p.y-a.y,d=Math.hypot(dx,dy)||1,nx=dx/d,ny=dy/d;if(d>p.ropeLen){const excess=d-p.ropeLen;p.x-=nx*excess;p.y-=ny*excess;const radial=p.vx*nx+p.vy*ny;p.vx-=radial*nx;p.vy-=radial*ny;}const tangent=p.vx*(-ny)+p.vy*nx;p.vx+=(-ny)*tangent*.003;p.vy+=nx*tangent*.003;}}
-const speedNow=Math.hypot(p.vx,p.vy),speedLimit=430;if(speedNow>speedLimit){p.vx=p.vx/speedNow*speedLimit;p.vy=p.vy/speedNow*speedLimit;}p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.x>worldEnd-C.CHUNK*2)generateChunk();
+const speedNow=Math.hypot(p.vx,p.vy),speedLimit=360;if(speedNow>speedLimit){p.vx=p.vx/speedNow*speedLimit;p.vy=p.vy/speedNow*speedLimit;}p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.x>worldEnd-C.CHUNK*2)generateChunk();
 if(p.y>H-28){if(shield){shield=0;p.y=H-40;p.vy=-500;camera.shake=10;burst(p.x,p.y,18,'#fff18b');}else die('Boden berührt');}if(p.y<8)die('Aus der Bahn geraten');
 for(const h of hazards){if(Math.abs(p.x-h.x)<h.w/2+p.r&&Math.abs(p.y-h.y)<h.h/2+p.r)die(h.type==='laser'?'Laser getroffen':'Stacheln erwischt');}
 for(const a of anchors){if(a.fragile&&a===p.rope&&p.rope&&Math.hypot(p.x-a.x,p.y-a.y)<p.ropeLen+4){a.life=(a.life||0)+dt;if(a.life>1){a.alive=false;p.rope=null;}}}

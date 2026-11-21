@@ -24,5 +24,5 @@ if(pine){for(let tier=0;tier<3;tier++){const top=py+1+tier*7,base=py+15+tier*7;c
 else if(desert){c.fillStyle=leaf;c.beginPath();c.ellipse(px+17,py+5,8,5,-.15,0,7);c.fill();c.fillStyle=light;c.beginPath();c.ellipse(px+12,py+4,3,2,-.3,0,7);c.fill()}
 else{c.fillStyle=leaf;c.beginPath();c.arc(px+10,py+13,9,0,7);c.arc(px+21,py+12,10,0,7);c.arc(px+16,py+7,10,0,7);c.fill();c.fillStyle=light;c.beginPath();c.arc(px+11,py+8,4,0,7);c.arc(px+22,py+10,4,0,7);c.fill();c.fillStyle="#ffffff25";c.beginPath();c.arc(px+13,py+5,2,0,7);c.fill()}
 if(volcanic){c.fillStyle="#ffb06a";c.globalAlpha=.75;c.fillRect(px+8,py+8,2,2);c.fillRect(px+24,py+15,2,2);c.globalAlpha=1}
-}}if(camera.x<1920)this.drawMeadowLandmarks(c,camera);for(let i=0;i<GATES.length;i++)this.drawGate(c,camera,GATES[i],i)}
+}}if(camera.x<1920)this.drawMeadowLandmarks(c,camera);this.drawEpilogueLandmarks(c,camera);for(let i=0;i<GATES.length;i++)this.drawGate(c,camera,GATES[i],i)}
 }

@@ -24,6 +24,14 @@
 #reset{position:fixed;z-index:4;right:14px;top:78px;pointer-events:auto;border:1px solid #ffffff2b;background:#081522c9;color:#e7f2f9;border-radius:9px;padding:7px 10px;font-size:11px;font-weight:850}
 .garage{margin-top:16px;border-top:1px solid #ffffff20;padding-top:12px}.wallet{font-weight:950;color:#ffe28a;margin:4px}.shopgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.shopgrid button{font-size:10px;padding:10px 5px;margin:0;background:#20384a;color:#eaf4fa;border:1px solid #ffffff25}.shopgrid button:disabled{opacity:.35}.shopgrid [data-buy=box]{grid-column:1/-1;min-height:84px;font-size:17px;font-weight:1000;letter-spacing:.5px;background:linear-gradient(135deg,#6846a8,#bd77ff 52%,#52358b);border:2px solid #e2c3ff;box-shadow:0 0 24px #a65cff66;border-radius:16px}.shopgrid [data-buy=box]::before{content:'🎁  ';font-size:25px}.garage .sub{margin-top:8px}@media(hover:hover) and (pointer:fine){#touch{opacity:.42}#touch:hover{opacity:1}}
 @media(max-width:520px){.hud{padding:8px}.brand{font-size:11px;padding:8px}.stats{gap:8px;padding:8px}.stat{min-width:53px}.stat strong{font-size:14px}.stat small{font-size:8px}#hint{top:62px;font-size:10px}#reset{top:68px;right:8px}.ctrl{border-radius:16px}}
+
+/* ZUNOX quality pass: tactile controls, visible keyboard focus and reduced-motion support */
+button,a{-webkit-tap-highlight-color:transparent}
+button{transition:transform .14s ease,filter .18s ease,box-shadow .18s ease}
+button:active{transform:translateY(1px) scale(.975);filter:brightness(1.12)}
+button:focus-visible,a:focus-visible{outline:3px solid #b9f5a0;outline-offset:3px}
+button:disabled{filter:saturate(.35);cursor:not-allowed}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 <style>
 .zuno-back{position:fixed!important;top:max(10px,env(safe-area-inset-top))!important;left:12px!important;z-index:99999!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:42px!important;padding:0 15px!important;border:1px solid #ffffff38!important;border-radius:13px!important;background:rgba(8,17,31,.88)!important;color:#fff!important;font:800 13px/1 system-ui,-apple-system,sans-serif!important;letter-spacing:.2px!important;text-decoration:none!important;box-shadow:0 5px 20px #0005!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:transparent!important;user-select:none!important;-webkit-user-select:none!important}

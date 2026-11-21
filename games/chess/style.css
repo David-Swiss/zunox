@@ -45,3 +45,11 @@
 .online-box .leave-room{width:100%;margin-top:6px;background:#25364a;border-color:#3b5269;color:#c6d7e9}
 .online-box small{display:block;margin-top:8px;color:#9be6d7;font-size:10px;overflow-wrap:anywhere}
 @media(max-width:620px){.online-box{width:100%}.online-box input{font-size:12px}}
+
+/* ZUNOX quality pass: clear interaction states, tactile feedback and safe rendering */
+button,a{ -webkit-tap-highlight-color:transparent }
+button{transition:transform .14s ease,filter .18s ease,box-shadow .18s ease}
+button:active{transform:translateY(1px) scale(.975);filter:brightness(1.12)}
+button:focus-visible,a:focus-visible{outline:3px solid #b9f5a0;outline-offset:3px}
+button:disabled{filter:saturate(.35);cursor:not-allowed}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}

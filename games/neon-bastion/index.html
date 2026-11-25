@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#070b16">
+<meta name="description" content="NEON BASTION – Verteidige den Kern. Baue deinen Build. Überlebe den Zyklus.">
+<title>NEON BASTION · ZUNOX</title>
+<link rel="icon" href="./thumbnail.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main id="app">
+  <canvas id="game" aria-label="Neon Bastion Spielfeld"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="back" href="../../index.html">← ZUNOX</a>
+    <div class="brand"><span class="brand-mark">N</span><span>NEON <b>BASTION</b></span></div>
+    <div class="top-actions"><button id="soundButton" class="icon-button" aria-label="Sound umschalten">♫</button><button id="pauseButton" class="icon-button" aria-label="Pause" disabled>Ⅱ</button></div>
+  </header>
+  <section class="hud" id="hud" hidden>
+    <div class="hud-stat"><small>KERNINTEGRITÄT</small><strong id="coreHealth">100<span>%</span></strong></div>
+    <div class="hud-stat"><small>ENERGIE</small><strong id="energy">120</strong></div>
+    <div class="hud-stat"><small>ZYKLUS</small><strong id="wave">00<span>/30</span></strong></div>
+    <div class="hud-stat"><small>ABSCHÜSSE</small><strong id="kills">0</strong></div>
+  </section>
+  <section class="buildbar" id="buildbar" hidden>
+    <div><small>BAUPHASE</small><strong id="selectionText">Wähle ein freies Feld</strong></div>
+    <div class="build-actions"><button id="pulseButton" class="primary" disabled>＋ PULSE-TURM <span>60 E</span></button><button id="undoButton" class="secondary" disabled>↶ Rückgängig</button></div>
+  </section>
+  <section class="speedbar" id="speedbar" hidden>
+    <button data-speed="1" class="speed active">1×</button><button data-speed="2" class="speed">2×</button><button data-speed="3" class="speed">3×</button>
+    <span id="phaseLabel">BASIS-SYSTEM · PHASE 1</span>
+  </section>
+  <section class="overlay" id="menu">
+    <div class="panel menu-panel">
+      <div class="eyebrow">ZUNOX ORIGINAL · DEFENSE PROTOCOL 01</div>
+      <div class="hero-emblem"><div class="emblem-ring ring-a"></div><div class="emblem-ring ring-b"></div><div class="emblem-core"></div><span>NB</span></div>
+      <h1>NEON <em>BASTION</em></h1>
+      <p class="lead">Ein Kern. Ein endloser Ansturm. Deine Verteidigung entscheidet.</p>
+      <div class="feature-row"><span>⌖ TAKTISCHER AUFBAU</span><span>✦ ROGUELITE-BUILDS</span><span>◈ 30 ZYKLEN</span></div>
+      <button id="startButton" class="primary start-button">VERTEIDIGUNG STARTEN <span>→</span></button>
+      <p class="microcopy">Phase 1 · Spielfeld, Pfadlogik und Baugrundlage</p>
+    </div>
+  </section>
+  <section class="overlay hidden" id="pauseOverlay">
+    <div class="panel compact"><div class="eyebrow">SYSTEMSTATUS</div><h2>PAUSIERT</h2><p>Der Kern wartet auf deinen nächsten Befehl.</p><button id="resumeButton" class="primary">WEITER →</button><button id="menuButton" class="secondary wide-button">ZUM MENÜ</button></div>
+  </section>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="bootError" class="boot-error" hidden></div>
+</main>
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>

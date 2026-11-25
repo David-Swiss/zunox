@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+<defs><radialGradient id="bg"><stop stop-color="#173454"/><stop offset="1" stop-color="#070b16"/></radialGradient><radialGradient id="core"><stop stop-color="#fff"/><stop offset=".25" stop-color="#8ffaff"/><stop offset=".65" stop-color="#2389cf"/><stop offset="1" stop-color="#091629"/></radialGradient><filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="640" height="360" fill="url(#bg)"/>
+<g stroke="#59f4ff" opacity=".22" fill="none"><path d="M0 75H640M0 145H640M0 215H640M0 285H640M80 0V360M160 0V360M240 0V360M320 0V360M400 0V360M480 0V360M560 0V360"/></g>
+<path d="M-20 250H145V170H310V85H480V185H660" fill="none" stroke="#4d8db8" stroke-width="38" opacity=".3"/><path d="M-20 250H145V170H310V85H480V185H660" fill="none" stroke="#59f4ff" stroke-width="3" stroke-dasharray="8 9" opacity=".8"/>
+<g filter="url(#glow)"><circle cx="510" cy="185" r="39" fill="none" stroke="#59f4ff" stroke-width="2"/><circle cx="510" cy="185" r="24" fill="url(#core)"/><path d="M510 145V225M470 185H550" stroke="#b8ffff" opacity=".7"/></g>
+<g fill="#0d1d33" stroke="#a879ff" stroke-width="3" filter="url(#glow)"><path d="m170 132 24 14v28l-24 14-24-14v-28Z"/><path d="m350 46 22 13v26l-22 13-22-13V59Z"/></g>
+<text x="34" y="55" fill="#d9fbff" font-family="Arial,sans-serif" font-size="24" font-weight="900" letter-spacing="5">NEON</text><text x="34" y="91" fill="#59f4ff" font-family="Arial,sans-serif" font-size="34" font-weight="900" letter-spacing="2">BASTION</text><text x="36" y="324" fill="#90a9c8" font-family="Arial,sans-serif" font-size="12" letter-spacing="3">DEFENSE PROTOCOL · ZUNOX ORIGINAL</text>
+</svg>

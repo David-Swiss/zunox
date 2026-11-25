@@ -37,9 +37,10 @@ export class BastionMap{
   }
   drawTower(ctx,t,cell,clock){
     const x=(t.x+.5)*cell,y=(t.y+.5)*cell,r=cell*.3;
-    ctx.save();ctx.translate(x,y);ctx.shadowColor="#59f4ff";ctx.shadowBlur=10+Math.sin(clock*3)*2;
-    ctx.fillStyle="#102b42";ctx.strokeStyle="#70f6ff";ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fill();ctx.stroke();
-    ctx.rotate(clock*.4);ctx.strokeStyle="#c4ff75";ctx.lineWidth=Math.max(2,cell*.07);ctx.beginPath();ctx.moveTo(-r*.55,0);ctx.lineTo(r*.55,0);ctx.moveTo(0,-r*.55);ctx.lineTo(0,r*.55);ctx.stroke();
+    const color=t.type==="beam"?"#c18aff":t.type==="cannon"?"#ffb45d":"#59f4ff";
+    ctx.save();ctx.translate(x,y);ctx.shadowColor=color;ctx.shadowBlur=10+Math.sin(clock*3)*2;
+    ctx.fillStyle="#102b42";ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.rotate(clock*.4);ctx.strokeStyle=t.level>1?"#c4ff75":color;ctx.lineWidth=Math.max(2,cell*.07);ctx.beginPath();ctx.moveTo(-r*.55,0);ctx.lineTo(r*.55,0);ctx.moveTo(0,-r*.55);ctx.lineTo(0,r*.55);ctx.stroke();
     ctx.restore();
   }
   drawLabels(ctx,width,height,m){

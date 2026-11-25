@@ -26,7 +26,7 @@
   </section>
   <section class="buildbar" id="buildbar" hidden>
     <div><small>BAUPHASE</small><strong id="selectionText">Wähle ein freies Feld</strong></div>
-    <div class="build-actions"><button id="pulseButton" class="primary" disabled>＋ PULSE-TURM <span>60 E</span></button><button id="undoButton" class="secondary" disabled>↶ Rückgängig</button></div>
+    <div class="build-actions"><button data-tower="pulse" class="primary" disabled>＋ PULSE <span>60 E</span></button><button data-tower="beam" class="secondary" disabled>＋ PRISMA <span>95 E</span></button><button data-tower="cannon" class="secondary" disabled>＋ NOVA <span>125 E</span></button><button id="upgradeButton" class="secondary" disabled>↑ Upgrade</button><button id="undoButton" class="secondary" disabled>↶</button></div>
   </section>
   <section class="speedbar" id="speedbar" hidden>
     <button data-speed="1" class="speed active">1×</button><button data-speed="2" class="speed">2×</button><button data-speed="3" class="speed">3×</button>
@@ -34,13 +34,13 @@
   </section>
   <section class="overlay" id="menu">
     <div class="panel menu-panel">
-      <div class="eyebrow">ZUNOX ORIGINAL · DEFENSE PROTOCOL 01</div>
+      <div class="eyebrow" id="menuEyebrow">ZUNOX ORIGINAL · DEFENSE PROTOCOL 01</div>
       <div class="hero-emblem"><div class="emblem-ring ring-a"></div><div class="emblem-ring ring-b"></div><div class="emblem-core"></div><span>NB</span></div>
-      <h1>NEON <em>BASTION</em></h1>
-      <p class="lead">Ein Kern. Ein endloser Ansturm. Deine Verteidigung entscheidet.</p>
+      <h1 id="menuTitle">NEON <em>BASTION</em></h1>
+      <p class="lead" id="menuLead">Ein Kern. Ein endloser Ansturm. Deine Verteidigung entscheidet.</p>
       <div class="feature-row"><span>⌖ TAKTISCHER AUFBAU</span><span>✦ ROGUELITE-BUILDS</span><span>◈ 30 ZYKLEN</span></div>
       <button id="startButton" class="primary start-button">VERTEIDIGUNG STARTEN <span>→</span></button>
-      <p class="microcopy">Phase 1 · Spielfeld, Pfadlogik und Baugrundlage</p>
+      <p class="microcopy" id="menuMicro">Phase 2 + 3 · Gegnerwellen, drei Turmklassen und Ausbaupfade</p>
     </div>
   </section>
   <section class="overlay hidden" id="pauseOverlay">

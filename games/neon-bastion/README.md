@@ -3,39 +3,28 @@
 Ein eigenständiges Neon-Sci-Fi-Tower-Defense-Roguelite für ZUNOX. Keine externen Bibliotheken, Bilddateien oder Sounddateien. Rendering läuft über Canvas 2D; Audio wird später über die Web Audio API ergänzt.
 
 ## Starten
-
 Auf GitHub Pages: `/zunox/games/neon-bastion/`
 
-Für lokale Entwicklung einen HTTP-Server verwenden. ES-Module funktionieren nicht zuverlässig über `file://`.
-
-## Phase 1 – Fundament
-
-- Responsives Canvas-Spielfeld mit eigenem Neon-Art-Style
-- Datengetriebene Kartenbeschreibung
-- Rasterkarte mit Spawn, Pfad und Kern
-- BFS-Pfadprüfung: Ein Turm darf den Weg zum Kern nicht vollständig blockieren
-- Feld-Auswahl und erste Pulse-Turm-Platzierung
-- Rückgängig innerhalb von drei Sekunden
-- 1×/2×/3×-Geschwindigkeit, Pause und Canvas-Pinch-Zoom
-- Desktop-Maus und Touch-Eingabe
-
 ## Steuerung
-
 - Tippen/Klicken: Feld auswählen
-- Pulse-Turm platzieren: 60 Energie
+- Pulse-Turm: 60 Energie, schnell und günstig
+- Prisma-Turm: 95 Energie, grosse Reichweite und direkter Energiestrahl
+- Nova-Turm: 125 Energie, langsamer und starker Einzelschuss
+- Turm anklicken und Upgrade drücken: Schaden und Feuerrate verbessern
 - Rückgängig: letzte Platzierung innerhalb von drei Sekunden
 - Pause: Schaltfläche oben rechts
 - Zoom: Zwei Finger direkt auf dem Spielfeld zusammen-/auseinanderziehen
+- Geschwindigkeit: 1×, 2× oder 3×
 
-## Geplante Phasen
+## Entwicklungsphasen
+- [x] Phase 1 – Fundament, Spielfeld, Kamera, Pfadvalidierung
+- [x] Phase 2 – Gegnerwellen, Gegnerbewegung, Kernschaden, Projektile, Bossgegner, 30 Wellen und Sieg/Niederlage
+- [x] Phase 3 – Drei Turmklassen, unterschiedliche Reichweiten/Schussraten/Schäden, Upgrades und Energieökonomie
+- [ ] Phase 4 – Kartenwahl, Relikte, Held und Run-Mutatoren
+- [ ] Phase 5 – Sechs Karten, individuelle Bossmuster und Endlosmodus
+- [ ] Phase 6 – Meta-Progression, Skilltree, Erfolge, Audio und vollständige QA
 
-1. Fundament, Spielfeld, Kamera und Pfadvalidierung
-2. Wellen, Gegner, Projektile und Kernschaden
-3. Alle 12 Türme mit Ausbaupfaden, Zielmodi und Fusionen
-4. Kartenwahl, Relikte, Held und Run-Mutatoren
-5. Sechs Karten, Bosse und Endlosmodus
-6. Meta-Progression, Skilltree, Erfolge, Audio und QA-Polish
-
-## Bekannte Grenzen in Phase 1
-
-Wellen, Gegner-KI, Turm-Angriffe, Roguelite-Karten und Meta-Progression sind noch nicht implementiert. Diese Phase liefert zuerst eine testbare Bau- und Kartenbasis.
+## Technische Hinweise
+- Feste 60-Hz-Simulationsschritte; Rendering und Resize bleiben geräteunabhängig
+- Turmplatzierung validiert weiterhin den Pfad zum Kern
+- Browser-Spielstände/Meta-Progression kommen in Phase 6

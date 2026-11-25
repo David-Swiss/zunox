@@ -100,16 +100,16 @@ const dpr=Math.min(2,window.devicePixelRatio||1);canvas.width=W*dpr;canvas.heigh
 const $=id=>document.getElementById(id);
 const timeEl=$('time'),scoreEl=$('score'),streakEl=$('streak'),bestEl=$('best'),statusEl=$('status'),overlay=$('overlay');
 let phase='ready',remaining=60,score=0,shots=0,made=0,streak=0,bestStreak=0,clock=0,lastFrame=0,raf=0,drag=null,particles=[],banner='',bannerUntil=0;
-let pull={x:-85,y:55},best=readBest();
+let pull={x:-69.5,y:55.5},best=readBest();
 const ball={x:205,y:455,vx:0,vy:0,r:14,mode:'ready',resolved:false,resetAt:0,spin:0,money:false};
 function readBest(){try{return Math.max(0,Number(localStorage.getItem('zunox-courtside-best'))||0)}catch(_){return 0}}
 function writeBest(){try{localStorage.setItem('zunox-courtside-best',String(best))}catch(_){}}
 function hud(){timeEl.textContent=String(Math.max(0,Math.ceil(remaining)));scoreEl.textContent=String(score).padStart(3,'0');streakEl.textContent='×'+streak;bestEl.textContent=String(best).padStart(3,'0')}
 function setStatus(t){statusEl.textContent=t}
-function resetBall(){ball.x=205;ball.y=455;ball.vx=0;ball.vy=0;ball.mode='ready';ball.resolved=false;ball.spin=0;ball.money=false;pull={x:-85,y:55};drag=null}
+function resetBall(){ball.x=205;ball.y=455;ball.vx=0;ball.vy=0;ball.mode='ready';ball.resolved=false;ball.spin=0;ball.money=false;pull={x:-69.5,y:55.5};drag=null}
 function beginRun(){phase='playing';remaining=60;score=0;shots=0;made=0;streak=0;bestStreak=0;clock=0;particles=[];banner='';resetBall();overlay.hidden=true;setStatus('ZIEHEN · ZIELEN · TREFFEN');hud()}
 function finishRun(){if(phase!=='playing')return;phase='finished';if(score>best){best=score;writeBest()}hud();$('overlayKicker').textContent='BUZZER BEATER / RUN COMPLETE';$('overlayTitle').textContent='TIME IS UP.';$('overlayText').textContent='Du hast '+score+' Punkte mit '+made+' Treffern aus '+shots+' Würfen erzielt. Trefferquote: '+(shots?Math.round(made/shots*100):0)+' %. '+(score>=best?'Neuer Rekord!':'Dein Bestwert: '+best+' Punkte.');$('start').textContent='NOCH EINE RUNDE ↗';$('overlay').hidden=false;setStatus('RUN BEENDET · '+(shots?Math.round(made/shots*100):0)+'% TREFFERQUOTE')}
-function launch(){if(phase!=='playing'||ball.mode!=='ready')return;let m=Math.hypot(pull.x,pull.y);if(m<42){pull={x:-85,y:55};m=Math.hypot(pull.x,pull.y)}const scale=14.4;ball.vx=-pull.x*scale;ball.vy=-pull.y*scale;ball.mode='flying';ball.resolved=false;ball.money=(shots+1)%5===0;shots++;ball.spin=0;setStatus(ball.money?'MONEYBALL IN DER LUFT!':'WURF '+shots+' · FINDE DEN SWISH');}
+function launch(){if(phase!=='playing'||ball.mode!=='ready')return;let m=Math.hypot(pull.x,pull.y);if(m<42){pull={x:-69.5,y:55.5};m=Math.hypot(pull.x,pull.y)}const scale=14.4;ball.vx=-pull.x*scale;ball.vy=-pull.y*scale;ball.mode='flying';ball.resolved=false;ball.money=(shots+1)%5===0;shots++;ball.spin=0;setStatus(ball.money?'MONEYBALL IN DER LUFT!':'WURF '+shots+' · FINDE DEN SWISH');}
 function resolveShot(scored,x){if(ball.resolved)return;ball.resolved=true;if(scored){made++;streak++;bestStreak=Math.max(bestStreak,streak);const swish=Math.abs(x-HOOP_C)<12;const points=(ball.money?5:3)+(swish?1:0);score+=points;banner=(swish?'SWISH! ':'TREFFER! ')+(ball.money?'MONEYBALL ':'')+'+'+points;bannerUntil=clock+0.9;setStatus((swish?'PERFEKTER SWISH':'SAUBERER TREFFER')+' · +'+points+' PUNKTE');burst(x,HOOP_Y+12,ball.money?'#c7ff4b':'#ff9b54',swish?30:20);ball.mode='scored';ball.resetAt=clock+0.62;}else{streak=0;banner='NO GOOD';bannerUntil=clock+0.75;setStatus('DANEBEN · NÄCHSTER WURF');ball.mode='missed';ball.resetAt=clock+0.78;}hud()}
 function burst(x,y,color,count){for(let i=0;i<count;i++){const a=Math.random()*Math.PI*2,s=70+Math.random()*260;particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-80,life:.45+Math.random()*.65,max:.8,size:2+Math.random()*4,color})}}
 function update(dt){clock+=dt;remaining=Math.max(0,remaining-dt);if(remaining<=0){finishRun();return}

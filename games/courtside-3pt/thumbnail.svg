@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#182f3b"/><stop offset=".58" stop-color="#35535a"/><stop offset="1" stop-color="#10191f"/></linearGradient>
+ <linearGradient id="ball" x2=".8" y2="1"><stop stop-color="#ffc36e"/><stop offset=".55" stop-color="#ef8039"/><stop offset="1" stop-color="#a94320"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#ff9a55" stop-opacity=".5"/><stop offset="1" stop-color="#ff9a55" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="640" height="360" fill="url(#bg)"/>
+<circle cx="500" cy="100" r="120" fill="url(#glow)"/>
+<path d="M0 205h640v155H0z" fill="#172328"/>
+<path d="M0 280h640M0 325h640" stroke="#d8e4d0" stroke-opacity=".3" stroke-width="3"/>
+<g fill="#101b23"><path d="M0 90h70v125H0zM65 65h95v150H65zM155 110h75v105h-75zM235 78h88v137h-88zM320 102h70v113h-70zM385 60h95v155h-95zM480 100h65v115h-65zM540 72h100v143H540z"/></g>
+<g fill="#e4b76c" opacity=".55"><path d="M82 88h7v10h-7zm20 0h7v10h-7zm0 25h7v10h-7zm120-18h7v10h-7zm20 0h7v10h-7zm100 26h7v10h-7zm110-38h7v10h-7zm24 0h7v10h-7z"/></g>
+<path d="M535 93v164" stroke="#dce6d7" stroke-width="8"/>
+<rect x="490" y="82" width="55" height="86" rx="4" fill="#dce8dc" fill-opacity=".14" stroke="#e5eee2" stroke-width="5"/>
+<path d="M450 170h85" stroke="#ff8b43" stroke-width="8" stroke-linecap="round"/>
+<path d="M455 176l12 53 25 0 27-53" fill="none" stroke="#f1eee1" stroke-opacity=".8" stroke-width="2"/>
+<g transform="translate(290 210)"><circle r="42" fill="url(#ball)" stroke="#74381f" stroke-width="3"/><path d="M-42-5Q0-18 42 6M-8-41Q-33 0 8 41M-32 27Q0-10 32-28" fill="none" stroke="#71331f" stroke-width="3"/></g>
+<text x="30" y="48" fill="#c7ff4b" font-family="Arial,sans-serif" font-size="18" font-weight="900" letter-spacing="5">ZUNOX / SPORTS</text>
+<text x="28" y="318" fill="#fff8eb" font-family="Arial,sans-serif" font-size="42" font-weight="900" letter-spacing="-2">3PT RUSH</text>
+<path d="M30 333h175" stroke="#ff8b43" stroke-width="6"/>
+</svg>

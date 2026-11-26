@@ -1,1 +1,2 @@
-export function collectNearby(state){const s=state.sub;for(const o of state.world.objects){if(o.taken||Math.hypot(o.x-s.x,o.y-s.y)>36)continue;o.taken=true;s.cargo.push({type:o.type,value:o.value});s.cargoValue+=o.value;state.ui.toast(o.type+" geborgen");}}
+import{progressEvent}from"./meta.js";
+export function collectNearby(state){const s=state.sub;for(const o of state.world.objects){if(o.taken||Math.hypot(o.x-s.x,o.y-s.y)>36)continue;o.taken=true;s.cargo.push({type:o.type,value:o.value});s.cargoValue+=o.value;progressEvent(state,"collect",1);state.ui.toast(o.type+" geborgen");}}

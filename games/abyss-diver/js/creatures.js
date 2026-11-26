@@ -9,7 +9,7 @@ export function populateCreatures(w){
 }
 export function fireHarpoon(s,tx,ty){
  const b=s.sub;if(!b||b.battery<1||!s.world)return false;
- let dx=tx==null?(s.aim?.x||1):tx-b.x,dy=ty==null?(s.aim?.y||0):ty-b.y,l=Math.hypot(dx,dy)||1;
+ let dx,dy;if(tx==null){dx=s.aim?.x??1;dy=s.aim?.y??0;if(s.touch&&Math.hypot(s.touch.x,s.touch.y)>.2){dx=s.touch.x;dy=s.touch.y;}}else{dx=tx-b.x;dy=ty-b.y;}const l=Math.hypot(dx,dy)||1;
  s.world.projectiles.push({x:b.x+dx/l*28,y:b.y+dy/l*28,vx:dx/l*520,vy:dy/l*520,life:1.2,damage:2+(s.save.upgrades.harpoon||0)*2});
  b.battery-=1;s.audio?.ping();return true;
 }

@@ -44,7 +44,7 @@ iPad/Handy: linker virtueller Stick, rechte Tasten für Licht/Interaktion/Turbo.
 
 ## iPad-Testliste
 - [ ] Startmenü, Tauchgang starten und Rückkehr zur Station.
-- [ ] Stick in alle Richtungen, Turbo, Licht und Interaktion testen.
+- [ ] Stick in alle Richtungen, Turbo, Licht, Harpune und Bohrer testen.\n- [ ] Kreaturen in Dämmerwald und Schwarzer Schlucht spawnen und Verhalten prüfen.\n- [ ] Harpune mit Maus, Leertaste und Touch abfeuern; Treffer und Beute kontrollieren.\n- [ ] Bohrer an Felsader halten; Akkuverbrauch, Abbauleiste und Erzbeute prüfen.\n- [ ] Korallenwächter bei ca. 930 m auslösen, Telegraphen ausweichen und Boss besiegen.\n- [ ] Motor-, Bohrer- und Harpunen-Upgrades kaufen und Wirkung prüfen.
 - [ ] Trägheit und Wasserwiderstand beobachten.
 - [ ] Weltkorridor bleibt frei; Rückweg blockiert nicht.
 - [ ] Sauerstoff, Akku und Druckschaden beobachten.

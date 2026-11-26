@@ -1,0 +1,1 @@
+export class Debug{constructor(s,el){this.s=s;this.el=el;this.on=new URLSearchParams(location.search).has("debug");el.hidden=!this.on;}update(fps){if(this.on)this.el.textContent="DEBUG · "+fps.toFixed(0)+" FPS\n"+this.s.mode+" · SEED "+this.s.seed+"\n"+Math.round(this.s.sub?.depth||0)+" m · ERR "+this.s.debug.errors.length;}}

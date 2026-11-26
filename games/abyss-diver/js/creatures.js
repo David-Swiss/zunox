@@ -4,7 +4,7 @@ import{BOSSES}from"../data/bosses.js";
 import{progressEvent,recordDiscovery}from"./meta.js";
 export function populateCreatures(w){
  const r=w.r,all=[...CREATURES,...DEEP_CREATURES];w.creatures=[];
- for(let y=210;y<2500;y+=112){const z=w.zoneAt(y),pool=all.filter(c=>c.zone.includes(z.id));if(!pool.length)continue;for(let n=0;n<(r()<.35?2:1);n++){const d=pool[Math.floor(r()*pool.length)];w.creatures.push({id:d.id,def:d,x:(r()-.5)*230,y:y+r()*55,hp:d.hp,maxHp:d.hp,phase:r()*6,hit:0,attack:0});}}
+ for(let y=70;y<2500;y+=112){const z=w.zoneAt(y),pool=all.filter(c=>c.zone.includes(z.id));if(!pool.length)continue;for(let n=0;n<(r()<.35?2:1);n++){const d=pool[Math.floor(r()*pool.length)];w.creatures.push({id:d.id,def:d,x:(r()-.5)*230,y:y+r()*55,hp:d.hp,maxHp:d.hp,phase:r()*6,hit:0,attack:0});}}
  w.projectiles=[];w.boss=null;w.defeatedBosses=[];w.bossDef=BOSSES[0];
 }
 export function fireHarpoon(s,tx,ty){

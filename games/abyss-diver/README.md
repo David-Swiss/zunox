@@ -1,4 +1,4 @@
-# ABYSS DIVER – Phase 1
+# ABYSS DIVER – Phase 2
 
 2D-Tiefsee-Roguelite für ZUNOX. Keine Bibliotheken, externen Bild- oder Sounddateien. Canvas 2D + Web Audio API.
 
@@ -28,18 +28,18 @@ games/abyss-diver/
     └── utils.js
 ```
 
-## Phase 1
+## Phase 1 + 2
 - 60-Hz-Simulation mit begrenztem Frame-Delta und Canvas-Resize.
 - Seeded Weltgeneration, freier zentraler Korridor als garantierter Rückweg.
 - U-Boot-Trägheit, Wasserwiderstand, Auftrieb und Turbo.
 - Sauerstoff, Akku, Licht, Druckbelastung und Rumpf.
-- Erz-, Perlen- und Wrackteil-Funde; Station, Verkauf, drei Upgrades mit je fünf Stufen.
+- Erz-, Perlen- und Wrackteil-Funde;\n- 20 Kreaturenarten mit friedlichen und aggressiven Verhaltensmustern, Lichtschwächen und Harpunenabwehr;\n- Harpune per Maus/Leertaste, Bohrer per V oder Touch; abbaubare Erzadern;\n- Erster Boss: Korallenwächter mit drei Angriffsphasen und sichtbaren Telegraphen;\n- Motor-, Bohrer- und Harpunen-Upgrades zusätzlich zu den drei Basis-Upgrades; Station, Verkauf, drei Upgrades mit je fünf Stufen.
 - LocalStorage-Version, Prüfsumme, Backup, Migration und Fehlerbehandlung.
 - Pause bei Escape/Tab-Wechsel, Fokusverlust löst Tasten; Touch-Stick und Aktionstasten.
 - Sichtbare Laufzeitfehler; Debug unter ?debug=1; Audio erst nach Interaktion.
 
 ## Steuerung
-Desktop: WASD/Pfeile, Shift Turbo, F Licht, E an der Oberfläche zurückkehren, R Notfreisetzung, Esc Pause.
+Desktop: WASD/Pfeile, Shift Turbo, F Licht, Leertaste Harpune, V Bohrer, E an der Oberfläche zurückkehren, R Notfreisetzung, Esc Pause. Maus zielt und Linksklick feuert.
 iPad/Handy: linker virtueller Stick, rechte Tasten für Licht/Interaktion/Turbo.
 
 ## iPad-Testliste
@@ -55,7 +55,7 @@ iPad/Handy: linker virtueller Stick, rechte Tasten für Licht/Interaktion/Turbo.
 - [ ] Hochformat, Safe-Area, große Touch-Ziele und keine Doppeltrigger.
 
 ## Bekannte Schwächen
-Kreaturen, Harpune, Bohrer, Bosse und echte abbaubare Felsen folgen in Phase 2. Zonen sind datengetrieben, Kreaturen-/Relikt-/Questinhalte folgen in späteren Phasen. Boot-/Stationsgrafik sind Phase-1-Canvas-Prototypen. Echter iPad-Browserlauf war hier nicht möglich.
+Zonen 3–5, weitere Bosse, Wracks, Relikte, Sonar, Foto-Modus, Aufträge, Hangar und Endgame folgen in den nächsten Phasen. Zonen sind datengetrieben, Kreaturen-/Relikt-/Questinhalte folgen in späteren Phasen. Boot-/Stationsgrafik sind Phase-1-Canvas-Prototypen. Echter iPad-Browserlauf war hier nicht möglich.
 
 ## Git-Befehle
 ```bash

@@ -1,0 +1,22 @@
+export const CREATURES=Object.freeze([
+{id:"shoal",name:"Schwarmfische",hp:1,hostile:false,speed:35,damage:0,value:12,zone:[0,1],pattern:"school",weakness:"harpoon",color:"#8be9df"},
+{id:"jelly",name:"Mondqualle",hp:2,hostile:false,speed:18,damage:0,value:18,zone:[0,1],pattern:"float",weakness:"light",color:"#9ddcff"},
+{id:"star",name:"Seestern",hp:1,hostile:false,speed:0,damage:0,value:10,zone:[0,1],pattern:"drift",weakness:"drill",color:"#ffb58c"},
+{id:"turtle",name:"Schildkröte",hp:4,hostile:false,speed:22,damage:0,value:35,zone:[0,1],pattern:"cruise",weakness:"none",color:"#87d5a4"},
+{id:"grouper",name:"Zackenbarsch",hp:3,hostile:true,speed:72,damage:12,value:28,zone:[0,1],pattern:"charge",weakness:"harpoon",color:"#dca56b"},
+{id:"mine",name:"Seeigel-Mine",hp:2,hostile:true,speed:0,damage:18,value:22,zone:[0,1],pattern:"mine",weakness:"drill",color:"#e58d8d"},
+{id:"puffer",name:"Kugelfisch",hp:3,hostile:true,speed:35,damage:10,value:24,zone:[0,1],pattern:"inflate",weakness:"harpoon",color:"#e7c879"},
+{id:"moray",name:"Höhlenmuräne",hp:4,hostile:true,speed:65,damage:16,value:36,zone:[1,2],pattern:"ambush",weakness:"light",color:"#9bc77b"},
+{id:"angler",name:"Tiefsee-Angler",hp:5,hostile:true,speed:40,damage:20,value:65,zone:[1,2],pattern:"lure",weakness:"light",color:"#b5d5a2"},
+{id:"crab",name:"Riesenkrebs",hp:6,hostile:true,speed:28,damage:20,value:58,zone:[1,2],pattern:"sidestep",weakness:"drill",color:"#db806c"},
+{id:"piranha",name:"Piranhaschwarm",hp:4,hostile:true,speed:95,damage:14,value:44,zone:[1,2],pattern:"swarm",weakness:"light",color:"#c5d2a1"},
+{id:"ray",name:"Elektrorochen",hp:5,hostile:true,speed:55,damage:22,value:70,zone:[1,2],pattern:"sweep",weakness:"harpoon",color:"#8ec7d8"},
+{id:"ghost",name:"Geisterqualle",hp:3,hostile:true,speed:30,damage:15,value:48,zone:[1,2],pattern:"phase",weakness:"light",color:"#c6a6f2"},
+{id:"lantern",name:"Laternenfisch",hp:2,hostile:false,speed:28,damage:0,value:22,zone:[0,1],pattern:"float",weakness:"none",color:"#a8f0dc"},
+{id:"urchin",name:"Stachelkugel",hp:2,hostile:true,speed:24,damage:12,value:24,zone:[0,1],pattern:"roll",weakness:"drill",color:"#d69a9a"},
+{id:"squid",name:"Glas-Kalmar",hp:3,hostile:false,speed:58,damage:0,value:38,zone:[1,2],pattern:"blink",weakness:"light",color:"#9ecbff"},
+{id:"eel",name:"Schlitzschatten",hp:4,hostile:true,speed:76,damage:18,value:52,zone:[1,2],pattern:"ambush",weakness:"light",color:"#7ed6c1"},
+{id:"shrimp",name:"Leuchtgarnele",hp:1,hostile:false,speed:45,damage:0,value:16,zone:[0,1],pattern:"school",weakness:"none",color:"#ff9fa9"},
+{id:"jelly2",name:"Stachelqualle",hp:3,hostile:true,speed:26,damage:17,value:46,zone:[1,2],pattern:"float",weakness:"harpoon",color:"#c9a0ed"},
+{id:"crawler",name:"Schlammkriecher",hp:5,hostile:true,speed:38,damage:16,value:60,zone:[1,2],pattern:"sidestep",weakness:"drill",color:"#a8a17c"}
+]);

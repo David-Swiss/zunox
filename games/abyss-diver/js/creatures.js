@@ -35,7 +35,7 @@ export function updateCreatures(s,dt){
   if(w.boss&&Math.hypot(w.boss.x-p.x,w.boss.y-p.y)<65){w.boss.hp-=p.damage;hit=true;}
   if(hit||p.life<=0)w.projectiles.splice(i,1);
  }
- if(w.bossDef&&!w.boss&&b.depth>w.bossDef.depth-55){w.boss={x:0,y:w.bossDef.depth,hp:w.bossDef.hp,maxHp:w.bossDef.hp,phase:0,tell:0,attack:0};s.ui.toast("WARNUNG · "+w.bossDef.name+" ERWACHT");}
+ if(w.bossDef&&!w.boss&&b.depth>w.bossDef.depth-15){w.boss={x:0,y:w.bossDef.depth,hp:w.bossDef.hp,maxHp:w.bossDef.hp,phase:0,tell:0,attack:0};s.ui.toast("WARNUNG · "+w.bossDef.name+" ERWACHT");}
  if(w.boss){const q=w.boss;q.phase+=dt;q.x=Math.sin(q.phase*.55)*125;q.phaseIndex=q.hp<q.maxHp*.3?2:q.hp<q.maxHp*.65?1:0;
   if(q.tell>0){q.tell-=dt;if(q.tell<=0&&Math.hypot(b.x-q.x,b.y-q.y)<280)b.hull=Math.max(0,b.hull-w.bossDef.damage);}
   else if(q.attack<=0&&Math.hypot(b.x-q.x,b.y-q.y)<320){q.tell=w.bossDef.phases[q.phaseIndex].tell;q.attack=2.4;s.ui.toast("BOSS-ANGRIFF · AUSWEICHEN!");}

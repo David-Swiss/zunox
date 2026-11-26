@@ -1,0 +1,1 @@
+export const UPGRADES=Object.freeze([{id:"hull",name:"Druckrumpf",description:"Verstärkte Außenplatten",baseCost:90,max:5,perLevel:22},{id:"oxygen",name:"Sauerstofftank",description:"Größere Außentanks",baseCost:75,max:5,perLevel:25},{id:"battery",name:"Akkupack",description:"Mehr Kapazität für Licht und Antrieb",baseCost:70,max:5,perLevel:25}]);

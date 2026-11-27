@@ -53,6 +53,7 @@ function resetMenuCopy(){
   $("menuTitle").innerHTML="NEON <em>BASTION</em>";
   $("menuLead").textContent="Drei Fronten. Drei Kommandanten. Dein Relikt-Build entscheidet über den Kern.";
   $("startButton").textContent="RUN KONFIGURIEREN →";
+  $("menuMicro").textContent="Phase 4 · Kartenwahl, Kommandanten, Mutatoren und Relikt-Drafts";
 }
 function openLoadout(){
   resetMenuCopy();menu.classList.add("hidden");pauseOverlay.classList.add("hidden");

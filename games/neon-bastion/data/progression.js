@@ -19,7 +19,8 @@ export const RELICS = [
   {id:"relay-overload",icon:"⌘",name:"Relais-Überladung",description:"Relais-Türme verursachen 25% mehr Schaden.",relayDamageMultiplier:1.25}
 ];
 export function rollRelics(ownedIds=[]){
-  const pool=RELICS.filter(relic=>!ownedIds.includes(relic.id));
+  let pool=RELICS.filter(relic=>!ownedIds.includes(relic.id));
+  if(pool.length<3)pool=RELICS.slice();
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
   return pool.slice(0,3);
 }

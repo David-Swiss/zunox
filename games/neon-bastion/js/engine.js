@@ -12,9 +12,13 @@ export class Engine{
   setSpeed(value){this.speed=clamp(Number(value)||1,1,3);}
   frame(ts){
     if(!this.running)return;if(!this.last)this.last=ts;const dt=Math.min(.05,(ts-this.last)/1000);this.last=ts;
-    if(!this.paused){this.acc=Math.min(.25,this.acc+dt*this.speed);let n=0;while(this.acc>=this.step&&n++<12){this.update?.(this.step);this.acc-=this.step;}}
+    if(!this.paused){
+      this.acc=Math.min(.25,this.acc+dt*this.speed);let n=0;
+      while(this.acc>=this.step&&n++<12&&!this.paused){this.update?.(this.step);this.acc-=this.step;}
+    }
     const ctx=this.ctx;ctx.setTransform(this.dpr,0,0,this.dpr,0,0);ctx.clearRect(0,0,this.width,this.height);
-    ctx.save();ctx.translate(this.width/2,this.height/2);ctx.scale(this.zoom,this.zoom);ctx.translate(-this.width/2,-this.height/2);this.render?.(ctx,this.width,this.height,{zoom:this.zoom,paused:this.paused,dt});ctx.restore();
+    ctx.save();ctx.translate(this.width/2,this.height/2);ctx.scale(this.zoom,this.zoom);ctx.translate(-this.width/2,-this.height/2);
+    this.render?.(ctx,this.width,this.height,{zoom:this.zoom,paused:this.paused,dt});ctx.restore();
     this.raf=requestAnimationFrame(this.frame);
   }
   bindPinch(){

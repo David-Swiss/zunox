@@ -1,0 +1,1 @@
+export function botProfile(data,id){return data.find(x=>x.id===id)||data[0]}

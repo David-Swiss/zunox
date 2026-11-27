@@ -30,17 +30,36 @@
   </section>
   <section class="speedbar" id="speedbar" hidden>
     <button data-speed="1" class="speed active">1×</button><button data-speed="2" class="speed">2×</button><button data-speed="3" class="speed">3×</button>
-    <span id="phaseLabel">BASIS-SYSTEM · PHASE 1</span>
+    <span id="phaseLabel">DEFENSE PROTOCOL · PHASE 4</span>
   </section>
   <section class="overlay" id="menu">
     <div class="panel menu-panel">
-      <div class="eyebrow" id="menuEyebrow">ZUNOX ORIGINAL · DEFENSE PROTOCOL 01</div>
+      <div class="eyebrow" id="menuEyebrow">ZUNOX ORIGINAL · DEFENSE PROTOCOL 04</div>
       <div class="hero-emblem"><div class="emblem-ring ring-a"></div><div class="emblem-ring ring-b"></div><div class="emblem-core"></div><span>NB</span></div>
       <h1 id="menuTitle">NEON <em>BASTION</em></h1>
-      <p class="lead" id="menuLead">Ein Kern. Ein endloser Ansturm. Deine Verteidigung entscheidet.</p>
-      <div class="feature-row"><span>⌖ TAKTISCHER AUFBAU</span><span>✦ ROGUELITE-BUILDS</span><span>◈ 30 ZYKLEN</span></div>
-      <button id="startButton" class="primary start-button">VERTEIDIGUNG STARTEN <span>→</span></button>
-      <p class="microcopy" id="menuMicro">Phase 2 + 3 · Gegnerwellen, drei Turmklassen und Ausbaupfade</p>
+      <p class="lead" id="menuLead">Drei Fronten. Drei Kommandanten. Dein Relikt-Build entscheidet über den Kern.</p>
+      <div class="feature-row"><span>⌖ 3 SCHLACHTFELDER</span><span>✦ RELIKT-BUILDS</span><span>◈ 30 ZYKLEN</span></div>
+      <button id="startButton" class="primary start-button">RUN KONFIGURIEREN →</button>
+      <p class="microcopy" id="menuMicro">Phase 4 · Kartenwahl, Kommandanten, Mutatoren und Relikt-Drafts</p>
+    </div>
+  </section>
+  <section class="overlay selection-overlay hidden" id="selectionOverlay">
+    <div class="panel loadout-panel">
+      <div class="eyebrow">PHASE 4 · EINSATZPLANUNG</div>
+      <h2>RUN <em>KONFIGURIEREN</em></h2>
+      <p class="loadout-intro">Wähle deine Front, eine Doktrin und einen Mutator. Jede Kombination verändert den Run.</p>
+      <div class="loadout-group"><h3>01 · SCHLACHTFELD</h3><div class="choice-grid map-choices" id="mapChoices"></div></div>
+      <div class="loadout-group"><h3>02 · KOMMANDANT</h3><div class="choice-grid" id="commanderChoices"></div></div>
+      <div class="loadout-group"><h3>03 · RUN-MUTATOR</h3><div class="choice-grid mutator-choices" id="mutatorChoices"></div></div>
+      <div class="selection-actions"><button id="backSelectionButton" class="secondary">ZURÜCK</button><button id="confirmRunButton" class="primary">VERTEIDIGUNG STARTEN →</button></div>
+    </div>
+  </section>
+  <section class="overlay hidden" id="relicOverlay">
+    <div class="panel compact relic-panel">
+      <div class="eyebrow" id="relicWaveLabel">WELLE ÜBERSTANDEN</div>
+      <h2>WÄHLE EIN <em>RELIKT</em></h2>
+      <p>Dein Build wird stärker. Jedes Relikt bleibt bis zum Ende dieses Runs aktiv.</p>
+      <div class="relic-grid" id="relicChoices"></div>
     </div>
   </section>
   <section class="overlay hidden" id="pauseOverlay">

@@ -36,3 +36,7 @@ Spielstände liegen lokal im Browser unter einem versionierten localStorage-Schl
 ## Credits
 
 Konzept, Code, Grafik und Sound: ZUNOX / OpenAI-Unterstützung. Alle visuellen und akustischen Effekte werden zur Laufzeit erzeugt.
+
+
+## Zusätzliche Flotte
+- **PHANTOM** (260 Void-Kerne): startet mit Kettenblitz und besitzt +18% Glück für seltenere Drops und bessere Build-Chancen.

@@ -5,3 +5,39 @@
 .build-actions .secondary{border-color:#ffffff35}
 @media(max-width:760px){.buildbar{flex-direction:column;align-items:stretch}.build-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%}.build-actions button{min-width:0;padding:0 5px;font-size:8px}.build-actions #upgradeButton,.build-actions #undoButton{grid-column:auto}.buildbar strong{max-width:none}}
 @media(max-height:620px) and (orientation:landscape){.hud{top:57px}.hud-stat{padding:5px 8px}.buildbar{bottom:44px;padding:6px 8px}.build-actions button{min-height:33px}.speedbar{bottom:6px}.overlay{padding-top:54px}.menu-panel{padding:14px 22px}.hero-emblem{width:70px;height:70px;margin:6px auto}.emblem-core{width:30px;height:30px}}
+
+/* Phase 4 – loadout, map selection and between-wave relic drafts */
+.selection-overlay{padding:54px 12px 12px}
+.loadout-panel{width:min(100%,900px);max-height:calc(100dvh - 66px);overflow:auto;text-align:left;padding:22px}
+.loadout-panel>h2,.relic-panel h2{text-align:center;margin:6px 0;font-size:clamp(25px,4vw,36px);letter-spacing:-1.5px}
+.loadout-intro{text-align:center;color:var(--muted);font-size:12px;margin:0 0 16px}
+.loadout-group{margin:14px 0}
+.loadout-group h3{margin:0 0 8px;color:var(--cyan);font-size:9px;letter-spacing:1.7px}
+.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.choice-card{min-width:0;min-height:104px;padding:11px;text-align:left;border:1px solid #36516d;border-radius:12px;background:linear-gradient(145deg,#142741,#0b1728);color:#eaf7ff;display:flex;flex-direction:column;gap:5px}
+.choice-card[aria-pressed=true]{border-color:var(--lime);background:linear-gradient(145deg,#263b35,#112a2b);box-shadow:0 0 0 2px #c4ff7522,0 0 22px #c4ff7514}
+.choice-card small{color:var(--cyan);font-size:8px;font-weight:950;letter-spacing:1px}
+.choice-card strong{font-size:13px}
+.choice-card span{color:#9db1c8;font-size:10px;line-height:1.4}
+.map-choices{grid-template-columns:repeat(3,minmax(0,1fr))}
+.mutator-choices{grid-template-columns:repeat(4,minmax(0,1fr))}
+.selection-actions{display:flex;justify-content:space-between;gap:9px;margin-top:17px}
+.selection-actions button{min-height:45px}
+.selection-actions .primary{flex:1}
+.relic-panel{width:min(100%,650px)}
+.relic-panel>p{color:#a9bbd1;font-size:12px}
+.relic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:16px}
+.relic-card{min-width:0;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px 10px;border:1px solid #4b6680;border-radius:14px;background:linear-gradient(155deg,#172d48,#0a1728);color:#effaff}
+.relic-card:hover{border-color:var(--lime);box-shadow:0 0 24px #c4ff7520}
+.relic-icon{display:grid;place-items:center;width:40px;height:40px;border:1px solid #c4ff7566;border-radius:12px;color:var(--lime);font-size:22px;background:#c4ff7510}
+.relic-card strong{font-size:12px}
+.relic-card small{color:#a6bad0;font-size:10px;line-height:1.45}
+@media(max-width:700px){
+  .loadout-panel{padding:17px 13px}
+  .choice-grid,.map-choices{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mutator-choices{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .choice-card{min-height:90px;padding:9px}
+  .choice-card strong{font-size:12px}
+  .choice-card span{font-size:9px}
+}
+@media(max-width:390px){.relic-grid{grid-template-columns:1fr}.relic-card{min-height:90px;display:grid;grid-template-columns:42px 1fr;justify-items:start;text-align:left}.relic-icon{grid-row:span 2}.relic-card small{grid-column:2}}

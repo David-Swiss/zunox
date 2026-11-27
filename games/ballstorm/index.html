@@ -174,11 +174,11 @@ function frame(t){if(!lastTime)lastTime=t;let elapsed=Math.min(CFG.maxFrame,(t-l
 $('play').onclick=()=>{initAudio();resetRun(false);};
 $('daily').onclick=()=>{initAudio();resetRun(true);};
 $('pauseBtn').onclick=togglePause;$('resume').onclick=()=>{state='playing';setScreen(null);lastTime=performance.now();};
-$('restart').onclick=()=>resetRun(dailyMode);$('again').onclick=()=>resetRun(dailyMode);$('toMenu').onclick=$('overMenu').onclick=()=>{state='menu';setScreen('start');$('bestLine').textContent='Beste Welle: '+save.bestWave+' · Highscore: '+save.highscore.toLocaleString('de-CH')+' · Bestes Combo: '+(save.bestCombo||0)+'×'+' · Bestes Combo: '+(save.bestCombo||0)+'×';};
+$('restart').onclick=()=>resetRun(dailyMode);$('again').onclick=()=>resetRun(dailyMode);$('toMenu').onclick=$('overMenu').onclick=()=>{state='menu';setScreen('start');$('bestLine').textContent='Beste Welle: '+save.bestWave+' · Highscore: '+save.highscore.toLocaleString('de-CH')+' · Bestes Combo: '+(save.bestCombo||0)+'×';};
 $('mute').onclick=()=>{muted=!muted;if(master)master.gain.value=muted?0:.16;$('mute').textContent=muted?'×♫':'♫';};
 document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();speedMult=speedMult===1?2:speedMult===2?4:1;updateHud();}if(e.key==='p'||e.key==='Escape'){if(state==='playing'||state==='paused')togglePause();}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='playing')togglePause();});
-load();$('bestLine').textContent='Beste Welle: '+save.bestWave+' · Highscore: '+save.highscore.toLocaleString('de-CH');
+load();$('bestLine').textContent='Beste Welle: '+save.bestWave+' · Highscore: '+save.highscore.toLocaleString('de-CH')+' · Bestes Combo: '+(save.bestCombo||0)+'×';
 window.addEventListener('resize',resize);resize();requestAnimationFrame(frame);
 </script>
 </body>

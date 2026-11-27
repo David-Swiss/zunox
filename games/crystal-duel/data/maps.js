@@ -1,0 +1,1 @@
+export const MAPS=[{id:"foundry",name:"Splitterwerk",seed:4312,theme:"steel"},{id:"canopy",name:"Himmelsgarten",seed:9917,theme:"green"},{id:"rift",name:"Rissplateau",seed:7281,theme:"ember"}]

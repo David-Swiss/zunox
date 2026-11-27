@@ -1,0 +1,1 @@
+export const ARMORS=[{id:"iron",name:"Eisenpanzer",protection:2,durability:180},{id:"prism",name:"Prismenrüstung",protection:4,durability:260},{id:"aether",name:"Ätherpanzer",protection:6,durability:340}]

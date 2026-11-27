@@ -29,7 +29,8 @@ const GAMES=[
  {title:'Rival Strike: Zero Hour',control:'Tastatur / Maus',description:'Kämpfe in schnellen Arena-Gefechten, wechsle Waffen und verbessere deine Kampfwertung.',category:'Action',path:'shooter/',icon:'🎯',style:'shooter',thumbnail:'assets/thumbs/rival-strike.svg'},
  {title:'Chicken Valley Tycoon',control:'Maus / Touch',description:'Baue deinen Hof aus, züchte Hühner, automatisiere die Eierproduktion und werde Tycoon.',category:'Simulation',path:'farm/',icon:'🚜',style:'farm',thumbnail:'assets/thumbs/chicken-valley.svg'},
  {title:'Ballstorm: Breakout',tag:'NEU',control:'Maus / Touch',description:'Zerschmettere Blockformationen, sammle Spezialbälle und verbessere deinen Arcade-Build.',category:'Arcade',path:'games/ballstorm/',icon:'●',style:'drift',thumbnail:'assets/thumbs/ballstorm.svg'},
- {title:'COURTSIDE: 3PT Rush',tag:'NEU',control:'Drag / WASD',description:'Triff in 60 Sekunden so viele Dreier wie möglich. Ziehe den Ball auf, knacke Moneyballs und baue Treffer-Streaks.',category:'Sport',path:'games/courtside-3pt/',icon:'🏀',style:'court',thumbnail:'games/courtside-3pt/thumbnail.svg'}
+ {title:'COURTSIDE: 3PT Rush',tag:'NEU',control:'Drag / WASD',description:'Triff in 60 Sekunden so viele Dreier wie möglich. Ziehe den Ball auf, knacke Moneyballs und baue Treffer-Streaks.',category:'Sport',path:'games/courtside-3pt/',icon:'🏀',style:'court',thumbnail:'games/courtside-3pt/thumbnail.svg'},
+ {title:'Crystal Duel',tag:'NEU',control:'WASD / Maus',description:'Baue eine 3D-Blockarena, setze Deckung und bereite dich auf taktische Kristall-Duelle vor.',category:'Action',path:'games/crystal-duel/',icon:'◆',style:'void',thumbnail:'games/crystal-duel/thumbnail.svg'}
 ];
 const categories=['Alle',...new Set(GAMES.map(g=>g.category)),'★ Favoriten'];let active='Alle';
 let favorites=new Set();try{favorites=new Set(JSON.parse(localStorage.getItem('zunox-favorites')||'[]'));}catch{favorites=new Set();}

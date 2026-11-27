@@ -1,0 +1,1 @@
+export const KITS=[{id:"standard",name:"Standard",items:["sword","stone","wood","crystal"]},{id:"crystal",name:"Kristall-Kit",items:["sword","crystal","crystal","dark"]},{id:"melee",name:"Nahkampf-Kit",items:["sword","axe","shield","apple"]},{id:"bow",name:"Bogen-Kit",items:["bow","sword","stone","potion"]},{id:"chaos",name:"Chaos-Kit",items:["axe","crystal","pearl","potion"]}]

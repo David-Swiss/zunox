@@ -1,0 +1,1 @@
+export function placeCrystal(){return false}export function detonateCrystal(){return false}

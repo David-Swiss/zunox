@@ -1,0 +1,1 @@
+export const HOTBAR=[{id:"sword",label:"Schwert",icon:"⚔"},{id:"stone",label:"Fels",icon:"▦"},{id:"wood",label:"Holz",icon:"▤"},{id:"dark",label:"Dunkel",icon:"◆"},{id:"grass",label:"Gras",icon:"▧"},{id:"bow",label:"Bogen",icon:"➶"},{id:"axe",label:"Axt",icon:"⚒"},{id:"crystal",label:"Kristall",icon:"✧"},{id:"potion",label:"Trank",icon:"◉"}]

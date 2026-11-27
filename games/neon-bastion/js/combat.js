@@ -34,7 +34,7 @@ export class BattleSystem {
   towerCost(base){return Math.max(1,Math.ceil(base*this.costMultiplier));}
   upgradeCost(level){return this.towerCost(65*level);}
   addRelic(relic){
-    if(!relic||this.relicIds.includes(relic.id))return false;
+    if(!relic)return false;
     this.relicIds.push(relic.id);
     for(const key of ["rangeMultiplier","damageMultiplier","fireRateMultiplier","waveRewardMultiplier","relayDamageMultiplier"])if(relic[key])this.relicBonuses[key]*=relic[key];
     this.relicBonuses.killEnergyBonus+=relic.killEnergyBonus||0;

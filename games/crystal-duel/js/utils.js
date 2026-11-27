@@ -1,0 +1,1 @@
+export const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));export const lerp=(a,b,t)=>a+(b-a)*t;export const dist2=(a,b)=>Math.hypot(a.x-b.x,a.z-b.z);export const key=(x,y,z)=>x+","+y+","+z;export function safe(fn,fallback){try{return fn()}catch(e){console.error(e);return fallback}}

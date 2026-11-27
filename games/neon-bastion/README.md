@@ -20,7 +20,7 @@ Auf GitHub Pages: `/zunox/games/neon-bastion/`
 - [x] Phase 1 – Fundament, Spielfeld, Kamera, Pfadvalidierung
 - [x] Phase 2 – Gegnerwellen, Gegnerbewegung, Kernschaden, Projektile, Bossgegner, 30 Wellen und Sieg/Niederlage
 - [x] Phase 3 – Drei Turmklassen, unterschiedliche Reichweiten/Schussraten/Schäden, Upgrades und Energieökonomie
-- [ ] Phase 4 – Kartenwahl, Relikte, Held und Run-Mutatoren
+- [x] Phase 4 – Kartenwahl, Kommandanten, Relikte und Run-Mutatoren
 - [ ] Phase 5 – Sechs Karten, individuelle Bossmuster und Endlosmodus
 - [ ] Phase 6 – Meta-Progression, Skilltree, Erfolge, Audio und vollständige QA
 
@@ -28,3 +28,13 @@ Auf GitHub Pages: `/zunox/games/neon-bastion/`
 - Feste 60-Hz-Simulationsschritte; Rendering und Resize bleiben geräteunabhängig
 - Turmplatzierung validiert weiterhin den Pfad zum Kern
 - Browser-Spielstände/Meta-Progression kommen in Phase 6
+
+
+## Phase 4 – Einsatzplanung und Relikt-Builds
+- Drei Schlachtfelder mit eigenen Pfadverläufen, Schwierigkeitswerten und Relaisfeldern.
+- Drei Kommandanten-Doktrinen: zusätzlicher Kernschutz, günstiger Bau oder höhere Reichweite/Schadensleistung.
+- Vier Run-Mutatoren mit klaren Risiko-/Belohnungsprofilen.
+- Nach jeder überstandenen Welle (ausser dem finalen Sieg) erscheint ein Draft aus drei unterschiedlichen Relikten; Relikte können mehrfach gesammelt und gestapelt werden.
+- Relikte verändern Reichweite, Feuerrate, Schaden, Energieökonomie, Kernintegrität oder Relais-Türme.
+- Relaisfelder markieren besondere Bauplätze; dort platzierte Türme erhalten 20% mehr Reichweite.
+- Die Simulation stoppt sofort beim Relikt-Draft, auch wenn die Pause während eines Frames ausgelöst wird.
